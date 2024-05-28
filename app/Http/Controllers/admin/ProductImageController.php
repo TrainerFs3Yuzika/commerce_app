@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\Models\ProductImage;
 use Image;
 
@@ -12,7 +13,7 @@ class ProductImageController extends Controller
     public function update(Request $request){
 
         $image = $request->image;
-        $ext = $image->getClienOriginalExtension();
+        $ext = $image->getClientOriginalExtension();
         $sourcePath = $image->getPathName();
        
 
