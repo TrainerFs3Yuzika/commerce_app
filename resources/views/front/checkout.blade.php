@@ -140,11 +140,11 @@
                             </div>
                             <div class="d-flex justify-content-between mt-2">
                                 <div class="h6"><strong>Shipping</strong></div>
-                                <div class="h6"><strong>$0</strong></div>
+                                <div class="h6" id="shippingAmount"><strong>Rp{{ number_format($totalShippingCharge, 2)}}</strong></div>
                             </div>
                             <div class="d-flex justify-content-between mt-2 summery-end">
                                 <div class="h5"><strong>Total</strong></div>
-                                <div class="h5"><strong>Rp{{Cart::subtotal()}}</strong></div>
+                                <div class="h5" id="grandTotal"><strong>Rp{{number_format($grandTotal, 2)}}</strong></div>
                             </div>                            
                         </div>
                     </div>   
@@ -346,6 +346,23 @@
 
                 }
             }); 
+        });
+
+        $("#country").change(function(){
+            $.ajax({
+                    url: '{{route ("front.getOrderSummery")}}',
+                    type: 'post',
+                    data: {country_id: $(this).val()},
+                    dataType: 'json',
+                    success: function (response) {
+                        if(response.status == true){
+                            $("#shippingAmount").html('Rp'+response.shippingCharge);
+                            $("#grandTotal").html('Rp'+response.grandTotal);
+                        }
+                          
+                    }
+                });
+
         });
 
     </script>
