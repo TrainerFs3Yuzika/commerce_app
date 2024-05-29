@@ -53,10 +53,10 @@
                         </div>
 
                         @if ($product->compare_price > 0)
-                        <h2 class="price text-secondary"><del>${{ $product->compare_price }}</del></h2>
+                        <h2 class="price text-secondary"><del>Rp{{ $product->compare_price }}</del></h2>
                         @endif
 
-                        <h2 class="price ">${{ $product->price }}</h2>
+                        <h2 class="price ">Rp{{ $product->price }}</h2>
                             
                         {!! $product->short_description !!}
 
@@ -134,9 +134,9 @@
                         <div class="card-body text-center mt-3">
                             <a class="h6 link" href="">{{ $relProduct->title}}</a>
                             <div class="price mt-2">
-                                <span class="h5"><strong>${{ $relProduct->price}}</strong></span>
+                                <span class="h5"><strong>Rp{{ $relProduct->price}}</strong></span>
                                 @if ($relProduct->compare_price > 0)
-                                <span class="h6 text-underline"><del>${{$relProduct->compare_price}}</del></span>
+                                <span class="h6 text-underline"><del>Rp{{$relProduct->compare_price}}</del></span>
                                 @endif
                             </div>
                         </div>                        
