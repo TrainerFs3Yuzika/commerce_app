@@ -5,8 +5,9 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="white-text" href="#">Shop</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{route("front.home")}}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{route("front.shop")}}">Shop</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{route("front.cart")}}">Cart</a></li>
                     <li class="breadcrumb-item">Checkout</li>
                 </ol>
             </div>
@@ -138,6 +139,10 @@
                                 <div class="h6"><strong>Subtotal</strong></div>
                                 <div class="h6"><strong>Rp{{Cart::subtotal()}}</strong></div>
                             </div>
+                            <div class="d-flex justify-content-between summery-end">
+                                <div class="h6"><strong>Discount</strong></div>
+                                <div class="h6" id="discount_value"><strong>Rp{{$discount}}</strong></div>
+                            </div>
                             <div class="d-flex justify-content-between mt-2">
                                 <div class="h6"><strong>Shipping</strong></div>
                                 <div class="h6" id="shippingAmount"><strong>Rp{{ number_format($totalShippingCharge, 2)}}</strong></div>
@@ -148,6 +153,22 @@
                             </div>                            
                         </div>
                     </div>   
+
+                    <div class="input-group apply-coupan mt-4">
+                        <input type="text" placeholder="Coupon Code" class="form-control" name="discount_code" id="discount_code">
+                        <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
+                    </div> 
+
+                    <div id="discount-response-wrapper">
+                        @if (Session::has('code'))
+                            <div class="mt-4 d-flex justify-content-center align-items-center" id="discount-response" style="background-color: orange; width: 300px; height: 50px; position: relative;">
+                                <strong>{{ Session::get('code')->code }}</strong>
+                                <a class="btn btn-sm btn-danger position-absolute" style="top: 0; right: 0;" id="remove-discount"><i class="fa fa-times"></i></a>
+                            </div>
+                        @endif
+                    </div>
+
+
                     
                     <div class="card payment-form ">    
                         
@@ -169,7 +190,7 @@
                         </div>
                         
                         
-                        <div class="card-body p-0 d-none" id="card-payment-form">
+                        <div class="card-body p-0 d-none mt-3" id="card-payment-form">
                             <div class="mb-3">
                                 <label for="card_number" class="mb-2">Card Number</label>
                                 <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
@@ -364,6 +385,65 @@
                 });
 
         });
+
+        $("#apply-discount").click(function(){
+            $.ajax({
+                url: '{{route ("front.applyDiscount")}}',
+                type: 'post',
+                data: {code: $("#discount_code").val(), country_id: $("#country").val()},
+                dataType: 'json',
+                success: function (response) {     
+                    if(response.status == true) {
+                        $("#shippingAmount").html('Rp'+response.shippingCharge);
+                        $("#grandTotal").html('Rp'+response.grandTotal);
+                        $("#discount_value").html('Rp'+response.discount);
+                        $("#discount-response-wrapper").html(response.discountString);
+                        
+                        $("#discount-response").css({
+                            'background-color': 'orange',   
+                            'display': 'flex',
+                            'justify-content': 'center', 
+                            'align-items': 'center', 
+                            'height': '50px',
+                            'width': '300px',
+                            'position': 'relative' 
+                        });
+
+                        $("#remove-discount").css({
+                            'position': 'absolute',
+                            'top': '0',
+                            'right': '0'
+                        });
+                    } else {
+                        $("#discount-response-wrapper").html("<span class='text-danger'>"+response.message+"<span>");
+                    }
+                }
+            });
+        });
+
+        $('body').on('click', "#remove-discount", function(){
+            $.ajax({
+                url: '{{route ("front.removeCoupon")}}',
+                type: 'post',
+                data:  {country_id: $("#country").val()},
+                dataType: 'json',
+                success: function (response) {     
+                    if(response.status == true) {
+                        $("#shippingAmount").html('Rp'+response.shippingCharge);
+                        $("#grandTotal").html('Rp'+response.grandTotal);
+                        $("#discount_value").html('Rp'+response.discount);
+                        $("#discount-response-wrapper").html(''); 
+                        $("#discount_code").val(''); 
+                    }
+                }
+            });
+        });
+
+
+        
+        // $("#remove-discount").click(function(){
+          
+        // });
 
     </script>
 @endsection

@@ -50,7 +50,7 @@ with font-awesome or any other icon font library -->
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('shipping.create') }}" class="nav-link">
                         <!-- <i class="nav-icon fas fa-tag"></i> -->
                         <i class="fas fa-truck nav-icon"></i>
                         <p>Shipping</p>
@@ -63,7 +63,7 @@ with font-awesome or any other icon font library -->
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="discount.html" class="nav-link">
+                    <a href="{{ route('coupons.index') }}" class="nav-link">
                         <i class="nav-icon  fa fa-percent" aria-hidden="true"></i>
                         <p>Discount</p>
                     </a>

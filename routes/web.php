@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\ShippingController;
+use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
@@ -49,6 +50,11 @@ Route::get('/checkout', [CartController::class, 'checkout'])->name('front.checko
 Route::post('/process-checkout', [CartController::class, 'processCheckout'])->name('front.processCheckout');
 Route::get('/thanks/{orderId}', [CartController::class, 'thankyou'])->name('front.thankyou');
 Route::post('/get-order-summery', [CartController::class, 'getOrderSummery'])->name('front.getOrderSummery');
+Route::post('/apply-discount', [CartController::class, 'applyDiscount'])->name('front.applyDiscount');
+Route::post('/remove-discount', [CartController::class, 'removeCoupon'])->name('front.removeCoupon');
+
+// Menambahkan Diskon Customer
+
 
 //user
 Route::group(['prefix' => 'account'], function () {
@@ -124,6 +130,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/shipping/{id}', [ShippingController::class, 'edit'])->name('shipping.edit');
         Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
         Route::delete('/shipping/{id}', [ShippingController::class, 'destroy'])->name('shipping.delete');
+
+        // Coupon Code Routes
+        Route::get('/coupons', [DiscountCodeController::class, 'index'])->name('coupons.index');
+        Route::get('/coupons/create', [DiscountCodeController::class, 'create'])->name('coupons.create');
+        Route::post('/coupons', [DiscountCodeController::class, 'store'])->name('coupons.store');
+        Route::get('/coupons/{coupon}/edit', [DiscountCodeController::class, 'edit'])->name('coupons.edit');
+        Route::put('/coupons/{coupon}', [DiscountCodeController::class, 'update'])->name('coupons.update');
+        Route::delete('/coupons/{coupon}', [DiscountCodeController::class, 'destroy'])->name('coupons.delete');
+
 
         // temp-images.create
         Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
