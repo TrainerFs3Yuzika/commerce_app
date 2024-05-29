@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Produk</h1>
+                    <h1>Discount Coupon</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary">Produk Baru</a>
+                    <a href="{{ route('coupons.create') }}" class="btn btn-primary">New Kupon Diskon</a>
                 </div>
             </div>
         </div>
@@ -21,10 +21,10 @@
         <div class="container-fluid">
             @include('admin.message')
             <div class="card">
-                <form action="" method="get">
+                <form action="" method="GET">
                     <div class="card-header">
                         <div class="card-title">
-                            <button type="button" onclick="window.location.href='{{ route('products.index') }}'"
+                            <button type="button" onclick="window.location.href='{{ route('coupons.index') }}'"
                                 class="btn btn-default btn-sm">Reset</button>
                         </div>
                         <div class="card-tools">
@@ -41,44 +41,41 @@
                         </div>
                     </div>
                 </form>
+
                 <div class="card-body table-responsive p-0">
+
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
                                 <th width="60">ID</th>
-                                <th width="80"></th>
-                                <th>Produk</th>
-                                <th>Harga</th>
-                                <th>kuantitas</th>
-                                <th>SKU</th>
+                                <th>Code</th>
+                                <th>Nama</th>
+                                <th>Diskon</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
                                 <th width="100">Status</th>
                                 <th width="100">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($products->isNotEmpty())
-                                @foreach ($products as $product)
-                                    @php
-                                        $productImage = $product->product_images->first();
-                                    @endphp
+                            @if ($discountCoupons->isNotEmpty())
+                                @foreach ($discountCoupons as $discountCoupon)
                                     <tr>
-                                        <td>{{ $product->id }}</td>
+                                        <td>{{ $discountCoupon->id }}</td>
+                                        <td>{{ $discountCoupon->code }}</td>
+                                        <td>{{ $discountCoupon->name }}</td>
                                         <td>
-                                            @if (!@empty($productImage->image))
-                                                <img src="{{ asset('uploads/product/small/' . $productImage->image) }}"
-                                                    class="img-thumbnail" width="50" />
+                                            @if ($discountCoupon->type == 'percent')
+                                                {{ $discountCoupon->discount_amount }}%
                                             @else
-                                                <img src="{{ asset('admin-assets/img/default-150x150.png') }}"class="img-thumbnail"
-                                                    width="50" />
+                                                Rp{{ $discountCoupon->discount_amount }}
                                             @endif
-
                                         </td>
-                                        <td><a href="#">{{ $product->title }}</a></td>
-                                        <td>{{ 'Rp' . number_format($product->price, 2) }}</td>
-                                        <td>{{ $product->qty }} Stok </td>
-                                        <td>{{ $product->sku }}</td>
+                                        <td>{{ (!empty($discountCoupon->starts_at)) ? \Carbon\Carbon::parse($discountCoupon->starts_at)->format('Y/m/d H:i:s') : ''}}</td>
+                                        <td>{{ (!empty($discountCoupon->expires_at)) ? \Carbon\Carbon::parse($discountCoupon->expires_at)->format('Y/m/d H:i:s') : ''}}</td>
+
                                         <td>
-                                            @if ($product->status == 1)
+                                            @if ($discountCoupon->status == 1)
                                                 <svg class="text-success-500 h-6 w-6 text-success"
                                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -96,7 +93,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('products.edit', $product->id) }}">
+                                            <a href="{{ route('coupons.edit', $discountCoupon->id) }}">
                                                 <svg class="filament-link-icon w-4 h-4 mr-1"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                     fill="currentColor" aria-hidden="true">
@@ -105,7 +102,7 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href="#" onclick="deleteProduct({{ $product->id }})"
+                                            <a href="#" onclick="deleteCoupon({{ $discountCoupon->id }})"
                                                 class="text-danger w-4 h-4 mr-1">
                                                 <svg wire:loading.remove.delay="" wire:target=""
                                                     class="filament-link-icon w-4 h-4 mr-1"
@@ -121,7 +118,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="8" style="text-align: center;"> Data tidak tersedia</td>
+                                    <td colspan="5" style="text-align: center;">Data Tidak Tersedia</td>
                                 </tr>
                             @endif
 
@@ -129,29 +126,20 @@
                     </table>
                 </div>
                 <div class="card-footer clearfix">
-                    {{ $products->links() }}
-                    <!-- <ul class="pagination pagination m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">«</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">»</a></li>
-                    </ul>  -->
+                    {{ $discountCoupons->links() }}
                 </div>
             </div>
         </div>
         <!-- /.card -->
     </section>
-				<!-- /.content -->
-
-
+    <!-- /.content -->
 @endsection
 
 @section('customJs')
-<script>
-        function deleteProduct(id) {
-			
-            var url = '{{ route("products.delete", "ID") }}';
+    <script>
+        function deleteCoupon(id) {
+
+            var url = '{{ route('coupons.delete', 'ID') }}';
             var newUrl = url.replace("ID", id)
 
             if (confirm("Apakah kamu ingin menghapus data ini?")) {
@@ -160,15 +148,18 @@
                     type: 'delete',
                     data: {},
                     dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(response) {
-                        if (response["status"] == true) {
-                            window.location.href = "{{ route('products.index') }}";
-                        } else {
-							window.location.href = "{{ route('products.index') }}";
-						}
+
+                        if (response["status"]) {
+
+                            window.location.href = "{{ route('coupons.index') }}";
+                        }
                     }
                 });
             }
         }
-</script>
+    </script>
 @endsection
