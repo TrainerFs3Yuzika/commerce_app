@@ -299,8 +299,6 @@ class CartController extends Controller
                 $grandTotal = ($subTotal-$discount)+$shipping;
 
             }
-
-           
  
             $order = new Order;
             $order->subtotal = $subTotal;
@@ -338,13 +336,13 @@ class CartController extends Controller
                 $orderItem->save();
             }
 
+            // Send Order Email
+            orderEmail($order->id);
+
             session()->flash('success', 'Kamu Berhasil Memesan');
             
             Cart::destroy();
 
-           
-
-            
             return response()->json([
                 'message' => 'Pesanan berhasil disimpan',
                 'orderId' => $order->id,
@@ -385,7 +383,6 @@ class CartController extends Controller
             </div>';
         }
 
-       
 
         if($request->country_id > 0){
 
