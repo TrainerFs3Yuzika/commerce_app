@@ -76,7 +76,7 @@
                             <div class="card-footer p-3">
 
                                 <!-- heading -->
-                                <h6 class="mb-7 h5 mt-4">Order Items(3)</h6>
+                                <h6 class="mb-7 h5 mt-4">Order Items</h6>
 
                                 <!-- divider -->
                                 <hr class="my-3">
