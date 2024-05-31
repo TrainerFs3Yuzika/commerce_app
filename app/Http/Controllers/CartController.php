@@ -212,7 +212,7 @@ class CartController extends Controller
             
         ]);
     }
-
+    // awal
     public function processCheckout(Request $request){
 
         // step -1 Apply Validation
@@ -263,8 +263,7 @@ class CartController extends Controller
         // step - 3 store data in orders table
 
         if($request->payment_method =='cod'){
-
-            $discountCodeId = '';
+            $discountCodeId = NULL;
             $promoCode ='';
             $shipping = 0;
             $discount = 0;
@@ -308,8 +307,10 @@ class CartController extends Controller
             $order->shipping = $shipping;
             $order->grand_total = $grandTotal;
             $order->discount = $discount;
-            $order->coupon_code_id = $discountCodeId;
-            $order->coupon_code = $promoCode;
+            $order->coupon_code_id = !empty($discountCodeId) ? $discountCodeId : null;
+            $order->coupon_code = $promoCode ?? null;
+            $order->payment_status = 'not paid';
+            $order->status = 'pending';
             $order->user_id = $user->id;
             $order->first_name = $request->first_name;
             $order->last_name = $request->last_name;
@@ -356,6 +357,7 @@ class CartController extends Controller
         }
 
     }
+    // ini adalah akhir
 
     public function thankyou($id) {
         return view('front.thanks',[

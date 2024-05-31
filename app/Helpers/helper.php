@@ -1,5 +1,6 @@
 <?php
 use App\Models\Category;
+use App\Models\ProductImage;
 
 function getCategories(){
     return Category::orderBy('name','ASC')
@@ -9,5 +10,9 @@ function getCategories(){
     ->where('showHome','Yes')
     ->get();
     
+}
+
+function getProductImage($productId){
+    return ProductImage::where('product_id',$productId)->first();
 }
 ?>
