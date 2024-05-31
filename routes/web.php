@@ -38,6 +38,9 @@ use Illuminate\Support\Facades\File;
 //     return view('welcome');
 // });
 
+// Route::get('/test', function () {
+//     orderEmail(28);
+// });
 
 //produk
 Route::get('/',[FrontController::class,'index'])->name('front.home');
