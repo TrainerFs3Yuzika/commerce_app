@@ -53,10 +53,10 @@
                         </div>
 
                         @if ($product->compare_price > 0)
-                        <h2 class="price text-secondary"><del>Rp{{ $product->compare_price }}</del></h2>
+                        <h2 class="price text-secondary"><del>Rp. {{ $product->compare_price }}</del></h2>
                         @endif
 
-                        <h2 class="price ">Rp{{ $product->price }}</h2>
+                        <h2 class="price ">Rp. {{ $product->price }}</h2>
                             
                         {!! $product->short_description !!}
 
@@ -96,53 +96,49 @@
         </div>
     </section>
     
-    @if(!empty($relateProducts))
+    @if(!empty($relatedProducts))
     <section class="pt-5 section-8">
         <div class="container">
             <div class="section-title">
                 <h2>Related Products</h2>
             </div> 
             <div class="col-md-12">
-                <div id="related-products" class="carousel">
-                    
-                    @foreach( $relateProducts as $relateProducts)
+                <div id="related-products" class="carousel">                    
+                    @foreach ($relatedProducts as $relProduct)
                     @php 
                         $productImage = $relProduct->product_images->first();
-                    @endphp
+                    @endphp                   
                     <div class="card product-card">
                         <div class="product-image position-relative">
-
-                        
                             <a href="" class="product-img">
-                                <!-- <img class="card-img-top" src="images/product-1.jpg" alt=""></a> -->
                                 @if (!empty($productImage->image))
                                     <img class="card-img-top" src="{{ asset('uploads/product/small/'.
                                     $productImage->image) }}" />
 									@else
                                     <img src="{{ asset('admin-assets/img/default-150x150.png') }}" /> 
                                     @endif
-                            </a>
-
+                            </a>                            
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
                             <div class="product-action">
-                                <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart ({{ $product->id }});">
+                                <!-- <a class="btn btn-dark" href="#">   -->
+                            <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart ({{ $product->id }});"> 
+
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
                         </div>                        
                         <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="">{{ $relProduct->title}}</a>
+                            <a class="h6 link" href="">{{ $relProduct->title }}</a>
                             <div class="price mt-2">
-                                <span class="h5"><strong>Rp{{ $relProduct->price}}</strong></span>
+                                <span class="h5"><strong>Rp. {{ $relProduct->price}}</strong></span>
                                 @if ($relProduct->compare_price > 0)
-                                <span class="h6 text-underline"><del>Rp{{$relProduct->compare_price}}</del></span>
+                                <span class="h6 text-underline"><del>Rp. {{ $relProduct->compare_price }}</del></span>
                                 @endif
+                                
                             </div>
                         </div>                        
-                    </div> 
-                    @endforeach
-                    
+                    </div>
+                    @endforeach              
                 </div>
             </div>
         </div>
