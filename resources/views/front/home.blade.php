@@ -1,70 +1,65 @@
 @extends('front.layouts.app')
 
 @section('content')
+
 <section class="section-1">
-        <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <!-- <img src="images/carousel-1.jpg" class="d-block w-100" alt=""> -->
-
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-1-m.jpg')}}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-1-m.jpg')}}" />
-                        <img src="{{ asset('front-assets/images/carousel-1.jpg')}}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Kids Fashion</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg')}}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg')}}" />
-                        <img src="{{ asset('front-assets/images/carousel-2.jpg')}}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <!-- <img src="images/carousel-3.jpg" class="d-block w-100" alt=""> -->
-
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg')}}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg')}}" />
-                        <img src="{{ asset('front-assets/images/carousel-3.jpg')}}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                        </div>
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <picture>
+                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-1-m.jpg') }}" />
+                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-1.jpg') }}" />
+                    <img src="{{ asset('front-assets/images/carousel-1.jpg') }}" alt="Kids Fashion" class="d-block w-100 img-fluid" />
+                </picture>
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3">
+                        <h1 class="display-4 text-white mb-3">Fashion</h1>
+                        <p class="mx-md-5 px-5">  Tetap stylish dengan koleksi fashion terkini kami. Dari kasual chic hingga elegan, temukan gaya yang sempurna untuk setiap momen. 
+                            Pilih dari pakaian, aksesori, dan sepatu yang akan membuat Anda tampil memukau.</p>
+                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            <div class="carousel-item">
+                <picture>
+                    <source media="(max-width: 799px)" srcset="{{ asset('https://i.pinimg.com/736x/c3/69/ad/c369adaaec225ae57c1084223943c6c4.jpg') }}" />
+                    <source media="(min-width: 800px)" srcset="{{ asset('https://i.pinimg.com/736x/c3/69/ad/c369adaaec225ae57c1084223943c6c4.jpg') }}" />
+                    <img src="{{ asset('https://i.pinimg.com/736x/c3/69/ad/c369adaaec225ae57c1084223943c6c4.jpg') }}" alt="Womens Fashion" class="d-block w-100 img-fluid" />
+                </picture>
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3">
+                        <h1 class="display-4 text-white mb-3">Elekronik</h1>
+                        <p class="mx-md-5 px-5">Temukan teknologi terkini dengan koleksi elektronik kami! Dari gadget canggih hingga perangkat rumah pintar, penuhi kebutuhan teknologimu di sini.</p>
+                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <picture>
+                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg') }}" />
+                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3.jpg') }}" />
+                    <img src="{{ asset('front-assets/images/carousel-3.jpg') }}" alt="Branded Clothes" class="d-block w-100 img-fluid" />
+                </picture>
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3">
+                        <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes</h1>
+                        <p class="mx-md-5 px-5">Nikmati diskon 70% untuk pakaian bermerk secara online! Temukan gaya terbaru dan kualitas premium. Klik 'Shop Now' untuk penawaran terbaik.</p>
+                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
     <section class="section-2">
         <div class="container">
             <div class="row">
@@ -161,9 +156,9 @@
                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                             <div class="price mt-2">
 
-                                <span class="h5"><strong>Rp{{ $product->price }}</strong></span>
+                                <span class="h5"><strong>${{ $product->price }}</strong></span>
                                 @if($product->compare_price > 0)
-                                <span class="h6 text-underline"><del>Rp{{ $product->compare_price }}</del></span>
+                                <span class="h6 text-underline"><del>${{ $product->compare_price }}</del></span>
                                 @endif
                             </div>
                         </div>                        
@@ -212,9 +207,9 @@
                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                             <div class="price mt-2">
 
-                                <span class="h5"><strong>Rp{{ $product->price }}</strong></span>
+                                <span class="h5"><strong>${{ $product->price }}</strong></span>
                                 @if($product->compare_price > 0)
-                                <span class="h6 text-underline"><del>Rp{{ $product->compare_price }}</del></span>
+                                <span class="h6 text-underline"><del>Rp. {{ $product->compare_price }}</del></span>
                                 @endif
                             </div>
                         </div>                        
