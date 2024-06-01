@@ -131,16 +131,18 @@
                                
                                 <div class="card">
                                     <div class="card-body">
-                                        <h2 class="h4 mb-3">Send Inovice Email</h2>
-                                        <div class="mb-3">
-                                            <select name="status" id="status" class="form-control">
-                                                <option value="">Customer</option>                                                
-                                                <option value="">Admin</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary">Send</button>
-                                        </div>
+                                        <form action="" method="post" name="sendInvoiceEmail" id="sendInvoiceEmail">
+                                            <h2 class="h4 mb-3">Send Inovice Email</h2>
+                                            <div class="mb-3">
+                                                <select name="userType" id="userType" class="form-control">
+                                                    <option value="customer">Customer</option>                                                
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary">Send</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -161,18 +163,54 @@
     });
 
     $("#changeOrderStatusForm").submit(function(event){
-        event.preventDefault();
+    event.preventDefault();
 
-        $.ajax({
-            url: '{{ route('orders.changeOrderStatus', $order->id) }}',
-            type: 'post',
-            data: $(this).serializeArray(),
-            dataType: 'json',
-            success: function(response){
-                window.location.href='{{ route("orders.detail",$order->id) }}';
-            }
-        });
+    Swal.fire({
+        title: 'Anda yakin akan mengubah order status?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, saya yakin!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '{{ route('orders.changeOrderStatus', $order->id) }}',
+                type: 'post',
+                data: $(this).serializeArray(),
+                dataType: 'json',
+                success: function(response){
+                    window.location.href='{{ route("orders.detail",$order->id) }}';
+                }
+            });
+        }
     });
+});
 
+$("#sendInvoiceEmail").submit(function(event){
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'Anda yakin akan mengirim email?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, saya yakin!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '{{ route("orders.sendInvoiceEmail", $order->id) }}',
+                type: 'post',
+                data: $(this).serializeArray(),
+                dataType: 'json',
+                success: function(response){
+                    window.location.href='{{ route("orders.detail",$order->id) }}';
+                }
+            });
+        }
+    });
+});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

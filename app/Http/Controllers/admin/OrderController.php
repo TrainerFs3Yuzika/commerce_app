@@ -59,4 +59,17 @@ class OrderController extends Controller
         'message' => $message
        ]);
     }
+
+    public function sendInvoiceEmail(Request $request, $orderId){
+        orderEmail($orderId, $request->userType);
+
+        $message = 'Email order berhasil dikirim';
+
+       session()->flash('success', $message);
+
+       return response()->json([
+        'status' => true,
+        'message' => $message
+       ]);
+    }
 }
