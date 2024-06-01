@@ -144,10 +144,12 @@
                                     <img src="{{ asset('admin-assets/img/default-150x150.png') }}" /> 
                                     @endif
                             </a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
+                            <a onclick="addToWishList({{ $product->id }})" class="whishlist" href="javascript:void(0);">
+                                <i class="far fa-heart"></i>
+                            </a>
+                           
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
+                                <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
@@ -178,7 +180,7 @@
                 <h2>Latest Produsts</h2>
             </div>    
             <div class="row pb-3">
-            @if ($latestProducts->isNotEmpty())
+             @if ($latestProducts->isNotEmpty())
                     @foreach ($latestProducts as $product)
                     @php 
                         $productImage = $product->product_images->first();
@@ -195,7 +197,9 @@
                                     <img src="{{ asset('admin-assets/img/default-150x150.png') }}" /> 
                                     @endif
                             </a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
+                            <a onclick="addToWishList({{ $product->id }})" class="whishlist" href="javascript:void(0);">
+                                <i class="far fa-heart"></i>
+                            </a>                           
 
                             <div class="product-action">
                                 <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart ({{ $product->id }});">
@@ -207,7 +211,7 @@
                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                             <div class="price mt-2">
 
-                                <span class="h5"><strong>${{ $product->price }}</strong></span>
+                                <span class="h5"><strong>Rp. {{ $product->price }}</strong></span>
                                 @if($product->compare_price > 0)
                                 <span class="h6 text-underline"><del>Rp. {{ $product->compare_price }}</del></span>
                                 @endif
@@ -222,3 +226,5 @@
         </div>
     </section>
     @endsection
+
+    
