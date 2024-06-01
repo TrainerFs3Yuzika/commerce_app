@@ -66,7 +66,7 @@
                             @if ($brands->isNotEmpty())
                             @foreach ($brands as $brand)
                             <div class="form-check mb-2">
-                                <input {{ (in_array($brand->id, $brandsArray)) ? 'checked': ''}} class="form-check-input brand-label" type="checkbox" name="brand" value="  {{ $brand->id}}" id="brand-{{ $brand->id }}">
+                                <input {{ in_array($brand->id, $brandsArray) ? 'checked': ''}} class="form-check-input brand-label" type="checkbox" name="brand" value="  {{ $brand->id}}" id="brand-{{ $brand->id }}">
                                 <label class="form-check-label" for="brand-{{ $brand->id }}">
                                     {{ $brand->name}}
                                 </label>
@@ -95,9 +95,9 @@
                             <div class="d-flex align-items-center justify-content-end mb-4">
                                 <div class="ml-2">
                                     <select name="sort" id="sort" class="form-control">
-                                        <option value="latest" {{ ($sort == 'latest') ? 'selected' : ''}}>Latest</option>
-                                        <option value="price_desc" {{ ($sort == 'price_desc') ? 'selected' : ''}}>price High</option>
-                                        <option value="price_asc"  {{ ($sort == 'price_asc') ? 'selected' : ''}}>price Low</option>
+                                        <option value="latest" {{ ($sort == 'latest') ? 'selected' : ''}}>Terbaru</option>
+                                        <option value="price_desc" {{ ($sort == 'price_desc') ? 'selected' : ''}}>Harga Tertinggi</option>
+                                        <option value="price_asc"  {{ ($sort == 'price_asc') ? 'selected' : ''}}>Harga Terendah</option>
                                     </select>
                                 </div>
                             </div>
@@ -183,47 +183,51 @@
                 to: {{ ($priceMax)}},
                 skin: "round",
                 max_postfix: "+",
-                prefix: "$",
+                prefix: "Rp. ",
                 onFinish: function(){
                     apply_filters()
                 }
             });
 
-            // Savingit's instance to var 
-            var slider = $(".js-range-slider").data("ionRangeSlider")
-            
-             $(".brand-label").change(function(){
-                apply_filters();
-            
-             });
 
-             $("#sort").change(function(){
-                apply_filters();
-             });
+        // Saving it's instance to var
+        var slider = $(".js-range-slider").data("ionRangeSlider");
 
-        function apply_filters(){
+        $(".brand-label").change(function() {
+            apply_filters();
+        });
+
+        $("#sort").change(function() {
+            apply_filters();
+        });
+
+        function apply_filters() {
             var brands = [];
 
-            $(".brand-label").each(function(){
-                if ($(this).is(":checked") == true){
+            $(".brand-label").each(function() {
+                if ($(this).is(":checked") == true) {
                     brands.push($(this).val());
                 }
             });
-
 
             var url = '{{ url()->current() }}?';
 
             //Brand filter
             if(brands.length > 0){
-                url += '&brands='+brands.toString();
+                url += '&brand='+brands.toString();
             }
 
             //Price Range Filter
             url += '&price_min='+slider.result.from+'&price_max='+slider.result.to;
 
-           
-
             //Sortings
+
+            var keyword = $("#search").val();
+
+            if (keyword.length > 0) {
+                url += '&search='+keyword;
+            }
+
             url += '&sort='+$("#sort").val()
 
 

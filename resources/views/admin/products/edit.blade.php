@@ -87,7 +87,7 @@
                                     <input type ="hidden" name="image_array[]" value="{{ $image->id }}">
                                     <img src="{{ asset('uploads/product/small/'.$image->image)}}" class="card-img-top" alt="">
                                     <div class="card-body">
-                                        <a href="javascript:void(0)" onclick="deleteImage({{ $image->id }})" class="btn btn-danger">Delete</a>
+                                        <a href="javascript:void(0)" onclick="deleteImage({{ $image->id }})" class="btn btn-danger">Hapus</a>
 
                                     </div>
                                 </div>
@@ -381,7 +381,7 @@
                             <input type="hidden" name="image_array[]" value="${response.image_id}">
                             <img src="${response.imagePath}" class="card-img-top" alt="">
                             <div class="card-body">
-                                <a href="javascript::void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Delete</a>
+                                <a href="javascript::void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
                             </div>
                         </div>
                     </div>`;
