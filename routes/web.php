@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
@@ -155,6 +156,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/orders/{id}', [OrderController::class, 'detail'])->name('orders.detail');
         Route::post('/order/change-status/{id}', [OrderController::class, 'changeOrderStatus'])->name('orders.changeOrderStatus');
         Route::post('/order/send-email/{id}', [OrderController::class, 'sendInvoiceEmail'])->name('orders.sendInvoiceEmail');
+
+        // User Routes
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        // Route::get('/brands/{brand}/edit', [BrandController::class, 'edit'])->name('brands.edit');
+        // Route::put('/brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
+        // Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])->name('brands.delete');
 
         // temp-images.create
         Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
