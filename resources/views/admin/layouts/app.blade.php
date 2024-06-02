@@ -100,6 +100,9 @@
     <script src="{{ asset('admin-assets/js/datetimepicker.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('admin-assets/js/demo.js') }}"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script type="text/javascript">
         $.ajaxSetup({
