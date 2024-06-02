@@ -82,7 +82,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('categories.edit', $user->id) }}">
+                                            <a href="{{ route('users.edit', $user->id) }}">
                                                 <svg class="filament-link-icon w-4 h-4 mr-1"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                     fill="currentColor" aria-hidden="true">
@@ -91,7 +91,7 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href="#" onclick="deleteCategory({{ $user->id }})"
+                                            <a href="#" onclick="deleteUser({{ $user->id }})"
                                                 class="text-danger w-4 h-4 mr-1">
                                                 <svg wire:loading.remove.delay="" wire:target=""
                                                     class="filament-link-icon w-4 h-4 mr-1"
@@ -125,13 +125,21 @@
 @endsection
 
 @section('customJs')
-    <script>
-        function deleteCategory(id) {
+<script>
+    function deleteUser(id) {
+        var url = '{{ route('users.delete', 'ID') }}';
+        var newUrl = url.replace("ID", id);
 
-            var url = '{{ route('categories.delete', 'ID') }}';
-            var newUrl = url.replace("ID", id)
-
-            if (confirm("Apakah kamu ingin menghapus data ini?")) {
+        Swal.fire({
+            title: 'Apakah kamu ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
                     url: newUrl,
                     type: 'delete',
@@ -141,14 +149,14 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-
                         if (response["status"]) {
-
-                            window.location.href = "{{ route('categories.index') }}";
+                            window.location.href = "{{ route('users.index') }}";
                         }
                     }
                 });
             }
-        }
-    </script>
+        });
+    }
+</script>
+
 @endsection

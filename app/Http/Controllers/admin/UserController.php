@@ -44,6 +44,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone = $request->phone;
+            $user->status = $request->status;
             $user->password = Hash::make($request->password);
             $user->save();
 
@@ -63,5 +64,93 @@ class UserController extends Controller
 
             ]);
         }
+    }
+
+    public function edit(Request $request, $id) {
+        $user = User::find($id);
+
+        if($user == null){
+            $message = 'Users tidak ditemukan!';
+            session()->flash('error', $message);
+            return redirect()->route('users.index');
+        }
+
+        return view('admin.users.edit', [
+           'user' => $user
+        ]);
+    }
+
+    public function update(Request $request, $id) {
+        $user = User::find($id);
+
+        if($user == null){
+            $message = 'Users tidak ditemukan!';
+            session()->flash('error', $message);
+
+            return response()->json([
+                'status' => true,
+                'message' => $message
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id.',id',
+            'phone' => 'required'
+        ]);
+
+        if ($validator->passes()) {
+            
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->status = $request->status;
+
+            if ($request->password != '') {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            $message = 'Edit user berhasil!';
+
+            session()->flash('success', $message);
+
+            return response()->json([
+                'status' => true,
+                'message' => $message
+            ]);
+        
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+
+            ]);
+        }
+    }
+
+    public function destroy($id) {
+        $user = User::find($id);
+
+        if($user == null){
+            $message = 'Users tidak ditemukan!';
+            session()->flash('error', $message);
+
+            return response()->json([
+                'status' => true,
+                'message' => $message
+            ]);
+        }
+
+        $user->delete();
+
+        $message = 'Users berhasil dihapus!';
+        session()->flash('success', $message);
+
+        return response()->json([
+            'status' => true,
+            'message' => $message
+        ]);
     }
 }
