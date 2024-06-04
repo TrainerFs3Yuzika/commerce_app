@@ -30,7 +30,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
                                 <input value="{{ Request::get('keyword') }}" type="text" name="keyword"
-                                    class="form-control float-right" placeholder="Cari Kategori">
+                                    class="form-control float-right" placeholder="Cari Produk">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -74,7 +74,7 @@
 
                                         </td>
                                         <td><a href="#">{{ $product->title }}</a></td>
-                                        <td>{{ 'Rp' . number_format($product->price, 2) }}</td>
+                                        <td>@rupiah($product->price)</td>
                                         <td>{{ $product->qty }} Stok </td>
                                         <td>{{ $product->sku }}</td>
                                         <td>
@@ -131,44 +131,57 @@
                 <div class="card-footer clearfix">
                     {{ $products->links() }}
                     <!-- <ul class="pagination pagination m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">«</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">»</a></li>
-                    </ul>  -->
+                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                </ul>  -->
                 </div>
             </div>
         </div>
         <!-- /.card -->
     </section>
-				<!-- /.content -->
+    <!-- /.content -->
 
 
 @endsection
 
 @section('customJs')
-<script>
+    <script>
         function deleteProduct(id) {
-			
-            var url = '{{ route("products.delete", "ID") }}';
-            var newUrl = url.replace("ID", id)
+            var url = '{{ route('products.delete', 'ID') }}';
+            var newUrl = url.replace("ID", id);
 
-            if (confirm("Apakah kamu ingin menghapus data ini?")) {
-                $.ajax({
-                    url: newUrl,
-                    type: 'delete',
-                    data: {},
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response["status"] == true) {
-                            window.location.href = "{{ route('products.index') }}";
-                        } else {
-							window.location.href = "{{ route('products.index') }}";
-						}
-                    }
-                });
-            }
+            Swal.fire({
+                title: 'Apakah kamu ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            if (response["status"] == true) {
+
+                                window.location.href = "{{ route('products.index') }}";
+                            } else {
+                                window.location.href = "{{ route('products.index') }}";
+                            }
+                        }
+                    });
+                }
+            });
         }
-</script>
+    </script>
 @endsection

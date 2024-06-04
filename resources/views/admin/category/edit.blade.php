@@ -25,9 +25,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
+                                    <label for="name">Nama</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Name" value="{{ $category->name }}">
+                                        placeholder="Nama" value="{{ $category->name }}" autofocus>
                                     <p></p>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <input type="hidden" name="image_id" id="image_id" value="">
-                                    <label for="image">Image</label>
+                                    <label for="image">Foto</label>
                                     <div id="image" class="dropzone dz-clickable">
                                         <div class="dz-message needsclick">
                                             <br>Letakkan file di sini atau klik untuk mengunggah.<br><br>
@@ -61,18 +61,21 @@
                                 <div class="mb-3">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option {{ $category->status == 1 ? 'selected' : '' }} value="1">Active</option>
-                                        <option {{ $category->status == 0 ? 'selected' : '' }} value="0">Inactive</option>
+                                        <option {{ $category->status == 1 ? 'selected' : '' }} value="1">Aktif
+                                        </option>
+                                        <option {{ $category->status == 0 ? 'selected' : '' }} value="0">Tidak Aktif
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="status">Tampilkan di Beranda</label>
+                                    <label for="status">Tampilkan di beranda</label>
                                     <select name="showHome" id="showHome" class="form-control">
-                                        <option {{ ($category->showHome == 'Yes') ? 'selected' : '' }} value="Yes">Ya</option>
-                                        <option {{ ($category->showHome == 'No') ? 'selected' : '' }} value="No">No</option>
-                                        
+                                        ' <option {{ $category->showHome == 'Yes' ? 'selected' : '' }} value="Yes">Ya
+                                        </option>
+                                        <option {{ $category->showHome == 'No' ? 'selected' : '' }} value="No">Tidak
+                                        </option>
                                     </select>
                                 </div>
                             </div>

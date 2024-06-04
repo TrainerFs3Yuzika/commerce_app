@@ -25,9 +25,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
+                                    <label for="name">Nama</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Name" value="{{ $brand->name }}">
+                                        placeholder="Nama" value="{{ $brand->name }}" autofocus>
                                     <p></p>
                                 </div>
                             </div>
@@ -43,9 +43,9 @@
                                 <div class="mb-3">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option {{ $brand->status == 1 ? 'selected' : '' }} value="1">Active
+                                        <option {{ $brand->status == 1 ? 'selected' : '' }} value="1">Aktif
                                         </option>
-                                        <option {{ $brand->status == 0 ? 'selected' : '' }} value="0">Inactive
+                                        <option {{ $brand->status == 0 ? 'selected' : '' }} value="0">Tidak Aktif
                                         </option>
                                     </select>
                                     <p></p>

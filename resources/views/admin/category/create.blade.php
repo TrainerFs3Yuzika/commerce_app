@@ -27,8 +27,7 @@
                                 <div class="mb-3">
                                     <label for="name">Nama</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Name" autofocus
-                                        >
+                                        placeholder="Nama" autofocus>
                                     <p></p>
                                 </div>
                             </div>
@@ -56,14 +55,14 @@
                                 <div class="mb-3">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Tidak Aktif</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="status">Tampilkan di Beranda</label>
+                                    <label for="status">Tampilkan di beranda</label>
                                     <select name="showHome" id="showHome" class="form-control">
                                         <option value="Yes">Ya</option>
                                         <option value="No">Tidak</option>

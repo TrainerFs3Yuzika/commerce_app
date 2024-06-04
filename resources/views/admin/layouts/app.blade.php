@@ -16,8 +16,13 @@
     <link rel="stylesheet" href="{{ asset('admin-assets/plugins/dropzone/min/dropzone.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('admin-assets/plugins/summernote/summernote.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/plugins/select2/css/select2.min.css') }}">
+
+    {{-- SweetAlert --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <link rel="stylesheet" href="{{ asset('admin-assets/css/datetimepicker.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('admin-assets/css/custom.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -79,9 +84,9 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-
-            <strong>Copyright &copy; 2014-2022 AmazingShop All rights reserved.
+            <strong>&copy; {{ date('Y') }} KuyBelanja</strong>
         </footer>
+
 
     </div>
     <!-- ./wrapper -->
@@ -96,7 +101,7 @@
 
     <script src="{{ asset('admin-assets/plugins/summernote/summernote.min.js') }}"></script>
     <script src="{{ asset('admin-assets/plugins/select2/js/select2.min.js') }}"></script>
-    
+
     <script src="{{ asset('admin-assets/js/datetimepicker.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('admin-assets/js/demo.js') }}"></script>

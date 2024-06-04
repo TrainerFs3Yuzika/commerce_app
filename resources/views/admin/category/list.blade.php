@@ -125,28 +125,33 @@
 @section('customJs')
     <script>
         function deleteCategory(id) {
-
             var url = '{{ route('categories.delete', 'ID') }}';
-            var newUrl = url.replace("ID", id)
+            var newUrl = url.replace("ID", id);
 
-            if (confirm("Apakah kamu ingin menghapus data ini?")) {
-                $.ajax({
-                    url: newUrl,
-                    type: 'delete',
-                    data: {},
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-
-                        if (response["status"]) {
-
+            Swal.fire({
+                title: 'Apakah kamu ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
                             window.location.href = "{{ route('categories.index') }}";
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         }
     </script>
 @endsection

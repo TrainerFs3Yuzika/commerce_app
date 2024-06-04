@@ -26,58 +26,59 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="code">Kode</label>
-                                    <input value="{{ $coupon->code }}" type="text" name="code" id="code" class="form-control"
-                                        placeholder="Kode Kupon" autofocus
-                                        >
+                                    <input value="{{ $coupon->code }}" type="text" name="code" id="code"
+                                        class="form-control" placeholder="Kode Kupon" autofocus>
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Nama</label>
-                                    <input value="{{ $coupon->name }}" type="text" name="name" id="name" class="form-control"
-                                        placeholder="Nama Kupon">
-                                    <p></p>
-                                </div>
-                            </div>                  
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="max_uses">Max Uses</label>
-                                    <input value="{{ $coupon->max_uses }}" type="number" name="max_uses" id="max_uses" class="form-control"
-                                        placeholder="Max Uses">
+                                    <input value="{{ $coupon->name }}" type="text" name="name" id="name"
+                                        class="form-control" placeholder="Nama Kupon">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="max_uses_user">Max Uses User</label>
-                                    <input value="{{ $coupon->max_uses_user }}" type="text" name="max_uses_user" id="max_uses_user" class="form-control"
-                                        placeholder="Max Uses User">
+                                    <label for="max_uses">Maksimal Penggunaan</label>
+                                    <input value="{{ $coupon->max_uses }}" type="number" name="max_uses" id="max_uses"
+                                        class="form-control" placeholder="Maksimal Penggunaan">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="type">Tipe</label>
+                                    <label for="max_uses_user">Maksimal Penggunaan User</label>
+                                    <input value="{{ $coupon->max_uses_user }}" type="text" name="max_uses_user"
+                                        id="max_uses_user" class="form-control" placeholder="Maksimal Penggunaan User">
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="type">Jenis Kupon</label>
                                     <select name="type" id="type" class="form-control">
-                                        <option {{ ($coupon->type == 'percent') ? 'selected' : ''}} value="percent">Percent</option>
-                                        <option {{ ($coupon->type == 'fixed') ? 'selected' : ''}} value="fixed">Fixed</option>
+                                        <option {{ $coupon->type == 'percent' ? 'selected' : '' }} value="percent">Persen
+                                        </option>
+                                        <option {{ $coupon->type == 'fixed' ? 'selected' : '' }} value="fixed">Tetap
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="discount_amount">Jumlah Diskon</label>
-                                    <input value="{{ $coupon->discount_amount }}" type="text" name="discount_amount" id="discount_amount" class="form-control"
-                                        placeholder="Jumlah Diskon">
+                                    <input value="{{ $coupon->discount_amount }}" type="text" name="discount_amount"
+                                        id="discount_amount" class="form-control" placeholder="Jumlah Diskon">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="min_amount">Jumlah Minimal Diskon</label>
-                                    <input value="{{ $coupon->min_amount }}" type="text" name="min_amount" id="min_amount" class="form-control"
-                                        placeholder="Jumlah Diskon Minimal">
+                                    <input value="{{ $coupon->min_amount }}" type="text" name="min_amount"
+                                        id="min_amount" class="form-control" placeholder="Jumlah Diskon Minimal">
                                     <p></p>
                                 </div>
                             </div>
@@ -85,23 +86,25 @@
                                 <div class="mb-3">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option {{ ($coupon->type == 1) ? 'selected' : ''}} value="1">Active</option>
-                                        <option {{ ($coupon->type == 0) ? 'selected' : ''}} value="0">Inactive</option>
+                                        <option {{ $coupon->type == 1 ? 'selected' : '' }} value="1">Aktif</option>
+                                        <option {{ $coupon->type == 0 ? 'selected' : '' }} value="0">Tidak Aktif
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="starts_at">Tanggal Mulai</label>
-                                    <input value="{{ $coupon->starts_at }}" autocomplete="off" type="text" name="starts_at" id="starts_at" class="form-control"
-                                        placeholder="Tanggal Mulai">
+                                    <input value="{{ $coupon->starts_at }}" autocomplete="off" type="text"
+                                        name="starts_at" id="starts_at" class="form-control" placeholder="Tanggal Mulai">
                                     <p></p>
                                 </div>
-                            </div>             
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="expires_at">Tanggal Selesai</label>
-                                    <input value="{{ $coupon->expires_at }}" autocomplete="off" type="text" name="expires_at" id="expires_at" class="form-control"
+                                    <input value="{{ $coupon->expires_at }}" autocomplete="off" type="text"
+                                        name="expires_at" id="expires_at" class="form-control"
                                         placeholder="Tanggal Kadaluarsa">
                                     <p></p>
                                 </div>
@@ -109,10 +112,11 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="description">Deskripsi</label>
-                                    <textarea class="form-control" name="description" id="description" cols="30" rows="10">{{ $coupon->description }}</textarea>
+                                    <textarea class="form-control" name="description" id="description" cols="30" rows="10"
+                                        placeholder="Deskripsi">{{ $coupon->description }}</textarea>
                                     <p></p>
                                 </div>
-                            </div>       
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,19 +134,20 @@
 @section('customJs')
     <script>
         var today = new Date();
-        var minDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        var minDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate())
+            .slice(-2);
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#starts_at').datetimepicker({
                 // options here
-                format:'Y-m-d H:i:s',
+                format: 'Y-m-d H:i:s',
                 minDate: minDate,
             });
         });
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#expires_at').datetimepicker({
                 // options here
-                format:'Y-m-d H:i:s',
+                format: 'Y-m-d H:i:s',
                 minDate: minDate,
             });
         });
@@ -172,8 +177,8 @@
                             .html("");
 
                         $("#starts_at").removeClass("is-invalid")
-                        .siblings('p').removeClass('invalid-feedback')
-                        .html("");
+                            .siblings('p').removeClass('invalid-feedback')
+                            .html("");
 
                         $("#expires_at").removeClass("is-invalid")
                             .siblings('p').removeClass('invalid-feedback')
@@ -223,7 +228,5 @@
                 }
             })
         });
-
-      
     </script>
 @endsection

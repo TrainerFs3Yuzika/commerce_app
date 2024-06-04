@@ -27,8 +27,7 @@
                                 <div class="mb-3">
                                     <label for="code">Kode</label>
                                     <input type="text" name="code" id="code" class="form-control"
-                                        placeholder="Kode Kupon" autofocus
-                                        >
+                                        placeholder="Kode Kupon" autofocus>
                                     <p></p>
                                 </div>
                             </div>
@@ -39,29 +38,29 @@
                                         placeholder="Nama Kupon">
                                     <p></p>
                                 </div>
-                            </div>                  
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="max_uses">Max Uses</label>
+                                    <label for="max_uses">Maksimal Penggunaan</label>
                                     <input type="number" name="max_uses" id="max_uses" class="form-control"
-                                        placeholder="Max Uses">
+                                        placeholder="Maksimal Penggunaan">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="max_uses_user">Max Uses User</label>
+                                    <label for="max_uses_user">Maksimal Penggunaan Pengguna</label>
                                     <input type="text" name="max_uses_user" id="max_uses_user" class="form-control"
-                                        placeholder="Max Uses User">
+                                        placeholder="Maksimal Penggunaan Pengguna">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="type">Tipe</label>
+                                    <label for="type">Jenis Kupon</label>
                                     <select name="type" id="type" class="form-control">
-                                        <option value="percent">Percent</option>
-                                        <option value="fixed">Fixed</option>
+                                        <option value="percent">Persen</option>
+                                        <option value="fixed">Tetap</option>
                                     </select>
                                 </div>
                             </div>
@@ -85,34 +84,35 @@
                                 <div class="mb-3">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Tidak Aktif</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="starts_at">Tanggal Mulai</label>
-                                    <input autocomplete="off" type="text" name="starts_at" id="starts_at" class="form-control"
-                                        placeholder="Tanggal Mulai">
+                                    <input autocomplete="off" type="text" name="starts_at" id="starts_at"
+                                        class="form-control" placeholder="Tanggal Mulai">
                                     <p></p>
                                 </div>
-                            </div>             
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="expires_at">Tanggal Selesai</label>
-                                    <input autocomplete="off" type="text" name="expires_at" id="expires_at" class="form-control"
-                                        placeholder="Tanggal Kadaluarsa">
+                                    <input autocomplete="off" type="text" name="expires_at" id="expires_at"
+                                        class="form-control" placeholder="Tanggal Kadaluarsa">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="description">Deskripsi</label>
-                                    <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
+                                    <textarea class="form-control" name="description" id="description" cols="30" rows="10"
+                                        placeholder="Deskripsi"></textarea>
                                     <p></p>
                                 </div>
-                            </div>       
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,19 +130,20 @@
 @section('customJs')
     <script>
         var today = new Date();
-        var minDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        var minDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate())
+            .slice(-2);
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#starts_at').datetimepicker({
                 // options here
-                format:'Y-m-d H:i:s',
+                format: 'Y-m-d H:i:s',
                 minDate: minDate,
             });
         });
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#expires_at').datetimepicker({
                 // options here
-                format:'Y-m-d H:i:s',
+                format: 'Y-m-d H:i:s',
                 minDate: minDate,
             });
         });
@@ -172,8 +173,8 @@
                             .html("");
 
                         $("#starts_at").removeClass("is-invalid")
-                        .siblings('p').removeClass('invalid-feedback')
-                        .html("");
+                            .siblings('p').removeClass('invalid-feedback')
+                            .html("");
 
                         $("#expires_at").removeClass("is-invalid")
                             .siblings('p').removeClass('invalid-feedback')
@@ -223,7 +224,5 @@
                 }
             })
         });
-
-      
     </script>
 @endsection

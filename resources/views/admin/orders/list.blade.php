@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Orders</h1>
+                    <h1>Pesanan</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                 </div>
@@ -29,7 +29,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
                                 <input value="{{ Request::get('keyword') }}" type="text" name="keyword"
-                                    class="form-control float-right" placeholder="Cari Kategori">
+                                    class="form-control float-right" placeholder="Cari Pesanan">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -46,37 +46,43 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th width="60">Order#</th>
-                                <th>Customer</th>
+                                <th width="60">Order Id</th>
+                                <th>Pelanggan</th>
                                 <th>Email</th>
-                                <th>Telp.</th>
+                                <th>Telpon</th>
                                 <th>Status</th>
                                 <th>Total</th>
                                 <th>Tanggal Pembelian</th>
+                                <th>Detail Order</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if ($orders->isNotEmpty())
                                 @foreach ($orders as $order)
                                     <tr>
-                                        <td><a href="{{ route('orders.detail',[$order->id]) }}">{{ $order->id }}</a></td>
+                                        <td>{{ $order->id }}</td>
                                         <td>{{ $order->name }}</td>
                                         <td>{{ $order->email }}</td>
                                         <td>{{ $order->mobile }}</td>
                                         <td>
                                             @if ($order->status == 'pending')
-                                            <span class="badge bg-danger">Pending</span>
+                                                <span class="badge bg-danger">Tertunda</span>
                                             @elseif ($order->status == 'shipped')
-                                            <span class="badge bg-info">Shipped</span>
+                                                <span class="badge bg-info">Dikirim</span>
                                             @elseif ($order->status == 'delivered')
-                                            <span class="badge bg-success">Delivered</span>
+                                                <span class="badge bg-success">Terkirim</span>
                                             @else
-                                            <span class="badge bg-danger">Cancelled</span>
+                                                <span class="badge bg-danger">Dibatalkan</span>
                                             @endif
                                         </td>
-                                        <td>Rp. {{ number_format($order->grand_total, 2) }}</td>
+                                        <td>@rupiah($order->grand_total)</td>
                                         <td>
-                                            {{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y')}}
+                                            {{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('orders.detail', [$order->id]) }}">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

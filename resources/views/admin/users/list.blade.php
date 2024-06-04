@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
+                    <h1>Pengguna</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">Users Baru</a>
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">Pengguna Baru</a>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                                 <th width="60">ID</th>
                                 <th>Nama</th>
                                 <th>Email</th>
-                                <th>Telp. </th>
+                                <th>Telpon </th>
                                 <th width="100">Status</th>
                                 <th width="100">Aksi</th>
                             </tr>
@@ -60,7 +60,7 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->id }}</td>
-                                        <td>{{$user->name }}</td>
+                                        <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
                                         <td>
@@ -125,38 +125,37 @@
 @endsection
 
 @section('customJs')
-<script>
-    function deleteUser(id) {
-        var url = '{{ route('users.delete', 'ID') }}';
-        var newUrl = url.replace("ID", id);
+    <script>
+        function deleteUser(id) {
+            var url = '{{ route('users.delete', 'ID') }}';
+            var newUrl = url.replace("ID", id);
 
-        Swal.fire({
-            title: 'Apakah kamu ingin menghapus data ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: newUrl,
-                    type: 'delete',
-                    data: {},
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        if (response["status"]) {
-                            window.location.href = "{{ route('users.index') }}";
+            Swal.fire({
+                title: 'Apakah kamu ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            if (response["status"]) {
+                                window.location.href = "{{ route('users.index') }}";
+                            }
                         }
-                    }
-                });
-            }
-        });
-    }
-</script>
-
+                    });
+                }
+            });
+        }
+    </script>
 @endsection

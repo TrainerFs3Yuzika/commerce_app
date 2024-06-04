@@ -30,7 +30,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
                                 <input value="{{ Request::get('keyword') }}" type="text" name="keyword"
-                                    class="form-control float-right" placeholder="Cari Kategori">
+                                    class="form-control float-right" placeholder="Cari Merek">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -89,7 +89,7 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href="#" onclick="deleteCategory({{ $brand->id }})"
+                                            <a href="#" onclick="deleteBrand({{ $brand->id }})"
                                                 class="text-danger w-4 h-4 mr-1">
                                                 <svg wire:loading.remove.delay="" wire:target=""
                                                     class="filament-link-icon w-4 h-4 mr-1"
@@ -123,30 +123,35 @@
 @endsection
 
 @section('customJs')
-<script>
-        function deleteCategory(id) {
-
+    <script>
+        function deleteBrand(id) {
             var url = '{{ route('brands.delete', 'ID') }}';
-            var newUrl = url.replace("ID", id)
+            var newUrl = url.replace("ID", id);
 
-            if (confirm("Apakah kamu ingin menghapus data ini?")) {
-                $.ajax({
-                    url: newUrl,
-                    type: 'delete',
-                    data: {},
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-
-                        if (response["status"]) {
-
+            Swal.fire({
+                title: 'Apakah kamu ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
                             window.location.href = "{{ route('brands.index') }}";
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         }
     </script>
 @endsection

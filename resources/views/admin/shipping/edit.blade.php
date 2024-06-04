@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Shipping Management</h1>
+                    <h1>Manajemen Pengiriman</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('categories.index') }}" class="btn btn-primary">Kembali</a>
+                    <a href="{{ route('shipping.create') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>
@@ -25,36 +25,39 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="mb-3">       
+                                <div class="mb-3">
                                     <select name="country" id="country" class="form-control">
-                                        <option value="">Select a Country</option>
+                                        <option value="">Pilih Negara</option>
                                         @if ($countries->isNotEmpty())
-                                            @foreach($countries as $country)
-                                            <option {{ ($shippingCharge->country_id == $country->id) ? 'selected' : '' }} value="{{ $country->id}}">{{ $country->name}}</option>
+                                            @foreach ($countries as $country)
+                                                <option {{ $shippingCharge->country_id == $country->id ? 'selected' : '' }}
+                                                    value="{{ $country->id }}">{{ $country->name }}</option>
                                             @endforeach
-                                            <option {{ ($shippingCharge->country_id == $country->id) ? 'selected' : '' }} value="semua_negara">Semua Negara</option>
+                                            <option {{ $shippingCharge->country_id == $country->id ? 'selected' : '' }}
+                                                value="semua_negara">Semua Negara</option>
                                         @endif
                                     </select>
                                     <p></p>
                                 </div>
                             </div>
-                              
+
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <input value=" {{ $shippingCharge->amount }}" type="text" name="amount" id="amount" class="form-control" placeholder="Amount">
+                                    <input value=" {{ $shippingCharge->amount }}" type="text" name="amount"
+                                        id="amount" class="form-control" placeholder="Amount">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Ubah</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-               
-            
+
+
             </form>
         </div>
         <!-- /.card -->
@@ -70,7 +73,7 @@
             $("button[type=submit]").prop('disabled', true);
 
             $.ajax({
-                url: '{{ route("shipping.update", $shippingCharge->id) }}',
+                url: '{{ route('shipping.update', $shippingCharge->id) }}',
                 type: 'put',
                 data: element.serializeArray(),
                 dataType: 'json',
@@ -81,7 +84,7 @@
 
                         window.location.href = "{{ route('shipping.create') }}";
 
-                       
+
                     } else {
                         var errors = response['errors'];
                         if (errors['country']) {
@@ -109,7 +112,5 @@
                 }
             })
         });
-
-       
     </script>
 @endsection
