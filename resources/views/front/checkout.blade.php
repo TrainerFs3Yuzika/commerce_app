@@ -1,13 +1,13 @@
 @extends('front.layouts.app')
 
 @section('content')
-<section class="section-5 pt-3 pb-3 mb-3 bg-white">
+    <section class="section-5 pt-3 pb-3 mb-3 bg-white">
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{route("front.home")}}">Home</a></li>
-                    <li class="breadcrumb-item"><a class="white-text" href="{{route("front.shop")}}">Shop</a></li>
-                    <li class="breadcrumb-item"><a class="white-text" href="{{route("front.cart")}}">Cart</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.shop') }}">Shop</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.cart') }}">Cart</a></li>
                     <li class="breadcrumb-item">Checkout</li>
                 </ol>
             </div>
@@ -17,207 +17,219 @@
     <section class="section-9 pt-4">
         <div class="container">
             <form id="orderForm" name="orderForm" action="" method="post">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="sub-title">
-                        <h2>Shipping Address</h2>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="sub-title">
+                            <h2>Shipping Address</h2>
+                        </div>
+                        <div class="card shadow-lg border-0">
+                            <div class="card-body checkout-form">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <input type="text" name="first_name" id="first_name" class="form-control"
+                                                placeholder="First Name"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->first_name : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <input type="text" name="last_name" id="last_name" class="form-control"
+                                                placeholder="Last Name"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->last_name : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <input type="text" name="email" id="email" class="form-control"
+                                                placeholder="Email"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->email : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <select name="country" id="country" class="form-control">
+                                                <option value="">Select a Country</option>
+                                                @if ($countries->isNotEmpty())
+                                                    @foreach ($countries as $country)
+                                                        <option
+                                                            {{ !empty($customerAddress) && $customerAddress->country_id == $country->id ? 'selected' : '' }}
+                                                            value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <textarea name="address" id="address" cols="30" rows="3" placeholder="Address" class="form-control">{{ !empty($customerAddress) ? $customerAddress->address : '' }}</textarea>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <input type="text" name="apartment" id="apartment" class="form-control"
+                                                placeholder="Apartment, suite, unit, etc. (optional)"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->apartment : '' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <input type="text" name="city" id="city" class="form-control"
+                                                placeholder="City"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->city : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <input type="text" name="state" id="state" class="form-control"
+                                                placeholder="State"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->state : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <input type="text" name="zip" id="zip" class="form-control"
+                                                placeholder="Zip"
+                                                value="{{ !empty($customerAddress) ? $customerAddress->zip : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <input type="text" name="mobile" id="mobile" class="form-control"
+                                                placeholder="Mobile No."
+                                                value="{{ !empty($customerAddress) ? $customerAddress->mobile : '' }}">
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <textarea name="order_notes" id="order_notes" cols="30" rows="2" placeholder="Order Notes (optional)"
+                                                class="form-control"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card shadow-lg border-0">
-                        <div class="card-body checkout-form">
-                            <div class="row">
-                                
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <input type="text" name="first_name" id="first_name" 
-                                        class="form-control" placeholder="First Name" value="{{ (!empty($customerAddress) ? $customerAddress->first_name : '' ) }}">
-                                        <p></p>
-                                    </div>            
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <input type="text" name="last_name" id="last_name" 
-                                        class="form-control" placeholder="Last Name" value="{{ (!empty($customerAddress) ? $customerAddress->last_name : '' ) }}">
-                                        <p></p>
-                                    </div>            
-                                </div>
-                                
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <input type="text" name="email" id="email" 
-                                        class="form-control" placeholder="Email" value="{{ (!empty($customerAddress) ? $customerAddress->email : '' ) }}">
-                                        <p></p>
-                                    </div>            
-                                </div>
+                    <div class="col-md-4">
+                        <div class="sub-title">
+                            <h2>Order Summery</h3>
+                        </div>
+                        <div class="card cart-summery">
+                            <div class="card-body">
 
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <select name="country" id="country" class="form-control">
-                                            <option value="">Select a Country</option>
-                                            @if($countries->isNotEmpty())
-                                            @foreach($countries as $country)
-                                                <option {{ (!empty($customerAddress) && $customerAddress->country_id == $country->id) ? 'selected' : ''  }} value="{{ $country->id }}">{{ $country->name }}</option>
-                                            @endforeach
-                                            @endif
-                                        </select>
-                                        <p></p>
-                                    </div>            
-                                </div>
+                                @foreach (Cart::content() as $item)
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <div class="h6">{{ $item->name }}</div>
+                                        <div class="h6">Rp{{ $item->price }}</div>
+                                    </div>
+                                @endforeach
 
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <textarea name="address" id="address" cols="30" rows="3" placeholder="Address" 
-                                        class="form-control"> {{ (!empty($customerAddress) ? $customerAddress->address : '' ) }}</textarea>
-                                        <p></p>
-                                    </div>            
+                                <div class="d-flex justify-content-between summery-end">
+                                    <div class="h6"><strong>Subtotal</strong></div>
+                                    <div class="h6"><strong>Rp{{ Cart::subtotal() }}</strong></div>
                                 </div>
+                                <div class="d-flex justify-content-between summery-end">
+                                    <div class="h6"><strong>Discount</strong></div>
+                                    <div class="h6" id="discount_value"><strong>Rp{{ $discount }}</strong></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <div class="h6"><strong>Shipping</strong></div>
+                                    <div class="h6" id="shippingAmount">
+                                        <strong>Rp{{ number_format($totalShippingCharge, 2) }}</strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 summery-end">
+                                    <div class="h5"><strong>Total</strong></div>
+                                    <div class="h5" id="grandTotal">
+                                        <strong>Rp{{ number_format($grandTotal, 2) }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <input type="text" name="apartment" id="apartment" 
-                                        class="form-control" placeholder="Apartment, suite, unit, etc. (optional)" value="{{ (!empty($customerAddress) ? $customerAddress->apartment : '' ) }}">
-                                    </div>            
-                                </div>
+                        <div class="input-group apply-coupan mt-4">
+                            <input type="text" placeholder="Coupon Code" class="form-control" name="discount_code"
+                                id="discount_code">
+                            <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
+                        </div>
 
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" name="city" id="city" 
-                                        class="form-control" placeholder="City" value="{{ (!empty($customerAddress) ? $customerAddress->city : '' ) }}">
-                                        <p></p>
-                                    </div>            
+                        <div id="discount-response-wrapper">
+                            @if (Session::has('code'))
+                                <div class="mt-4 d-flex justify-content-center align-items-center" id="discount-response"
+                                    style="background-color: orange; width: 300px; height: 50px; position: relative;">
+                                    <strong>{{ Session::get('code')->code }}</strong>
+                                    <a class="btn btn-sm btn-danger position-absolute" style="top: 0; right: 0;"
+                                        id="remove-discount"><i class="fa fa-times"></i></a>
                                 </div>
+                            @endif
+                        </div>
 
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" name="state" id="state" 
-                                        class="form-control" placeholder="State" value="{{ (!empty($customerAddress) ? $customerAddress->state : '' ) }}">
-                                        <p></p>
-                                    </div>            
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" name="zip" id="zip" 
-                                        class="form-control" placeholder="Zip" value="{{ (!empty($customerAddress) ? $customerAddress->zip : '' ) }}">
-                                        <p></p>
-                                    </div>            
-                                </div>
 
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <input type="text" name="mobile" id="mobile" 
-                                        class="form-control" placeholder="Mobile No." value="{{ (!empty($customerAddress) ? $customerAddress->mobile : '' ) }}">
-                                        <p></p>
-                                    </div>            
-                                </div>
-                                
 
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <textarea name="order_notes" id="order_notes" cols="30" rows="2" placeholder="Order Notes (optional)" class="form-control"></textarea>                                    
-                                    </div>            
+                        <div class="card payment-form ">
+
+                            <h3 class="card-title h5 mb-3">Payment Method</h3>
+
+                            <div>
+                                <input type="radio" name="payment_method" value="cod" id="payment_method_one">
+                                <label for="payment_method_one" class="form_check_label">COD</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" name="payment_method" value="transfer" id="payment_method_two">
+                                <label for="payment_method_two" class="form_check_label">Transfer Bank</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" name="payment_method" value="e-wallet" id="payment_method_three">
+                                <label for="payment_method_three" class="form_check_label">E-Wallet</label>
+                            </div>
+
+
+                            <div class="card-body p-0 d-none mt-3" id="card-payment-form">
+                                <div class="mb-3">
+                                    <label for="card_number" class="mb-2">Card Number</label>
+                                    <input type="text" name="card_number" id="card_number"
+                                        placeholder="Valid Card Number" class="form-control">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="expiry_date" class="mb-2">Expiry Date</label>
+                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="expiry_date" class="mb-2">CVV Code</label>
+                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="123"
+                                            class="form-control">
+                                    </div>
                                 </div>
 
                             </div>
+                            <div class="pt-4">
+                                <!-- <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>-->
+                                <button type="submit" id="payNowButton" class="btn-dark btn btn-block w-100">Pay
+                                    Now</button>
+                            </div>
                         </div>
-                    </div>    
+
+
+                        <!-- CREDIT CARD FORM ENDS HERE -->
+
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="sub-title">
-                        <h2>Order Summery</h3>
-                    </div>                    
-                    <div class="card cart-summery">
-                        <div class="card-body">
-
-                            @foreach (Cart::content() as $item )
-                            <div class="d-flex justify-content-between pb-2">
-                                <div class="h6">{{ $item->name }}</div>
-                                <div class="h6">Rp{{ $item->price}}</div>
-                            </div>
-                            @endforeach
-                           
-                            <div class="d-flex justify-content-between summery-end">
-                                <div class="h6"><strong>Subtotal</strong></div>
-                                <div class="h6"><strong>Rp{{Cart::subtotal()}}</strong></div>
-                            </div>
-                            <div class="d-flex justify-content-between summery-end">
-                                <div class="h6"><strong>Discount</strong></div>
-                                <div class="h6" id="discount_value"><strong>Rp{{$discount}}</strong></div>
-                            </div>
-                            <div class="d-flex justify-content-between mt-2">
-                                <div class="h6"><strong>Shipping</strong></div>
-                                <div class="h6" id="shippingAmount"><strong>Rp{{ number_format($totalShippingCharge, 2)}}</strong></div>
-                            </div>
-                            <div class="d-flex justify-content-between mt-2 summery-end">
-                                <div class="h5"><strong>Total</strong></div>
-                                <div class="h5" id="grandTotal"><strong>Rp{{number_format($grandTotal, 2)}}</strong></div>
-                            </div>                            
-                        </div>
-                    </div>   
-
-                    <div class="input-group apply-coupan mt-4">
-                        <input type="text" placeholder="Coupon Code" class="form-control" name="discount_code" id="discount_code">
-                        <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
-                    </div> 
-
-                    <div id="discount-response-wrapper">
-                        @if (Session::has('code'))
-                            <div class="mt-4 d-flex justify-content-center align-items-center" id="discount-response" style="background-color: orange; width: 300px; height: 50px; position: relative;">
-                                <strong>{{ Session::get('code')->code }}</strong>
-                                <a class="btn btn-sm btn-danger position-absolute" style="top: 0; right: 0;" id="remove-discount"><i class="fa fa-times"></i></a>
-                            </div>
-                        @endif
-                    </div>
-
-
-                    
-                    <div class="card payment-form ">    
-                        
-                         <h3 class="card-title h5 mb-3">Payment Method</h3>
-                        
-                         <div>
-                            <input type="radio" name="payment_method" value="cod" id="payment_method_one">
-                            <label for="payment_method_one" class="form_check_label">COD</label>
-                        </div>
-
-                        <div>
-                            <input type="radio" name="payment_method" value="transfer" id="payment_method_two">
-                            <label for="payment_method_two" class="form_check_label">Transfer Bank</label>
-                        </div>
-
-                        <div>
-                            <input type="radio" name="payment_method" value="e-wallet" id="payment_method_three">
-                            <label for="payment_method_three" class="form_check_label">E-Wallet</label>
-                        </div>
-                        
-                        
-                        <div class="card-body p-0 d-none mt-3" id="card-payment-form">
-                            <div class="mb-3">
-                                <label for="card_number" class="mb-2">Card Number</label>
-                                <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="expiry_date" class="mb-2">Expiry Date</label>
-                                    <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="expiry_date" class="mb-2">CVV Code</label>
-                                    <input type="text" name="expiry_date" id="expiry_date" placeholder="123" class="form-control">
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="pt-4">
-                           <!-- <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>-->
-                            <button type="submit" class="btn-dark btn btn-block w-100">Pay Now</button>
-                        </div>                        
-                    </div>
-
-                          
-                    <!-- CREDIT CARD FORM ENDS HERE -->
-                    
-                </div>
-            </div>
             </form>
         </div>
     </section>
@@ -226,187 +238,192 @@
 
 @section('customJs')
     <script>
-        $("#payment_method_one").click(function(){
-            if($(this).is(":checked") == true){
+        $("#payment_method_one").click(function() {
+            if ($(this).is(":checked") == true) {
                 $("#card-payment-form").addClass('d-none');
             }
         });
-        
-        $("#payment_method_two").click(function(){
-            if($(this).is(":checked") == true){
+
+        $("#payment_method_two").click(function() {
+            if ($(this).is(":checked") == true) {
                 $("#card-payment-form").removeClass('d-none');
             }
         });
 
-        $('#orderForm').submit(function(event){
+        $('#orderForm').submit(function(event) {
             event.preventDefault();
 
-            $('button[type="submit"]').prop('disabled',true);
+            $('button[type="submit"]').prop('disabled', true);
             $.ajax({
-                url: '{{ route("front.processCheckout")}}',
+                url: '{{ route('front.processCheckout') }}',
                 type: 'post',
                 data: $(this).serializeArray(),
                 dataType: 'json',
-                success: function(response){
+                success: function(response) {
                     var errors = response.errors;
-                    $('button[type="submit"]').prop('disabled',false);
+                    $('button[type="submit"]').prop('disabled', false);
 
-                    if(response.status == false){     
-                        if(errors.first_name){
+                    if (response.status == false) {
+                        if (errors.first_name) {
                             $("#first_name").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.first_name);
-                            } else {
-                                $("#first_name").removeClass('is-invalid')
+                        } else {
+                            $("#first_name").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.last_name){
-                                $("#last_name").addClass('is-invalid')
+                        if (errors.last_name) {
+                            $("#last_name").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.last_name);
-                            } else {
-                                $("#last_name").removeClass('is-invalid')
+                        } else {
+                            $("#last_name").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.email){
-                                $("#email").addClass('is-invalid')
+                        if (errors.email) {
+                            $("#email").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.email);
-                            } else {
-                                $("#email").removeClass('is-invalid')
+                        } else {
+                            $("#email").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.country){
-                                $("#country").addClass('is-invalid')
+                        if (errors.country) {
+                            $("#country").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.country);
-                            } else {
-                                $("#country").removeClass('is-invalid')
+                        } else {
+                            $("#country").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.address){
-                                $("#address").addClass('is-invalid')
+                        if (errors.address) {
+                            $("#address").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.address);
-                            } else {
-                                $("#address").removeClass('is-invalid')
+                        } else {
+                            $("#address").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.city){
-                                $("#city").addClass('is-invalid')
+                        if (errors.city) {
+                            $("#city").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.city);
-                            } else {
-                                $("#city").removeClass('is-invalid')
+                        } else {
+                            $("#city").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
 
-                            if(errors.state){
-                                $("#state").addClass('is-invalid')
+                        if (errors.state) {
+                            $("#state").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.state);
-                            } else {
-                                $("#state").removeClass('is-invalid')
+                        } else {
+                            $("#state").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.zip){
-                                $("#zip").addClass('is-invalid')
+                        if (errors.zip) {
+                            $("#zip").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.zip);
-                            } else {
-                                $("#zip").removeClass('is-invalid')
+                        } else {
+                            $("#zip").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
 
-                            if(errors.mobile){
-                                $("#mobile").addClass('is-invalid')
+                        if (errors.mobile) {
+                            $("#mobile").addClass('is-invalid')
                                 .siblings("p")
                                 .addClass('invalid-feedback')
                                 .html(errors.mobile);
-                            } else {
-                                $("#mobile").removeClass('is-invalid')
+                        } else {
+                            $("#mobile").removeClass('is-invalid')
                                 .siblings("p")
                                 .removeClass('invalid-feedback')
                                 .html('');
-                            }
+                        }
                     } else {
-                        window.location.href="{{ url('/thanks/')}}/"+response.orderId;
+                        window.location.href = "{{ url('/thanks/') }}/" + response.orderId;
                     }
 
 
                 }
-            }); 
+            });
         });
 
-        $("#country").change(function(){
+        $("#country").change(function() {
             $.ajax({
-                    url: '{{route ("front.getOrderSummery")}}',
-                    type: 'post',
-                    data: {country_id: $(this).val()},
-                    dataType: 'json',
-                    success: function (response) {
-                        if(response.status == true){
-                            $("#shippingAmount").html('Rp'+response.shippingCharge);
-                            $("#grandTotal").html('Rp'+response.grandTotal);
-                        }
-                          
-                    }
-                });
-
-        });
-
-        $("#apply-discount").click(function(){
-            $.ajax({
-                url: '{{route ("front.applyDiscount")}}',
+                url: '{{ route('front.getOrderSummery') }}',
                 type: 'post',
-                data: {code: $("#discount_code").val(), country_id: $("#country").val()},
+                data: {
+                    country_id: $(this).val()
+                },
                 dataType: 'json',
-                success: function (response) {     
-                    if(response.status == true) {
-                        $("#shippingAmount").html('Rp'+response.shippingCharge);
-                        $("#grandTotal").html('Rp'+response.grandTotal);
-                        $("#discount_value").html('Rp'+response.discount);
+                success: function(response) {
+                    if (response.status == true) {
+                        $("#shippingAmount").html('Rp' + response.shippingCharge);
+                        $("#grandTotal").html('Rp' + response.grandTotal);
+                    }
+
+                }
+            });
+
+        });
+
+        $("#apply-discount").click(function() {
+            $.ajax({
+                url: '{{ route('front.applyDiscount') }}',
+                type: 'post',
+                data: {
+                    code: $("#discount_code").val(),
+                    country_id: $("#country").val()
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == true) {
+                        $("#shippingAmount").html('Rp' + response.shippingCharge);
+                        $("#grandTotal").html('Rp' + response.grandTotal);
+                        $("#discount_value").html('Rp' + response.discount);
                         $("#discount-response-wrapper").html(response.discountString);
-                        
+
                         $("#discount-response").css({
-                            'background-color': 'orange',   
+                            'background-color': 'orange',
                             'display': 'flex',
-                            'justify-content': 'center', 
-                            'align-items': 'center', 
+                            'justify-content': 'center',
+                            'align-items': 'center',
                             'height': '50px',
                             'width': '300px',
-                            'position': 'relative' 
+                            'position': 'relative'
                         });
 
                         $("#remove-discount").css({
@@ -415,35 +432,78 @@
                             'right': '0'
                         });
                     } else {
-                        $("#discount-response-wrapper").html("<span class='text-danger'>"+response.message+"<span>");
+                        $("#discount-response-wrapper").html("<span class='text-danger'>" + response
+                            .message + "<span>");
                     }
                 }
             });
         });
 
-        $('body').on('click', "#remove-discount", function(){
+        $('body').on('click', "#remove-discount", function() {
             $.ajax({
-                url: '{{route ("front.removeCoupon")}}',
+                url: '{{ route('front.removeCoupon') }}',
                 type: 'post',
-                data:  {country_id: $("#country").val()},
+                data: {
+                    country_id: $("#country").val()
+                },
                 dataType: 'json',
-                success: function (response) {     
-                    if(response.status == true) {
-                        $("#shippingAmount").html('Rp'+response.shippingCharge);
-                        $("#grandTotal").html('Rp'+response.grandTotal);
-                        $("#discount_value").html('Rp'+response.discount);
-                        $("#discount-response-wrapper").html(''); 
-                        $("#discount_code").val(''); 
+                success: function(response) {
+                    if (response.status == true) {
+                        $("#shippingAmount").html('Rp' + response.shippingCharge);
+                        $("#grandTotal").html('Rp' + response.grandTotal);
+                        $("#discount_value").html('Rp' + response.discount);
+                        $("#discount-response-wrapper").html('');
+                        $("#discount_code").val('');
                     }
                 }
             });
         });
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get all input elements
+            const firstName = document.getElementById('first_name').value.trim();
+            const lastName = document.getElementById('last_name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const country = document.getElementById('country').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const zip = document.getElementById('zip').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+
+            // Check if any required field is empty
+            if (!firstName || !lastName || !email || !country || !address || !city || !state || !zip || !mobile) {
+                Swal.fire({
+                    title: 'Kesalahan!',
+                    text: 'Silakan isi semua bidang yang wajib diisi.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                // Show confirmation alert before proceeding to payment
+                Swal.fire({
+                    title: 'Apa kamu yakin?',
+                    text: "Apakah Anda benar-benar ingin melanjutkan pembayaran?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, bayar sekarang!',
+                    cancelButtonText: 'Tidak, batalkan'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit the form if confirmed
+                        event.target.submit();
+                    }
+                });
+            }
+        });
 
 
-        
+
         // $("#remove-discount").click(function(){
-          
-        // });
 
+        // });
     </script>
 @endsection

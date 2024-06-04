@@ -10,31 +10,40 @@ use Illuminate\Support\Facades\Validator;
 
 class ShippingController extends Controller
 {
-    public function create() {
+    public function create()
+    {
         $countries = Country::get();
-        $data ['countries'] = $countries;
+        $data['countries'] = $countries;
 
-        $shippingCharges = ShippingCharge::select('shipping_charges.*', 'countries.name')->
-        leftJoin('countries', 'countries.id', 'shipping_charges.country_id')->get();
-        $data ['shippingCharges'] = $shippingCharges;
+        $shippingCharges = ShippingCharge::select('shipping_charges.*', 'countries.name')->leftJoin('countries', 'countries.id', 'shipping_charges.country_id')->get();
+        $data['shippingCharges'] = $shippingCharges;
 
         return view('admin.shipping.create', $data);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-        $validator = Validator::make($request->all(), [
-            'country' => 'required',
-            'amount' => 'required|numeric'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'country' => 'required',
+                'amount' => 'required|numeric'
+            ],
+            [
+                'country.required' => 'Harap diisi terlebih dahulu.',
+                'amount.required'  => 'Harap diisi terlebih dahulu.',
+                'amount.numeric'   => 'Harap isi dengan angka.'
+            ]
+        );
 
-        if($validator->passes()){
+        if ($validator->passes()) {
 
             $count = ShippingCharge::where('country_id', $request->country)->count();
-            if($count > 0) {
+            if ($count > 0) {
                 session()->flash('error', 'Pengiriman sudah pernah ditambahkan!');
                 return response()->json([
-                    'status' =>true
+                    'status' => true
                 ]);
             }
 
@@ -46,52 +55,51 @@ class ShippingController extends Controller
             session()->flash('success', 'Pengiriman berhasil ditambahkan');
 
             return response()->json([
-                'status' =>true      
+                'status' => true
             ]);
-
-        }else{
+        } else {
             return response()->json([
-                'status' =>false,
-                'errors' =>$validator->errors()
+                'status' => false,
+                'errors' => $validator->errors()
             ]);
         }
-
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
 
         $shippingCharge = ShippingCharge::find($id);
 
         $countries = Country::get();
-        $data ['countries'] = $countries;
-        $data ['shippingCharge'] = $shippingCharge; 
+        $data['countries'] = $countries;
+        $data['shippingCharge'] = $shippingCharge;
         return view('admin.shipping.edit', $data);
-
     }
 
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $shipping = ShippingCharge::find($id);
         $validator = Validator::make($request->all(), [
             'country' => 'required',
             'amount' => 'required|numeric'
         ]);
 
-        if($validator->passes()){
+        if ($validator->passes()) {
 
-            if($shipping == null){
+            if ($shipping == null) {
 
                 session()->flash('error', 'Pengiriman tidak ditemukan');
-    
+
                 return response()->json([
-                    'status'=> true
+                    'status' => true
                 ]);
             }
 
             $count = ShippingCharge::where('country_id', $request->country)->where('id', '!=', $id)->count();
-            if($count > 0) {
+            if ($count > 0) {
                 session()->flash('error', 'Pengiriman sudah pernah ditambahkan!');
                 return response()->json([
-                    'status' =>true
+                    'status' => true
                 ]);
             }
 
@@ -102,28 +110,27 @@ class ShippingController extends Controller
             session()->flash('success', 'Pengiriman berhasil diupdate');
 
             return response()->json([
-                'status' =>true      
+                'status' => true
             ]);
-
-        }else{
+        } else {
             return response()->json([
-                'status' =>false,
-                'errors' =>$validator->errors()
+                'status' => false,
+                'errors' => $validator->errors()
             ]);
         }
-
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
 
         $shippingCharge = ShippingCharge::find($id);
 
-        if($shippingCharge == null){
+        if ($shippingCharge == null) {
 
             session()->flash('error', 'Pengiriman tidak ditemukan');
 
             return response()->json([
-                'status'=> true
+                'status' => true
             ]);
         }
 
@@ -132,9 +139,7 @@ class ShippingController extends Controller
         session()->flash('success', 'Pengiriman berhasil dihapus');
 
         return response()->json([
-            'status' =>true      
+            'status' => true
         ]);
-
     }
-
 }

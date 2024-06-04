@@ -15,23 +15,39 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return view('front.account.login');
     }
 
-    public function register(){
+    public function register()
+    {
         return view('front.account.register');
     }
 
-    public function processRegister(Request $request){
+    public function processRegister(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|confirmed'
+            'password' => 'required|min:5',
+            'phone' => 'required|numeric',
+        ], [
+            'name.required' => 'Harap isi nama terlebih dahulu',
+            'name.min' => 'Nama minimal harus terdiri dari 3 karakter',
+            'email.required' => 'Harap isi email terlebih dahulu',
+            'email.email' => 'format alamat email tidak valid.',
+            'email.unique' => 'Email sudah ada, harap gunakan email yang berbeda',
+            'password.required' => 'Harap isi password terlebih dahulu',
+            'password.min' => 'Password minimal 5 karakter',
+            'phone.required' => 'Harap isi nomor telepon terlebih dahulu',
+            'phone.numeric' => 'Nomor telepon harus berupa angka',
+            // 'password.confirmed' => 'Konfirmasi password tidak sesuai.'
         ]);
 
-        if($validator->passes()){
+
+        if ($validator->passes()) {
 
             $user = new User;
             $user->name = $request->name;
@@ -44,53 +60,59 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
             ]);
-
         } else {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
         }
-
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|min:5',
+        ], [
+            'email.required' => 'Harap diisi terlebih dahulu.',
+            'email.email' => 'Harap isi dengan format email yang benar.',
+            'password.required' => 'Harap isi password terlebih dahulu',
+            'password.min' => 'Password minimal 5 karakter',
         ]);
 
-        if ($validator->passes()){
-            
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password],
-            $request->get('remember'))){
 
-                if(session()->has('url.intended')){
+        if ($validator->passes()) {
+
+            if (Auth::attempt(
+                ['email' => $request->email, 'password' => $request->password],
+                $request->get('remember')
+            )) {
+
+                if (session()->has('url.intended')) {
                     return redirect(session()->get('url.intended'));
                 }
 
                 return redirect()->route('account.profile');
-
             } else {
                 //session()->flash('error', 'Either email/password is incorrect.');
-                return redirect()->route('account.login')                   
+                return redirect()->route('account.login')
                     ->withInput($request->only('email'))
-                    ->with('error', 'Either email/password is incorrect');
+                    ->with('error', 'Email atau kata sandi salah');
             }
-
         } else {
             return redirect()->route('account.login')
-            ->withErrors($validator)
-            ->withInput($request->only('email'));
+                ->withErrors($validator)
+                ->withInput($request->only('email'));
         }
     }
 
-    public function profile(){
+    public function profile()
+    {
 
         $userId = Auth::user()->id;
         $countries = Country::orderBy('name', 'ASC')->get();
         $user = User::where('id', $userId)->first();
-        $address = CustomerAddress::where('user_id',$userId)->first();
+        $address = CustomerAddress::where('user_id', $userId)->first();
 
         return view('front.account.profile', [
             'user' => $user,
@@ -99,15 +121,16 @@ class AuthController extends Controller
         ]);
     }
 
-    public function updateProfile(Request $request) {
+    public function updateProfile(Request $request)
+    {
         $userId = Auth::user()->id;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$userId.',id',
+            'email' => 'required|email|unique:users,email,' . $userId . ',id',
             'phone' => 'required'
-         ]);
+        ]);
 
-         if ( $validator->passes()) {
+        if ($validator->passes()) {
             $user = User::find($userId);
             $user->name = $request->name;
             $user->email = $request->email;
@@ -120,19 +143,19 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => 'Profile berhasil diupdate'
             ]);
-
-         } else {
+        } else {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
-         }
+        }
     }
 
-    public function updateAddress(Request $request) {
+    public function updateAddress(Request $request)
+    {
         $userId = Auth::user()->id;
 
-         $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'first_name' => 'required|min:1',
             'last_name' => 'required',
             'email' => 'required|email',
@@ -145,7 +168,7 @@ class AuthController extends Controller
             'mobile' => 'required'
         ]);
 
-         if ( $validator->passes()) {
+        if ($validator->passes()) {
             // $user = User::find($userId);
             // $user->name = $request->name;
             // $user->email = $request->email;
@@ -175,35 +198,37 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => 'Profile berhasil diupdate'
             ]);
-
-         } else {
+        } else {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
-         }
+        }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('account.login')
-        ->with('success','You successfully logged out!');
+            ->with('success', 'Anda berhasil logout!');
     }
 
-    public function orders() {
+    public function orders()
+    {
 
         $data = [];
         $user = Auth::user();
-        $orders = Order::where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
+        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
         $data['orders'] = $orders;
-        return view('front.account.order',$data);
+        return view('front.account.order', $data);
     }
 
 
-    public function orderDetail($id) {
+    public function orderDetail($id)
+    {
         $data = [];
         $user = Auth::user();
-        $order = Order::where('user_id',$user->id)->where('id', $id)->first();
+        $order = Order::where('user_id', $user->id)->where('id', $id)->first();
         $data['order'] = $order;
 
         $orderItems = OrderItem::where('order_id', $id)->get();
@@ -212,27 +237,28 @@ class AuthController extends Controller
         $orderItemsCount = OrderItem::where('order_id', $id)->count();
         $data['orderItemsCount'] = $orderItemsCount;
 
-        return view('front.account.order-detail',$data);
-
+        return view('front.account.order-detail', $data);
     }
 
-    public function wishlist() {
+    public function wishlist()
+    {
         $wishlists = Wishlist::where('user_id', Auth::user()->id)->with('product')->get();
         $data = [];
         $data['wishlists'] = $wishlists;
 
-        return view('front.account.wishlist',$data);
+        return view('front.account.wishlist', $data);
     }
- 
-    public function removeProductFromWishList(Request $request) {
+
+    public function removeProductFromWishList(Request $request)
+    {
         $wishlist = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->id)->first();
-        if ($wishlist == null){
+        if ($wishlist == null) {
 
             session()->flash('error', 'Product sudah dihapus');
             return response()->json([
                 'status' => true,
             ]);
-        } else{
+        } else {
             Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->id)->delete();
             session()->flash('success', 'Product berhasil dihapus');
             return response()->json([

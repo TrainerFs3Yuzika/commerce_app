@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Discount Coupon</h1>
+                    <h1>Kupon diskon</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('coupons.create') }}" class="btn btn-primary">New Kupon Diskon</a>
+                    <a href="{{ route('coupons.create') }}" class="btn btn-primary">Kupon Diskon Baru</a>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                         <thead>
                             <tr>
                                 <th width="60">ID</th>
-                                <th>Code</th>
+                                <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Diskon</th>
                                 <th>Tanggal Mulai</th>
@@ -71,8 +71,10 @@
                                                 Rp{{ $discountCoupon->discount_amount }}
                                             @endif
                                         </td>
-                                        <td>{{ (!empty($discountCoupon->starts_at)) ? \Carbon\Carbon::parse($discountCoupon->starts_at)->format('Y/m/d H:i:s') : ''}}</td>
-                                        <td>{{ (!empty($discountCoupon->expires_at)) ? \Carbon\Carbon::parse($discountCoupon->expires_at)->format('Y/m/d H:i:s') : ''}}</td>
+                                        <td>{{ !empty($discountCoupon->starts_at) ? \Carbon\Carbon::parse($discountCoupon->starts_at)->format('Y/m/d H:i:s') : '' }}
+                                        </td>
+                                        <td>{{ !empty($discountCoupon->expires_at) ? \Carbon\Carbon::parse($discountCoupon->expires_at)->format('Y/m/d H:i:s') : '' }}
+                                        </td>
 
                                         <td>
                                             @if ($discountCoupon->status == 1)
@@ -142,24 +144,32 @@
             var url = '{{ route('coupons.delete', 'ID') }}';
             var newUrl = url.replace("ID", id)
 
-            if (confirm("Apakah kamu ingin menghapus data ini?")) {
-                $.ajax({
-                    url: newUrl,
-                    type: 'delete',
-                    data: {},
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-
-                        if (response["status"]) {
-
-                            window.location.href = "{{ route('coupons.index') }}";
+            Swal.fire({
+                title: 'Apakah kamu ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            if (response["status"]) {
+                                window.location.href = "{{ route('coupons.index') }}";
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         }
     </script>
 @endsection

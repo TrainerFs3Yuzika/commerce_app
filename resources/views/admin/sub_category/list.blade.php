@@ -30,7 +30,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
                                 <input value="{{ Request::get('keyword') }}" type="text" name="keyword"
-                                    class="form-control float-right" placeholder="Cari Kategori">
+                                    class="form-control float-right" placeholder="Cari Sub Kategori">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -125,30 +125,33 @@
 @section('customJs')
     <script>
         function deleteSubCategory(id) {
-
             var url = '{{ route('sub-categories.delete', 'ID') }}';
-            var newUrl = url.replace("ID", id)
+            var newUrl = url.replace("ID", id);
 
-            if (confirm("Apakah kamu ingin menghapus data ini?")) {
-                $.ajax({
-                    url: newUrl,
-                    type: 'delete',
-                    data: {},
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-
-                        window.location.href = "{{ route('sub-categories.index') }}";
-
-                        // if (response["status"]) {
-
-                        //     window.location.href = "{{ route('sub-categories.index') }}";
-                        // }
-                    }
-                });
-            }
+            Swal.fire({
+                title: 'Apakah kamu ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            window.location.href = "{{ route('sub-categories.index') }}";
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection

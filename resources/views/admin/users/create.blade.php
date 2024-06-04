@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Buat Users Baru</h1>
+                    <h1>Buat Pengguna Baru</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('users.index') }}" class="btn btn-primary">Kembali</a>
@@ -27,8 +27,7 @@
                                 <div class="mb-3">
                                     <label for="name">Nama</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Name" autofocus
-                                        >
+                                        placeholder="Nama" autofocus>
                                     <p></p>
                                 </div>
                             </div>
@@ -61,7 +60,7 @@
                                     <label for="slug">Status</label>
                                     <select name="status" id="status" class="form-control">
                                         <option value="1">Aktif</option>
-                                        <option value="0">Non Aktif</option>
+                                        <option value="0">Tidak Aktif</option>
                                     </select>
                                     <p></p>
                                 </div>
@@ -156,6 +155,5 @@
                 }
             })
         });
-
     </script>
 @endsection

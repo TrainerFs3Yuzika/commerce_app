@@ -28,10 +28,10 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="title">Title</label>
+                                            <label for="title">Nama Produk</label>
                                             <input type="text" name="title" id="title" class="form-control"
-                                                placeholder="Title">
-                                                <p class="error"></p>
+                                                placeholder="Nama Produk" autofocus>
+                                            <p class="error"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -39,29 +39,28 @@
                                             <label for="slug">Slug</label>
                                             <input type="text" readonly name="slug" id="slug"
                                                 class="form-control" placeholder="Slug">
-                                                <p class="error"></p>
+                                            <p class="error"></p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="description">Short Description</label>
+                                            <label for="description">Deskripsi Singkat</label>
                                             <textarea name="short_description" id="short_description" cols="30" rows="10" class="summernote"
-                                                placeholder=""></textarea>
+                                                placeholder="Deskripsi Singkat"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="description">Description</label>
-                                            <textarea name="description" id="description" cols="30" rows="10" class="summernote"
-                                                placeholder="Description"></textarea>
+                                            <label for="description">Dekripsi</label>
+                                            <textarea name="description" id="description" cols="30" rows="10" class="summernote" placeholder="Dekripsi"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="description">Shipping and Returns</label>
+                                            <label for="description">Pengiriman dan Pengembalian</label>
                                             <textarea name="shipping_returns" id="shipping_returns" cols="30" rows="10" class="summernote"
-                                                placeholder=""></textarea>
+                                                placeholder="Pengiriman dan Pengembalian"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -69,10 +68,10 @@
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Media</h2>
+                                <h2 class="h4 mb-3">Foto</h2>
                                 <div id="image" class="dropzone dz-clickable">
                                     <div class="dz-message needsclick">
-                                        <br>Drop files here or click to upload.<br><br>
+                                        <br>Letakkan file di sini atau klik untuk mengunggah.<br><br>
                                     </div>
                                 </div>
                             </div>
@@ -83,24 +82,25 @@
 
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Pricing</h2>
+                                <h2 class="h4 mb-3">Harga</h2>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="price">Price</label>
+                                            <label for="price">Harga</label>
                                             <input type="text" name="price" id="price" class="form-control"
-                                                placeholder="Price">
-                                                <p class="error"></p>
+                                                placeholder="Harga">
+                                            <p class="error"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label for="compare_price">Compare at Price</label>
+                                            <label for="compare_price">Bandingkan dengan Harga</label>
                                             <input type="text" name="compare_price" id="compare_price"
-                                                class="form-control" placeholder="Compare Price">
+                                                class="form-control" placeholder="Bandingkan dengan Harga">
                                             <p class="text-muted mt-3">
-                                                To show a reduced price, move the product’s original price into Compare at
-                                                price. Enter a lower value into Price.
+                                                Untuk menampilkan potongan harga, pindahkan harga asli produk ke Bandingkan
+                                                di
+                                                harga. Masukkan nilai yang lebih rendah ke dalam Harga.
                                             </p>
                                         </div>
                                     </div>
@@ -109,21 +109,21 @@
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Inventory</h2>
+                                <h2 class="h4 mb-3">Inventaris</h2>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="sku">SKU (Stock Keeping Unit)</label>
+                                            <label for="sku">UPS (Unit Penyimpanan Stok)</label>
                                             <input type="text" name="sku" id="sku" class="form-control"
-                                                placeholder="sku">
-                                                <p class="error"></p>
+                                                placeholder="ups">
+                                            <p class="error"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="barcode">Barcode</label>
+                                            <label for="barcode">kode batang(Barcode)</label>
                                             <input type="text" name="barcode" id="barcode" class="form-control"
-                                                placeholder="Barcode">
+                                                placeholder="kode batang(Barcode)">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -132,14 +132,14 @@
                                                 <input type="hidden" name="track_qty" value="No">
                                                 <input class="custom-control-input" type="checkbox" id="track_qty"
                                                     name="track_qty" value="Yes" checked>
-                                                <label for="track_qty" class="custom-control-label">Track Quantity</label>
+                                                <label for="track_qty" class="custom-control-label">Jumlah Produk</label>
                                                 <p class="error"></p>
                                             </div>
                                         </div>
                                         <div class="mb-3">
                                             <input type="number" min="0" name="qty" id="qty"
-                                                class="form-control" placeholder="Qty">
-                                                <p class="error"></p>
+                                                class="form-control" placeholder="Jumlah Produk">
+                                            <p class="error"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -148,44 +148,45 @@
 
                         <div class="card mb-3">
                             <div class="card-body">
-                                    <h2 class="h4 mb-3">Related Products</h2>
-                                    <div class="mb-3">
-                                        <select multiple class="related-product w-100 "name="related_products[]" id="related_products">            
-                                        </select>    
-                                        <p class="error"></p>
-                                    </div>
-                             </div>
+                                <h2 class="h4 mb-3">Produk-produk terkait</h2>
+                                <div class="mb-3">
+                                    <select multiple class="related-product w-100 "name="related_products[]"
+                                        id="related_products">
+                                    </select>
+                                    <p class="error"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Product status</h2>
+                                <h2 class="h4 mb-3">Status produk</h2>
                                 <div class="mb-3">
                                     <select name="status" id="status" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Block</option>
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Tidak Aktif</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h2 class="h4  mb-3">Product category</h2>
+                                <h2 class="h4  mb-3">Kategori Produk</h2>
                                 <div class="mb-3">
-                                    <label for="category">Category</label>
+                                    <label for="category">Kategori</label>
                                     <select name="category" id="category" class="form-control">
                                         <option value="">Pilih Kategori</option>
                                         @if ($categories->isNotEmpty())
                                             @foreach ($categories as $category)
-                                            <option value="{{$category->id}}">{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
                                     <p class="error"></p>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="category">Sub category</label>
+                                    <label for="category">Sub Kategori</label>
                                     <select name="sub_category" id="sub_category" class="form-control">
                                         <option value="">Pilih Sub Kategori</option>
                                     </select>
@@ -194,27 +195,27 @@
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Product brand</h2>
+                                <h2 class="h4 mb-3">Merek produk</h2>
                                 <div class="mb-3">
                                     <select name="brand" id="brand" class="form-control">
                                         <option value="">Pilih Brand</option>
                                         @if ($brands->isNotEmpty())
-                                                @foreach ($brands as $brand)
-                                                <option value="{{$brand->id}}">{{ $brand->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            @endforeach
+                                        @endif
+
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Featured product</h2>
+                                <h2 class="h4 mb-3">Produk unggulan</h2>
                                 <div class="mb-3">
                                     <select name="is_featured" id="is_featured" class="form-control">
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="No">Tidak</option>
+                                        <option value="Yes">Iya</option>
                                     </select>
                                     <p class="error"></p>
                                 </div>
@@ -236,32 +237,32 @@
 
 @section('customJs')
     <script>
-        $('.related-product').select2({
+        $('.related-products').select2({
             ajax: {
-                url: '{{ route("products.getProducts") }}',
+                url: '{{ route('products.getProducts') }}',
                 dataType: 'json',
                 tags: true,
                 multiple: true,
                 minimumInputLength: 3,
-                processResults: function (data) {
+                processResults: function(data) {
                     return {
                         results: data.tags
                     };
                 }
             }
-        }); 
+        });
         $("#title").change(function() {
             element = $(this);
-            $("button[type=submit]").prop('disable', true);
+            $("button[type=submit]").prop('disabled', true);
             $.ajax({
-                url: '{{ route("getSlug") }}',
+                url: '{{ route('getSlug') }}',
                 type: 'get',
                 data: {
                     title: element.val()
                 },
                 dataType: 'json',
                 success: function(response) {
-                    $("button[type=submit]").prop('disable', false);
+                    $("button[type=submit]").prop('disabled', false);
                     if (response["status"] == true) {
                         $("#slug").val(response["slug"]);
                     }
@@ -271,37 +272,47 @@
 
         $("#productForm").submit(function(event) {
             event.preventDefault();
-            var formArray = $(this).serializeArray()
-            $("button[type='submit']").prop('disable',true);
+            var formArray = $(this).serializeArray();
+            $("button[type='submit']").prop('disabled', true);
+
             $.ajax({
-                url: '{{route("products.store")}}',
+                url: '{{ route('products.store') }}',
                 type: 'post',
                 data: formArray,
                 dataType: 'json',
                 success: function(response) {
-                    $("button[type='submit']").prop('disable',false);
 
-                    if(response['status']== true){
-                        $(".error").removeClass('invalid-feedback').html(' ');
+                    $("button[type='submit']").prop('disabled', false);
+
+                    if (response['status'] == true) {
+                        $(".error").removeClass('invalid-feedback').html('');
                         $("input[type='text'], select, input[type='number']").removeClass('is-invalid');
-
-                        window.location.href="{{ route('products.index') }}";
-                    }else{
+                        window.location.href = "{{ route('products.index') }}";
+                    } else {
                         var errors = response['errors'];
 
+                        // if (errors['title']) {
+                        //     $("#title").addClass('is-invalid')
+                        //         .siblings('p')
+                        //         .addClass('invalid-feedback')
+                        //         .html(errors['title']);
+                        // } else {
+                        //     $("#title").removeClass('is-invalid')
+                        //         .siblings('p')
+                        //         .removeClass('invalid-feedback')
+                        //         .html("");
+                        // }
 
-                        $(".error").removeClass('invalid-feedback').html(' ');
+                        $(".error").removeClass('invalid-feedback').html('');
                         $("input[type='text'], select, input[type='number']").removeClass('is-invalid');
 
-                        $.each(errors, function(key,value){
+                        $.each(errors, function(key, value) {
                             $(`#${key}`).addClass('is-invalid')
-                            .siblings('p')
-                            .addClass('invalid-feedback')
-                            .html(value);
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(value);
                         });
-                        
                     }
-
                 },
                 error: function() {
                     console.log("Something went wrong");
@@ -309,29 +320,31 @@
             });
         });
 
-        $("#category").change(function(){
+        $("#category").change(function() {
             var category_id = $(this).val();
             $.ajax({
-                url: '{{route("product-subcategories.index")}}',
+                url: '{{ route('product-subcategories.index') }}',
                 type: 'get',
-                data: {category_id:category_id},
+                data: {
+                    category_id: category_id
+                },
                 dataType: 'json',
                 success: function(response) {
                     $("#sub_category").find("option").not(":first").remove();
-                    $.each(response["subCategories"],function(key,item){
-                        $("#sub_category").append(`<option value ='${item.id}'>${item.name}</option>`);
+                    $.each(response["subCategories"], function(key, item) {
+                        $("#sub_category").append(
+                            `<option value='${item.id}'>${item.name}</option>`)
                     });
-
                 },
                 error: function() {
                     console.log("Something went wrong");
                 }
-            });    
+            });
         });
 
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
-           
+
             url: "{{ route('temp-images.create') }}",
             maxFiles: 10,
             paramName: 'image',
@@ -341,31 +354,26 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(file, response) {
-                $("#image_id").val(response.image_id);
+                // $("#image_id").val(response.image_id);
                 //console.log(response)
 
-                
-
                 var html = `<div class="col-md-3" id="image-row-${response.image_id}"><div class="card">
-                    <input type="hidden" name="image_array[]" value="${response.image_id}">
-                    <img src="${response.ImagePath}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
-                    </div>
-                </div></div>`;
+                <input type="hidden" name="image_array[]" value="${response.image_id}">
+                <img src="${response.ImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
+                </div>
+            </div></div>`;
 
                 $("#product-gallery").append(html);
             },
-            complate: function(file){
+            complete: function(file) {
                 this.removeFile(file);
             }
         });
 
-        function deleteImage(id){
-            $("#image-row-"+id).remove();
-
+        function deleteImage(id) {
+            $("#image-row-" + id).remove();
         }
     </script>
-
-    
 @endsection

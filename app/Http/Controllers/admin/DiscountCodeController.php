@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class DiscountCodeController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
-        $discountCoupons = DiscountCoupon::latest();
+        $discountCoupons = DiscountCoupon::orderBy('id', 'asc');
 
         if (!empty($request->get('keyword'))) {
             $discountCoupons = $discountCoupons->where('name', 'like', '%' . $request->get('keyword') . '%');
@@ -21,29 +22,36 @@ class DiscountCodeController extends Controller
         $discountCoupons = $discountCoupons->paginate(10);
 
         return view('admin.coupon.list', compact('discountCoupons'));
-
     }
 
-    public function create(){
+    public function create()
+    {
         return view('admin.coupon.create');
     }
 
-    public function store(Request $request){
-        $validator = Validator::make($request->all(),[
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'code' => 'required',
             'type' => 'required',
             'discount_amount' => 'required|numeric',
             'status' => 'required',
+        ], [
+            'code.required' => 'Harap diisi terlebih dahulu.',
+            'type.required' => 'Harap diisi terlebih dahulu.',
+            'discount_amount.required' => 'Harap diisi terlebih dahulu.',
+            'discount_amount.numeric' => 'Harap isi dengan angka.',
+            'status.required' => 'Harap diisi terlebih dahulu.',
         ]);
 
-        if($validator->passes()){
+        if ($validator->passes()) {
 
             // tanggal mulai harus tergenerate dengan tanggal sekarang
-            if(!empty($request->starts_at)){
+            if (!empty($request->starts_at)) {
                 $now = Carbon::now();
                 $startsAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->starts_at);
 
-                if($startsAt->lte($now) == true){
+                if ($startsAt->lte($now) == true) {
                     return response()->json([
                         'status' => false,
                         'errors' => ['starts_at' => 'Tanggal Mulai Tidak boleh sebelum hari ini!']
@@ -52,11 +60,11 @@ class DiscountCodeController extends Controller
             }
 
             // tanggal mulai harus melebihi tanggal mulai
-            if(!empty($request->starts_at) && !empty($request->expires_at)){
+            if (!empty($request->starts_at) && !empty($request->expires_at)) {
                 $expiresAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->expires_at);
                 $startsAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->starts_at);
-                
-                if($expiresAt->gt($startsAt) == false){
+
+                if ($expiresAt->gt($startsAt) == false) {
                     return response()->json([
                         'status' => false,
                         'errors' => ['expires_at' => 'Tanggal Selesai harus Lebih Besar dari Tanggal Mulai!']
@@ -87,25 +95,22 @@ class DiscountCodeController extends Controller
                 'status' => true,
                 'message' => $message
             ]);
-
-
         } else {
-            return response()-> json([
+            return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
         }
-
     }
 
-    public function edit(Request $request, $id){
+    public function edit(Request $request, $id)
+    {
 
         $coupon = DiscountCoupon::find($id);
 
-        if($coupon == null) {
+        if ($coupon == null) {
             session()->flash('error', 'Data Tidak Ditemukan');
             return redirect()->route('coupons.index');
-            
         }
 
         $data['coupon'] = $coupon;
@@ -113,38 +118,39 @@ class DiscountCodeController extends Controller
         return view('admin.coupon.edit', $data);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
         $discountCode = DiscountCoupon::find($id);
-    
-        if($discountCode == null) {
+
+        if ($discountCode == null) {
             session()->flash('error', 'Data tidak ditemukan');
             return response()->json([
                 'status' => true
             ]);
         }
-    
-        $validator = Validator::make($request->all(),[
+
+        $validator = Validator::make($request->all(), [
             'code' => 'required',
             'type' => 'required',
             'discount_amount' => 'required|numeric',
             'status' => 'required',
         ]);
-    
-        if($validator->passes()){
+
+        if ($validator->passes()) {
             // tanggal mulai harus melebihi tanggal mulai
-            if(!empty($request->starts_at) && !empty($request->expires_at)){
+            if (!empty($request->starts_at) && !empty($request->expires_at)) {
                 $expiresAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->expires_at);
                 $startsAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->starts_at);
-                
-                if($expiresAt->gt($startsAt) == false){
+
+                if ($expiresAt->gt($startsAt) == false) {
                     return response()->json([
                         'status' => false,
                         'errors' => ['expires_at' => 'Tanggal Selesai harus Lebih Besar dari Tanggal Mulai!']
                     ]);
                 }
             }
-    
+
             // Perbarui nilai-nilai properti objek $discountCode
             $discountCode->code = $request->code;
             $discountCode->name = $request->name;
@@ -158,16 +164,15 @@ class DiscountCodeController extends Controller
             $discountCode->starts_at = $request->starts_at;
             $discountCode->expires_at = $request->expires_at;
             $discountCode->save();
-    
+
             $message = 'Kupon Diskon Berhasil Diupdate';
-    
+
             session()->flash('success', $message);
-    
+
             return response()->json([
                 'status' => true,
                 'message' => $message
             ]);
-    
         } else {
             return response()->json([
                 'status' => false,
@@ -175,13 +180,14 @@ class DiscountCodeController extends Controller
             ]);
         }
     }
-    
 
-    public function destroy(Request $request, $id){
-        
+
+    public function destroy(Request $request, $id)
+    {
+
         $discountCode = DiscountCoupon::find($id);
-    
-        if($discountCode == null) {
+
+        if ($discountCode == null) {
             session()->flash('error', 'Data tidak ditemukan');
             return response()->json([
                 'status' => true
@@ -194,5 +200,4 @@ class DiscountCodeController extends Controller
             'status' => true
         ]);
     }
-
 }
