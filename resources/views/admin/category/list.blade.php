@@ -47,11 +47,11 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th width="60">ID</th>
+                                <th>ID</th>
                                 <th>Nama</th>
                                 <th>Slug</th>
-                                <th width="100">Status</th>
-                                <th width="100">Aksi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

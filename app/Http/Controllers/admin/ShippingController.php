@@ -31,7 +31,7 @@ class ShippingController extends Controller
                 'amount' => 'required|numeric'
             ],
             [
-                'country.required' => 'Harap diisi terlebih dahulu.',
+                'country.required' => 'Harap dipilih terlebih dahulu.',
                 'amount.required'  => 'Harap diisi terlebih dahulu.',
                 'amount.numeric'   => 'Harap isi dengan angka.'
             ]

@@ -45,12 +45,12 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th width="60">ID</th>
+                                <th>ID</th>
                                 <th>Nama</th>
                                 <th>Kategori</th>
                                 <th>Slug</th>
-                                <th width="100">Status</th>
-                                <th width="100">Aksi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -105,7 +105,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5" style="text-align: center;">Data Tidak Tersedia</td>
+                                    <td colspan="6" style="text-align: center;">Data Tidak Tersedia</td>
                                 </tr>
                             @endif
 

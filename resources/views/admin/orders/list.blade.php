@@ -46,7 +46,7 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th width="60">Order Id</th>
+                                <th>Order Id</th>
                                 <th>Pelanggan</th>
                                 <th>Email</th>
                                 <th>Telpon</th>
@@ -88,7 +88,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5" style="text-align: center;">Data Tidak Tersedia</td>
+                                    <td colspan="8" style="text-align: center;">Data Tidak Tersedia</td>
                                 </tr>
                             @endif
 

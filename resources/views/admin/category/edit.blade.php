@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Category</h1>
+                    <h1>Edit Kategori</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('categories.index') }}" class="btn btn-primary">Kembali</a>
@@ -177,12 +177,23 @@
                         this.removeFile(this.files[0]);
                     }
                 });
+                this.on('error', function(file, message) {
+                    if (file.size > this.options.maxFilesize * 1024 * 1024) {
+                        this.removeFile(file);
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'File terlalu besar',
+                            text: 'Ukuran file melebihi batas maksimal 2 MB.'
+                        });
+                    }
+                });
             },
             url: "{{ route('temp-images.create') }}",
             maxFiles: 1,
             paramName: 'image',
             addRemoveLinks: true,
             acceptedFiles: "image/jpeg,image/png,image/gif",
+            maxFilesize: 2, // Set maximum file size to 2MB
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

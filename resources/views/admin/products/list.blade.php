@@ -45,14 +45,14 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th width="60">ID</th>
-                                <th width="80"></th>
+                                <th>ID</th>
+                                <th>Foto Produk</th>
                                 <th>Produk</th>
                                 <th>Harga</th>
                                 <th>kuantitas</th>
                                 <th>SKU</th>
-                                <th width="100">Status</th>
-                                <th width="100">Aksi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,12 +131,12 @@
                 <div class="card-footer clearfix">
                     {{ $products->links() }}
                     <!-- <ul class="pagination pagination m-0 float-right">
-                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                </ul>  -->
+                                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                                </ul>  -->
                 </div>
             </div>
         </div>

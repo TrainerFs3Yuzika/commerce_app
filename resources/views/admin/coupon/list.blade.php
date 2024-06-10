@@ -30,7 +30,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
                                 <input value="{{ Request::get('keyword') }}" type="text" name="keyword"
-                                    class="form-control float-right" placeholder="Cari Kategori">
+                                    class="form-control float-right" placeholder="Cari Kupon">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -47,14 +47,14 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th width="60">ID</th>
+                                <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Diskon</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
-                                <th width="100">Status</th>
-                                <th width="100">Aksi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -120,7 +120,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5" style="text-align: center;">Data Tidak Tersedia</td>
+                                    <td colspan="8" style="text-align: center;">Data Tidak Tersedia</td>
                                 </tr>
                             @endif
 

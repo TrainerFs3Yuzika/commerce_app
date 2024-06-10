@@ -248,8 +248,21 @@
 
             window.location.href = url;
         }
-        // Function to add product to cart
+
         function addToCart(productId) {
+            // Assume isLoggedIn is a global variable that indicates whether the user is logged in
+            var isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Harap login terlebih dahulu!',
+                    confirmButtonText: 'OK'
+                });
+                return; // Exit the function if the user is not logged in
+            }
+
             $.ajax({
                 url: '/add-to-cart', // Update the URL according to your route
                 method: 'POST',
@@ -261,7 +274,7 @@
                     if (response.status) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Success',
+                            title: 'Berhasil',
                             html: response.message,
                             showConfirmButton: false,
                             timer: 1500
