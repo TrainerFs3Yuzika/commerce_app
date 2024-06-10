@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Brand</h1>
+                    <h1>Edit Merek</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('brands.index') }}" class="btn btn-primary">Kembali</a>
@@ -25,9 +25,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Nama</label>
+                                    <label for="name">Nama Merek</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Nama" value="{{ $brand->name }}" autofocus>
+                                        placeholder="Nama Merek" value="{{ $brand->name }}" autofocus>
                                     <p></p>
                                 </div>
                             </div>

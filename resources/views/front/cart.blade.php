@@ -173,51 +173,77 @@
         }
 
         function deleteItem(rowId) {
-            // SweetAlert confirmation
-            Swal.fire({
-                title: 'Apakah anda yakin ingin hapus ini keranjang?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Ajax request to delete item
-                    $.ajax({
-                        url: '{{ route('front.deleteItem.cart') }}',
-                        type: 'post',
-                        data: {
-                            rowId: rowId,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        dataType: 'json',
-                        success: function(response) {
-                            // Redirect to cart page after successful deletion
-                            window.location.href = '{{ route('front.cart') }}';
-                        },
-                    });
-                }
-            });
+            // Check if the user is logged in
+            var isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Harap login terlebih dahulu!',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                // SweetAlert confirmation
+                Swal.fire({
+                    title: 'Apakah anda yakin ingin hapus ini keranjang?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Ajax request to delete item
+                        $.ajax({
+                            url: '{{ route('front.deleteItem.cart') }}',
+                            type: 'post',
+                            data: {
+                                rowId: rowId,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                // Redirect to cart page after successful deletion
+                                window.location.href = '{{ route('front.cart') }}';
+                            },
+                        });
+                    }
+                });
+            }
         }
+
         document.getElementById('checkoutButton').addEventListener('click', function(event) {
             event.preventDefault(); // Prevent the default link behavior
-            Swal.fire({
-                title: 'Apa kamu yakin?',
-                text: " Apakah anda ingin checkout barang ini?",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, checkout!',
-                cancelButtonText: 'Tidak, Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href =
-                        "{{ route('front.checkout') }}"; // Redirect to the checkout route if confirmed
-                }
-            });
+
+            // Check if the user is logged in
+            var isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Harap login terlebih dahulu!',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Apa kamu yakin?',
+                    text: "Apakah anda ingin checkout barang ini?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, checkout!',
+                    cancelButtonText: 'Tidak, Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href =
+                            "{{ route('front.checkout') }}"; // Redirect to the checkout route if confirmed
+                    }
+                });
+            }
         });
     </script>
 @endsection

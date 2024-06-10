@@ -14,7 +14,7 @@
                 <!-- Add icons to the links using the .nav-icon class
 with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="dashboard.html" class="nav-link">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -52,6 +52,13 @@ with font-awesome or any other icon font library -->
                         <p>Produk</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('ratings.productRatings') }}"
+                        class="nav-link {{ request()->routeIs('ratings.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-star"></i>
+                        <p>Penilaian</p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="{{ route('shipping.create') }}"
@@ -79,13 +86,13 @@ with font-awesome or any other icon font library -->
                     <a href="{{ route('users.index') }}"
                         class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
                         <i class="nav-icon  fas fa-users"></i>
-                        <p>Users</p>
+                        <p>Pengguna</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages.html" class="nav-link">
+                    <a href="{{ route('pages.index') }}" class="nav-link">
                         <i class="nav-icon  far fa-file-alt"></i>
-                        <p>Pages</p>
+                        <p>Halaman</p>
                     </a>
                 </li>
             </ul>

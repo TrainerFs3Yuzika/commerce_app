@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Buat Product</h1>
+                    <h1>Buat Produk</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('products.index') }}" class="btn btn-primary">Kembali</a>
@@ -148,9 +148,9 @@
 
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Produk-produk terkait</h2>
+                                <h2 class="h4 mb-3">Produk Terkait</h2>
                                 <div class="mb-3">
-                                    <select multiple class="related-product w-100 "name="related_products[]"
+                                    <select multiple class="related-products w-100" name="related_products[]"
                                         id="related_products">
                                     </select>
                                     <p class="error"></p>
@@ -344,26 +344,37 @@
 
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
-
+            init: function() {
+                this.on('error', function(file, message) {
+                    if (file.size > this.options.maxFilesize * 1024 * 1024) {
+                        this.removeFile(file);
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'File terlalu besar',
+                            text: 'Ukuran file melebihi batas maksimal 2 MB.'
+                        });
+                    }
+                });
+            },
             url: "{{ route('temp-images.create') }}",
             maxFiles: 10,
             paramName: 'image',
             addRemoveLinks: true,
             acceptedFiles: "image/jpeg,image/png,image/gif",
+            maxFilesize: 2, // Set maximum file size to 2MB
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(file, response) {
-                // $("#image_id").val(response.image_id);
-                //console.log(response)
-
-                var html = `<div class="col-md-3" id="image-row-${response.image_id}"><div class="card">
-                <input type="hidden" name="image_array[]" value="${response.image_id}">
-                <img src="${response.ImagePath}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
-                </div>
-            </div></div>`;
+                var html = `<div class="col-md-3" id="image-row-${response.image_id}">
+                        <div class="card">
+                            <input type="hidden" name="image_array[]" value="${response.image_id}">
+                            <img src="${response.ImagePath}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
+                            </div>
+                        </div>
+                    </div>`;
 
                 $("#product-gallery").append(html);
             },

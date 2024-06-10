@@ -380,7 +380,8 @@
         });
 
         Dropzone.autoDiscover = false;
-        const dropzone = $("#image").dropzone({
+
+        const dropzone = new Dropzone("#image", {
             url: "{{ route('product-images.update') }}",
             maxFiles: 10,
             paramName: 'image',
@@ -392,46 +393,66 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(file, response) {
-                var html = `
-                    <div class="col-md-3" id="image-row-${response.image_id}">
-                        <div class="card">
-                            <input type="hidden" name="image_array[]" value="${response.image_id}">
-                            <img src="${response.imagePath}" class="card-img-top" alt="">
-                            <div class="card-body">
-                                <a href="javascript::void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
-                            </div>
+            init: function() {
+                this.on("addedfile", function(file) {
+                    if (file.size > 2 * 1024 * 1024) { // 2 MB in bytes
+                        this.removeFile(file); // Remove the file from Dropzone
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ukuran gambar maksimal adalah 2 MB.',
+                        });
+                    }
+                });
+
+                this.on("success", function(file, response) {
+                    var html = `
+                <div class="col-md-3" id="image-row-${response.image_id}">
+                    <div class="card">
+                        <input type="hidden" name="image_array[]" value="${response.image_id}">
+                        <img src="${response.imagePath}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
                         </div>
-                    </div>`;
-                $("#product-gallery").append(html);
-            },
-            complete: function(file) {
-                this.removeFile(file);
+                    </div>
+                </div>`;
+                    $("#product-gallery").append(html);
+                });
+
+                this.on("complete", function(file) {
+                    this.removeFile(file);
+                });
             }
         });
 
 
+
         function deleteImage(id) {
-            $("#image-row-" + id).remove();
-            if (confirm("Are you sure you want to delete image?")) {
-                $.ajax({
-                    url: '{{ route('product-images.destroy') }}',
-                    type: 'delete',
-                    data: {
-                        id: id
-                    },
-                    success: function(response) {
-                        if (response.status == true) {
-                            alert(response.message);
-                        } else {
-                            alert(response.message);
+            Swal.fire({
+                title: 'Apakah kamu ingin foto ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Tidak, Simpan saja'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('product-images.destroy') }}',
+                        type: 'delete',
+                        data: {
+                            id: id
+                        },
+                        success: function(response) {
+                            if (response.status == true) {
+                                Swal.fire('Deleted!', response.message, 'success');
+                                $("#image-row-" + id).remove();
+                            } else {
+                                Swal.fire('Error!', response.message, 'error');
+                            }
                         }
-
-                    }
-                });
-
-            }
-
+                    });
+                }
+            });
         }
     </script>
 @endsection

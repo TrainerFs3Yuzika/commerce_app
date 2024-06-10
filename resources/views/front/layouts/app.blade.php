@@ -197,11 +197,17 @@
                     <div class="footer-card">
                         <h3>Important Links</h3>
                         <ul>
-                            <li><a href="about-us.php" title="About">About</a></li>
+                            @if (staticPages()->isNotEmpty())
+                                @foreach (staticPages() as $page)
+                                    <li><a href="{{ route('front.page', $page->slug) }}"
+                                            title="{{ $page->name }}">{{ $page->name }}</a></li>
+                                @endforeach
+                            @endif
+                            {{-- <li><a href="about-us.php" title="About">About</a></li>
                             <li><a href="contact-us.php" title="Contact Us">Contact Us</a></li>
                             <li><a href="#" title="Privacy">Privacy</a></li>
                             <li><a href="#" title="Privacy">Terms & Conditions</a></li>
-                            <li><a href="#" title="Privacy">Refund Policy</a></li>
+                            <li><a href="#" title="Privacy">Refund Policy</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -210,9 +216,9 @@
                     <div class="footer-card">
                         <h3>My Account</h3>
                         <ul>
-                            <li><a href="#" title="Sell">Login</a></li>
-                            <li><a href="#" title="Advertise">Register</a></li>
-                            <li><a href="#" title="Contact Us">My Orders</a></li>
+                            <li><a href="{{ route('account.login') }}" title="Sell">Login</a></li>
+                            <li><a href="{{ route('account.register') }}" title="Advertise">Register</a></li>
+                            <li><a href="{{ route('front.cart') }}" title="Contact Us">My Orders</a></li>
                         </ul>
                     </div>
                 </div>

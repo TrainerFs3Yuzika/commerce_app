@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit User</h1>
+                    <h1>Edit Pengguna</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('users.index') }}" class="btn btn-primary">Kembali</a>
@@ -26,17 +26,16 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Nama</label>
-                                    <input value="{{ $user->name }}" type="text" name="name" id="name" class="form-control"
-                                        placeholder="Name" autofocus
-                                        >
+                                    <input value="{{ $user->name }}" type="text" name="name" id="name"
+                                        class="form-control" placeholder="Name" autofocus>
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Email</label>
-                                    <input value="{{ $user->email }}" type="text" name="email" id="email" class="form-control"
-                                        placeholder="Email">
+                                    <input value="{{ $user->email }}" type="text" name="email" id="email"
+                                        class="form-control" placeholder="Email">
                                     <p></p>
                                 </div>
                             </div>
@@ -45,15 +44,15 @@
                                     <label for="slug">Password</label>
                                     <input type="password" name="password" id="password" class="form-control"
                                         placeholder="Password">
-                                        <span>Untuk mengubah password silahkan isikan password baru</span>
+                                    <span>Untuk mengubah password silahkan isikan password baru</span>
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Telp. </label>
-                                    <input value="{{ $user->phone }}" type="text" name="phone" id="phone" class="form-control"
-                                        placeholder="Nomor Telp.">
+                                    <input value="{{ $user->phone }}" type="text" name="phone" id="phone"
+                                        class="form-control" placeholder="Nomor Telp.">
                                     <p></p>
                                 </div>
                             </div>
@@ -61,8 +60,9 @@
                                 <div class="mb-3">
                                     <label for="slug">Status</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option {{ ($user->status == 1) ? 'selected' : '' }} value="1">Aktif</option>
-                                        <option {{ ($user->status == 0) ? 'selected' : '' }} value="0">Non Aktif</option>
+                                        <option {{ $user->status == 1 ? 'selected' : '' }} value="1">Aktif</option>
+                                        <option {{ $user->status == 0 ? 'selected' : '' }} value="0">Non Aktif
+                                        </option>
                                     </select>
                                     <p></p>
                                 </div>
@@ -157,7 +157,5 @@
                 }
             })
         });
-
-        
     </script>
 @endsection

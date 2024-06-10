@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('image')->default(NULL);
+            $table->string('image')->nullable()->default(null);
+            $table->enum('showHome', ['Yes', 'No'])->default('No');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
