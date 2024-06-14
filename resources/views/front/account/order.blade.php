@@ -1,12 +1,12 @@
 @extends('front.layouts.app')
 
 @section('content')
-<section class="section-5 pt-3 pb-3 mb-3 bg-white">
+    <section class="section-5 pt-3 pb-3 mb-3 bg-white">
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
-                    <li class="breadcrumb-item">My Orders</li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">Akun Saya</a></li>
+                    <li class="breadcrumb-item">Pesananku</li>
                 </ol>
             </div>
         </div>
@@ -21,16 +21,17 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="h5 mb-0 pt-2 pb-2">My Orders</h2>
+                            <h2 class="h5 mb-0 pt-2 pb-2">Pesananku</h2>
                         </div>
                         <div class="card-body p-4">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <td>Orders #</td>
-                                        <td>Date Purchased</td>
+                                        <td>Tanggal Pembelian</td>
                                         <td>Status</td>
                                         <td>Total</td>
+                                        <td>Detail Order</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,31 +39,34 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>
-                                                    <a href="{{route('account.orderDetail', $order->id)}}">{{ $order->id }}</a>
+                                                    <a href="">{{ $order->id }}</a>
                                                 </td>
                                                 <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}</td>
                                                 <td>
                                                     @if ($order->status == 'pending')
-                                                    <span class="badge bg-danger">Pending</span>
+                                                        <span class="badge bg-danger">Dikemas</span>
                                                     @elseif ($order->status == 'shipped')
-                                                    <span class="badge bg-info">Shipped</span>
+                                                        <span class="badge bg-info">Dikirim</span>
                                                     @elseif ($order->status == 'delivered')
-                                                    <span class="badge bg-success">Delivered</span>
+                                                        <span class="badge bg-success">Selesai</span>
                                                     @else
-                                                    <span class="badge bg-danger">Cancelled</span>
+                                                        <span class="badge bg-danger">Di Batalkan</span>
                                                     @endif
                                                 </td>
-                                                <td>Rp. {{ number_format($order->grand_total,2) }}</td>
+                                                <td>Rp{{ number_format($order->grand_total,  0, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('account.orderDetail', $order->id) }}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                               </td>
                                             </tr>
                                         @endforeach
-
-                                        @else
+                                    @else
                                         <tr>
-                                            <td colspan="3">Orders not found</td>
+                                            <td colspan="3" style="text-align: center;">Belum Ada Pesanan</td>
                                         </tr>
-
                                     @endif
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -72,4 +76,3 @@
         </div>
     </section>
 @endsection
-

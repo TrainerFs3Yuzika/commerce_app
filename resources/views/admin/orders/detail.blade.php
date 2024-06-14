@@ -50,11 +50,11 @@
                                     <b>Total:</b> @rupiah($order->grand_total)<br>
                                     <b>Status:</b>
                                     @if ($order->status == 'pending')
-                                        <span class="text-danger">Tertunda</span>
+                                        <span class="text-danger">Dikemas</span>
                                     @elseif ($order->status == 'shipped')
                                         <span class="text-info">Dikirim</span>
                                     @elseif ($order->status == 'delivered')
-                                        <span class="text-success">Terkirim</span>
+                                        <span class="text-success">Selesai</span>
                                     @else
                                         <span class="text-danger">Dibatalkan</span>
                                     @endif
@@ -85,7 +85,7 @@
 
                                     <tr>
                                         <th colspan="3" class="text-right">Subtotal:</th>
-                                        <td>Rp.{{ number_format($order->subtotal, 2) }}</td>
+                                        <td>@rupiah($order->subtotal)</td>
                                     </tr>
                                     <tr>
                                         <th colspan="3" class="text-right">Diskon:
@@ -115,11 +115,11 @@
                                 <div class="mb-3">
                                     <select name="status" id="status" class="form-control">
                                         <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
-                                            Tertunda</option>
+                                            Dikemas</option>
                                         <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>
                                             Dikirim</option>
                                         <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>
-                                            Terkirim</option>
+                                            Selesai</option>
                                         <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>
                                             Dibatalkan</option>
                                     </select>

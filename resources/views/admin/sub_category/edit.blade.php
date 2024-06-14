@@ -40,9 +40,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Nama</label>
+                                    <label for="name">Nama Sub Kategori</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Nama" value="{{ $subCategory->name }}" autofocus>
+                                        placeholder="Nama Sub Kategori" value="{{ $subCategory->name }}" autofocus>
                                     <p></p>
                                 </div>
                             </div>

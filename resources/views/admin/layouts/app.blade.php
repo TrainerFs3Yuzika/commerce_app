@@ -61,15 +61,15 @@
                         <div class="mb-3">{{ Auth::guard('admin')->user()->email }}</div>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
-                            <i class="fas fa-user-cog mr-2"></i> Settings
+                            <i class="fas fa-user-cog mr-2"></i> Pengaturan
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('admin.showChangePasswordForm')}}" class="dropdown-item">
-                            <i class="fas fa-lock mr-2"></i> Change Password
+                            <i class="fas fa-lock mr-2"></i> Ubah Kata Sandi
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('admin.logout') }}" class="dropdown-item text-danger">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            <i class="fas fa-sign-out-alt mr-2"></i> Keluar
                         </a>
                     </div>
                 </li>

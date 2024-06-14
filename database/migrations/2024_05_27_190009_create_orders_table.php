@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('grand_total', 10, 2);
             $table->enum('payment_status', ['paid', 'not paid'])->default('not paid');
             $table->enum('status', ['pending', 'shipped', 'delivered'])->default('pending');
-            $table->timestamp('shipped_date')->nullable()->after('status');
+            $table->timestamp('shipped_date')->nullable();
 
             //user Addresss related columns
             $table->string('first_name');

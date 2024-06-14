@@ -198,7 +198,7 @@
                                 <h2 class="h4 mb-3">Merek produk</h2>
                                 <div class="mb-3">
                                     <select name="brand" id="brand" class="form-control">
-                                        <option value="">Pilih Brand</option>
+                                        <option value="">Pilih Merek</option>
                                         @if ($brands->isNotEmpty())
                                             @foreach ($brands as $brand)
                                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>

@@ -63,14 +63,14 @@
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->name }}</td>
                                         <td>{{ $order->email }}</td>
-                                        <td>{{ $order->mobile }}</td>
+                                        <td>@formatPhone($order->mobile)</td>
                                         <td>
                                             @if ($order->status == 'pending')
-                                                <span class="badge bg-danger">Tertunda</span>
+                                                <span class="badge bg-danger">Dikemas</span>
                                             @elseif ($order->status == 'shipped')
                                                 <span class="badge bg-info">Dikirim</span>
                                             @elseif ($order->status == 'delivered')
-                                                <span class="badge bg-success">Terkirim</span>
+                                                <span class="badge bg-success">Selesai</span>
                                             @else
                                                 <span class="badge bg-danger">Dibatalkan</span>
                                             @endif

@@ -5,8 +5,8 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
-                    <li class="breadcrumb-item">My Orders</li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">Akun Saya</a></li>
+                    <li class="breadcrumb-item">Pesananku</li>
                 </ol>
             </div>
         </div>
@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-6 col-lg-3">
                                             <!-- Heading -->
-                                            <h6 class="heading-xxxs text-muted">Shipped date:</h6>
+                                            <h6 class="heading-xxxs text-muted">Tanggal Pengiriman:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
                                                 <time datetime="2024-06-01">
@@ -57,22 +57,22 @@
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
                                                 @if ($order->status == 'pending')
-                                                <span class="badge bg-danger">Pending</span>
+                                                <span class="badge bg-danger">Dikemas</span>
                                                 @elseif ($order->status == 'shipped')
-                                                <span class="badge bg-info">Shipped</span>
+                                                <span class="badge bg-info">Dikirim</span>
                                                 @elseif ($order->status == 'delivered')
-                                                <span class="badge bg-success">Delivered</span>
+                                                <span class="badge bg-success">Selesai</span>
                                                 @else
-                                                <span class="badge bg-danger">Cancelled</span>
+                                                <span class="badge bg-danger">Di Batalkan</span>
                                                 @endif
                                             </p>
                                         </div>
                                         <div class="col-6 col-lg-3">
                                             <!-- Heading -->
-                                            <h6 class="heading-xxxs text-muted">Order Amount:</h6>
+                                            <h6 class="heading-xxxs text-muted">Jumlah Pesanan:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
-                                             Rp. {{ number_format($order->grand_total,2) }}
+                                             Rp{{ number_format($order->grand_total, 0, ',', '.') }}
                                             </p>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                             <div class="card-footer p-3">
 
                                 <!-- heading -->
-                                <h6 class="mb-7 h5 mt-4">Order Items ( {{$orderItemsCount}} )</h6>
+                                <h6 class="mb-7 h5 mt-4">Produk Pesanan ( {{$orderItemsCount}} )</h6>
 
                                 <!-- divider -->
                                 <hr class="my-3">
@@ -110,7 +110,7 @@
                                                 <!-- tittle -->
                                                 <p class="mb-4 fs-sm fw-bold">
                                                     <a href="product.html" class="text-body">{{ $item->name }} x {{ $item->qty }}</a> <br>
-                                                    <span class="text-muted">Rp. {{$item->total }}</span>
+                                                    <span class="text-muted">Rp{{ number_format($item->total, 0, ',', '.') }}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -123,25 +123,25 @@
                         <div class="card card-lg mb-5 mt-3">
                             <div class="card-body">
                                 <!-- heading -->
-                                <h6 class="mt-0 mb-3 h5">Order Total</h6>
+                                <h6 class="mt-0 mb-3 h5">Total Pesanan</h6>
 
                                 <!-- list group -->
                                 <ul>
                                     <li class="list-group-item d-flex">
                                         <span>Subtotal</span>
-                                        <span class="ms-auto">Rp. {{number_format($order->subtotal,2)}}</span>
+                                        <span class="ms-auto">Rp{{number_format($order->subtotal, 0, ',', '.')}}</span>
                                     </li>
                                     <li class="list-group-item d-flex">
-                                        <span>Discount {{ (!empty($order->coupon_code)) ? '('.$order->coupon_code.')' : '' }}</span>
-                                        <span class="ms-auto">Rp. {{number_format($order->discount,2)}}</span>
+                                        <span>Diskon {{ (!empty($order->coupon_code)) ? '('.$order->coupon_code.')' : '' }}</span>
+                                        <span class="ms-auto">Rp{{number_format($order->discount, 0, ',', '.')}}</span>
                                     </li>
                                     <li class="list-group-item d-flex">
-                                        <span>Shipping</span>
-                                        <span class="ms-auto">Rp. {{number_format($order->shipping,2)}}</span>
+                                        <span>Biaya Pengiriman</span>
+                                        <span class="ms-auto">Rp{{number_format($order->shipping, 0, ',', '.')}}</span>
                                     </li>
                                     <li class="list-group-item d-flex fw-bold">
-                                    <span>Grand Total</span>
-                                    <span class="ms-auto">Rp. {{number_format($order->grand_total,2)}}</span>
+                                    <span>Total Pembayaran</span>
+                                    <span class="ms-auto">Rp{{number_format($order->grand_total, 0, ',', '.')}}</span>
                                 </li>
                                 </ul>
                             </div>

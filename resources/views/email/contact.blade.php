@@ -13,8 +13,7 @@
    <p>Email: {{$mailData['email'] }}</p>
    <p>Subject: {{$mailData['subject'] }}</p>
 
-   <p> Message:</p>
-   <p>{{ $mailData['message'] }}</p>
+   <p> Message: {{ $mailData['message'] }}</p>
 
 </body>
 </html>

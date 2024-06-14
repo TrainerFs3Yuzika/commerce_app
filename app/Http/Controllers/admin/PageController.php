@@ -11,7 +11,7 @@ class PageController extends Controller
 {
     public function index(Request $request)
     {
-        $pages = Page::latest();
+        $pages = Page::orderBy('id', 'asc');
 
         if ($request->keyword != '') {
             $pages = $pages->where('name', 'like', '%' . $request->keyword . '%');

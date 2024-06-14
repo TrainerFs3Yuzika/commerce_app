@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->integer('coupon_code_id')->after('coupon_code');
+            $table->integer('coupon_code_id')->nullable()->after('coupon_code');
         });
     }
 

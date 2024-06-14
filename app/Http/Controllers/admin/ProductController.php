@@ -37,13 +37,14 @@ class ProductController extends Controller
         $data = [];
         $categories = Category::orderBy('name', 'ASC')->get();
         $brands = Brand::orderBy('name', 'ASC')->get();
-        $data['categories' ]= $categories;
-        $data[ 'brands' ]= $brands;
-        
+        $data['categories'] = $categories;
+        $data['brands'] = $brands;
+
         return view('admin.products.create', $data);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         // dd($request->image_array);
         // exit();
@@ -98,31 +99,32 @@ class ProductController extends Controller
             $product->is_featured = $request->is_featured;
             $product->shipping_returns = $request->shipping_returns;
             $product->short_description = $request->short_description;
-            $product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) : '';$product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) : '';
+            $product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) : '';
+            $product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) : '';
             $product->save();
 
             //save Gallery Pics
-            if(!empty($request->image_array)){
-                foreach ($request->image_array as $temp_image_id){
+            if (!empty($request->image_array)) {
+                foreach ($request->image_array as $temp_image_id) {
 
                     $tempImageInfo = TempImage::find($temp_image_id);
-                    $extArray = explode('.', $tempImageInfo->name) ;
+                    $extArray = explode('.', $tempImageInfo->name);
                     $ext = last($extArray); // like jpg,gif,png etc
 
                     $productImage = new ProductImage();
                     $productImage->product_id = $product->id;
                     $productImage->image = 'NULL';
                     $productImage->save();
-                    
-                    $imageName = $product->id.'-'.$productImage->id.'-'.time().'.'.$ext;
+
+                    $imageName = $product->id . '-' . $productImage->id . '-' . time() . '.' . $ext;
                     $productImage->image = $imageName;
                     $productImage->save();
 
                     //Generate Product Thumbnails
 
                     //Large Image
-                    $sourcePath = public_path().'/temp/'.$tempImageInfo->name;
-                    $destPath = public_path().'/uploads/product/large/'.$imageName;
+                    $sourcePath = public_path() . '/temp/' . $tempImageInfo->name;
+                    $destPath = public_path() . '/uploads/product/large/' . $imageName;
                     $image = Image::make($sourcePath);
                     $image->resize(1400, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -130,12 +132,11 @@ class ProductController extends Controller
                     $image->save($destPath);
 
                     //Small Image
-                    $destPath = public_path().'/uploads/product/small/'.$imageName;
+                    $destPath = public_path() . '/uploads/product/small/' . $imageName;
                     $image = Image::make($sourcePath);
                     $image->fit(300, 300);
                     $image->save($destPath);
                 }
-
             }
 
             $request->session()->flash('success', 'Product Berhasil Ditambahkan');
@@ -152,59 +153,59 @@ class ProductController extends Controller
         }
     }
 
-    public function edit($id, Request $request){
+    public function edit($id, Request $request)
+    {
         $product = Product::find($id);
 
-        if(empty($product)){
-            return Redirect()->route('products.index')->with('error','Product not found');
+        if (empty($product)) {
+            return Redirect()->route('products.index')->with('error', 'Product not found');
         }
 
         //Fetch Product Images
-        $ProductImages = ProductImage::where('product_id',$product->id)->get();
+        $ProductImages = ProductImage::where('product_id', $product->id)->get();
 
-        $subCategories = SubCategory::where('category_id',$product->category_id)->get();
+        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
 
         $relatedProducts = [];
         //fetch related
-        if($product->related_products != ''){
+        if ($product->related_products != '') {
             $productArray = explode(',', $product->related_products);
             $relatedProducts = Product::whereIn('id', $productArray)->with('product_images')->get();
         }
 
         $data = [];
-       
+
         $categories = Category::orderBy('name', 'ASC')->get();
         $brands = Brand::orderBy('name', 'ASC')->get();
-        $data['categories' ]= $categories;
-        $data[ 'brands' ]= $brands;
+        $data['categories'] = $categories;
+        $data['brands'] = $brands;
         $data['product'] = $product;
         $data['subCategories'] = $subCategories;
         $data['productImages'] = $ProductImages;
         $data['relatedProducts'] = $relatedProducts;
 
-        return view('admin.products.edit',$data);
-
+        return view('admin.products.edit', $data);
     }
-    
-    public function update($id, Request $request) {
+
+    public function update($id, Request $request)
+    {
 
         $product = Product::find($id);
 
-        
+
 
         $rules = [
             'title' => 'required',
-            'slug' => 'required|unique:products,slug,' .$product->id.',id',  
+            'slug' => 'required|unique:products,slug,' . $product->id . ',id',
             'price' => 'required|numeric',
-            'sku' => 'required|unique:products,sku,' .$product->id.',id',
+            'sku' => 'required|unique:products,sku,' . $product->id . ',id',
             'track_qty' => 'required|in:Yes,No',
             'category' => 'required|numeric',
             'is_featured' => 'required|in:Yes,No',
         ];
 
-        if (!empty($request->track_qty) && $request->track_qty == 'Yes'){
-            $rules['qty']='required|numeric';
-
+        if (!empty($request->track_qty) && $request->track_qty == 'Yes') {
+            $rules['qty'] = 'required|numeric';
         }
         $messages = [
             'title.required' => 'Judul wajib diisi',
@@ -223,11 +224,11 @@ class ProductController extends Controller
             'qty.required' => 'Kuantitas wajib diisi',
             'qty.numeric' => 'Kuantitas harus berupa angka',
         ];
-        
+
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->passes()) {
-            
+
             $product->title = $request->title;
             $product->slug = $request->slug;
             $product->description = $request->description;
@@ -248,7 +249,7 @@ class ProductController extends Controller
             $product->save();
 
             //save Gallery Pics
-            
+
             $request->session()->flash('success', 'Product Berhasil DiUbah');
 
             return response()->json([
@@ -261,86 +262,85 @@ class ProductController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        
     }
 
-    public function destroy($id, Request $request) {
+    public function destroy($id, Request $request)
+    {
         $product = Product::find($id);
 
-        if(empty($product)){
-            $request->session()->flash('error','product tidak tersedia');
+        if (empty($product)) {
+            $request->session()->flash('error', 'product tidak tersedia');
             return response()->json([
                 'status' => false,
                 'notFound' => true
             ]);
-
         }
-        $productImages = ProductImage::where('product_id',$id)->get();
+        $productImages = ProductImage::where('product_id', $id)->get();
 
-        if(!empty($productImages)){
+        if (!empty($productImages)) {
             foreach ($productImages as $productImage) {
-                File::delete(public_path('uploads/product/large'.$productImage->image));
-                File::delete(public_path('uploads/product/small'.$productImage->image));
+                File::delete(public_path('uploads/product/large' . $productImage->image));
+                File::delete(public_path('uploads/product/small' . $productImage->image));
             }
 
             ProductImage::where('product_id', $id)->delete();
         }
-        
+
         $product->delete();
 
-        $request->session()->flash('success','Product berhasil dihapus');
-            return response()->json([
-                'status' => true,
-                'message' => 'Product berhasil dihapus'
-            ]);
-        }
-
-        public function getProducts(Request $request ){
-
-            $tempProduct =[];
-            if($request->term !=""){
-                $products = Product::where('title','like','%'.$request->term.'%')->get();
-                 
-                if($products !=null){
-                    foreach($products as $product){
-                        $tempProduct[] = array('id' => $product->id, 'text'=> $product->title);
-                    }
-                }
-                
-            }
-            return response()->json([
-                'tags' => $tempProduct,
-                'status'=> true
-            ]);
-        }
-
-        public function productRatings(Request $request){
-            $ratings = ProductRating::select('product_ratings.*', 'products.title as productTitle')->orderBy('product_ratings.created_at', 'DESC');
-            $ratings = $ratings->leftJoin('products', 'products.id', 'product_ratings.product_id');
-
-            if ($request->get('keyword') != "") {
-                $ratings = $ratings->orwhere('products.title', 'like', '%' . $request->keyword . '%');
-                $ratings = $ratings->orwhere('product_ratings.username', 'like', '%' . $request->keyword . '%');
-
-            }
-
-            $ratings = $ratings->paginate(10);
-
-            return view('admin.products.ratings',[
-                'ratings' => $ratings
-            ]);
-        }
-
-        public function changeRatingStatus(Request $request){
-            $productRating = productRating::find($request->id);
-            $productRating->status = $request->status;
-            $productRating->save();
-
-            session()->flash('sukses','Status berhasil diubah.');
-
-            return response()->json([
-                'status' => true
-            ]);
-        }
+        $request->session()->flash('success', 'Product berhasil dihapus');
+        return response()->json([
+            'status' => true,
+            'message' => 'Product berhasil dihapus'
+        ]);
     }
 
+    public function getProducts(Request $request)
+    {
+
+        $tempProduct = [];
+        if ($request->term != "") {
+            $products = Product::where('title', 'like', '%' . $request->term . '%')->get();
+
+            if ($products != null) {
+                foreach ($products as $product) {
+                    $tempProduct[] = array('id' => $product->id, 'text' => $product->title);
+                }
+            }
+        }
+        return response()->json([
+            'tags' => $tempProduct,
+            'status' => true
+        ]);
+    }
+
+    public function productRatings(Request $request)
+    {
+        $ratings = ProductRating::select('product_ratings.*', 'products.title as productTitle')->orderBy('product_ratings.id', 'asc');
+        $ratings = $ratings->leftJoin('products', 'products.id', 'product_ratings.product_id');
+
+        if ($request->get('keyword') != "") {
+            $ratings = $ratings->orwhere('products.title', 'like', '%' . $request->keyword . '%');
+            $ratings = $ratings->orwhere('product_ratings.username', 'like', '%' . $request->keyword . '%');
+        }
+
+        $ratings = $ratings->paginate(10);
+
+        return view('admin.products.ratings', [
+            'ratings' => $ratings
+        ]);
+    }
+
+    public function changeRatingStatus(Request $request)
+    {
+        $productRating = productRating::find($request->id);
+        $productRating->status = $request->status;
+        $productRating->save();
+
+        session()->flash('sukses', 'Status berhasil diubah.');
+
+        return response()->json([
+            'status' => true
+        ]);
+    }
+}

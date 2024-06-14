@@ -14,79 +14,96 @@ use Illuminate\Support\Facades\File;
 
 class HomeController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $totalOrders = Order::where('status', '!=', 'cancelled')->count();
         $totalProducts = Product::count();
         $totalCustomers = User::where('role', 1)->count();
-
         $totalRevenue = Order::where('status', '!=', 'cancelled')->sum('grand_total');
 
-        //this month revenue
+        // pendapatan bulan ini
         $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
         $currentDate = Carbon::now()->format('Y-m-d');
-
         $revenueThisMonth = Order::where('status', '!=', 'cancelled')
-                        ->whereDate('created_at', '>=', $startOfMonth)
-                        ->whereDate('created_at', '>=', $currentDate)
-                        ->sum('grand_total');
+            ->whereDate('created_at', '>=', $startOfMonth)
+            ->whereDate('created_at', '<=', $currentDate)
+            ->sum('grand_total');
 
-        //last month revenue
-        $lastMonthStartDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $lastMonthEndDate = Carbon::now()->endOfMonth()->format('Y-m-d');
-        $lastMonthName = Carbon::now()->startOfMonth()->format('M');
-
+        // pendapatan bulan lalu
+        $lastMonthStartDate = Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d');
+        $lastMonthEndDate = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d');
+        $lastMonthName = Carbon::now()->subMonth()->format('M');
         $revenueLastMonth = Order::where('status', '!=', 'cancelled')
-                        ->whereDate('created_at', '>=', $lastMonthStartDate)
-                        ->whereDate('created_at', '>=', $lastMonthEndDate)
-                        ->sum('grand_total');
+            ->whereDate('created_at', '>=', $lastMonthStartDate)
+            ->whereDate('created_at', '<=', $lastMonthEndDate)
+            ->sum('grand_total');
 
-        //Last 30 day sale
+        // penjualan 30 hari terakhir
         $LastThirtyDayStartDate = Carbon::now()->subDays(30)->format('Y-m-d');
-
         $revenueLastThirtyDays = Order::where('status', '!=', 'cancelled')
-                        ->whereDate('created_at', '>=', $LastThirtyDayStartDate)
-                        ->whereDate('created_at', '>=', $currentDate)
-                        ->sum('grand_total');
+            ->whereDate('created_at', '>=', $LastThirtyDayStartDate)
+            ->whereDate('created_at', '<=', $currentDate)
+            ->sum('grand_total');
 
-        // Delete temp images here
+        // generate data untuk grafik
+        $revenueData = [];
+        $orderData = [];
+        $revenueLabels = [];
+        $orderLabels = [];
+        for ($i = 0; $i < 30; $i++) {
+            $date = Carbon::now()->subDays(29 - $i)->format('Y-m-d');
+            $revenueLabels[] = $date;
+            $orderLabels[] = $date;
 
-       $dayBeforeToday = Carbon::now()->subDays(1)->format('Y-m-d H:i:s');
-        
+            $dailyRevenue = Order::where('status', '!=', 'cancelled')
+                ->whereDate('created_at', $date)
+                ->sum('grand_total');
+            $dailyOrders = Order::where('status', '!=', 'cancelled')
+                ->whereDate('created_at', $date)
+                ->count();
+
+            $revenueData[] = $dailyRevenue;
+            $orderData[] = $dailyOrders;
+        }
+
+        // hapus gambar sementara
+        $dayBeforeToday = Carbon::now()->subDays(1)->format('Y-m-d H:i:s');
         $tempImages = TempImage::where('created_at', '<=', $dayBeforeToday)->get();
 
-        foreach ($tempImages as $tempImage ){
-            $path = public_path('/temp/'.$tempImage->name);        
-            $thumbPath = public_path('/temp/thumb/'.$tempImage->name);            
+        foreach ($tempImages as $tempImage) {
+            $path = public_path('/temp/' . $tempImage->name);
+            $thumbPath = public_path('/temp/thumb/' . $tempImage->name);
 
-            //Delete Main Image
-            if(File::exists($path)) {
+            // hapus gambar utama
+            if (File::exists($path)) {
                 File::delete($path);
             }
 
-            //Delete Thumb Image
-            if(File::exists($thumbPath)) {
+            // hapus gambar thumbnail
+            if (File::exists($thumbPath)) {
                 File::delete($thumbPath);
             }
 
-            TempImage::where('id',$tempImage->id)->delete();
-        
+            TempImage::where('id', $tempImage->id)->delete();
         }
 
         return view('admin.dashboard', [
-            'totalOrders' => $totalOrders,
-            'totalProducts' => $totalProducts,
-            'totalCustomers' => $totalCustomers,
-            'totalRevenue' => $totalRevenue,
-            'revenueThisMonth' => $revenueThisMonth,
-            'revenueLastMonth' => $revenueLastMonth,
-            'revenueLastThirtyDays' => $revenueLastThirtyDays,
+            'totalOrders' => number_format($totalOrders, 0, ',', '.'),
+            'totalProducts' => number_format($totalProducts, 0, ',', '.'),
+            'totalCustomers' => number_format($totalCustomers, 0, ',', '.'),
+            'totalRevenue' => number_format($totalRevenue, 0, ',', '.'),
+            'revenueThisMonth' => number_format($revenueThisMonth, 0, ',', '.'),
+            'revenueLastMonth' => number_format($revenueLastMonth, 0, ',', '.'),
+            'revenueLastThirtyDays' => number_format($revenueLastThirtyDays, 0, ',', '.'),
             'lastMonthName' => $lastMonthName,
-            
+            'revenueData' => array_map(function($value) { return number_format($value, 0, ',', '.'); }, $revenueData),
+            'revenueLabels' => $revenueLabels,
+            'orderData' => $orderData,
+            'orderLabels' => $orderLabels,
         ]);
     }
 
-    public  function logout()
+    public function logout()
     {
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login');

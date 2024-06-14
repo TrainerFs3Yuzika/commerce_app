@@ -5,7 +5,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">KuyBelanja</a></li>
                     <li class="breadcrumb-item active">Shop</li>
                 </ol>
             </div>
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-3 sidebar">
                     <div class="sub-title">
-                        <h2>Categories</h3>
+                        <h2>Kategori</h3>
                     </div>
 
                     <div class="card">
@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="sub-title mt-5">
-                        <h2>Brand</h3>
+                        <h2>Merek</h3>
                     </div>
 
                     <div class="card">
@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="sub-title mt-5">
-                        <h2>Price</h3>
+                        <h2>Harga</h3>
                     </div>
 
                     <div class="card">
@@ -142,19 +142,19 @@
                                             <div class="product-action">
                                                 @if ($product->track_qty == 'Yes')
                                                     @if ($product->qty > 0)
-                                                        <a class="btn btn-dark" href="javascript:void(0);"
+                                                        <a class="btn btn-dark" href="javascript:void(0);" id="wishlist"
                                                             onclick="addToCart ({{ $product->id }});">
-                                                            <i class="fa fa-shopping-cart"></i> Add To Cart
+                                                            <i class="fa fa-shopping-cart"></i> Masuk Keranjang
                                                         </a>
                                                     @else
                                                         <a class="btn btn-dark" href="javascript:void(0);">
-                                                            Out Of Stock
+                                                            Stok habis
                                                         </a>
                                                     @endif
                                                 @else
-                                                    <a class="btn btn-dark" href="javascript:void(0);"
+                                                    <a class="btn btn-dark" href="javascript:void(0);" id="wishlist"
                                                         onclick="addToCart ({{ $product->id }});">
-                                                        <i class="fa fa-shopping-cart"></i> Add To Cart
+                                                        <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                                     </a>
                                                 @endif
                                             </div>
@@ -162,11 +162,10 @@
                                         <div class="card-body text-center mt-3">
                                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                                             <div class="price mt-2">
-                                                <span class="h5"><strong>Rp. {{ $product->price }}</strong></span>
+                                            <span class="h5"><strong>Rp{{number_format($product->price, 0, ',', '.')}}</strong></span>
 
                                                 @if ($product->compare_price > 0)
-                                                    <span class="h6 text-underline"><del>Rp.
-                                                            {{ $product->compare_price }}</del></span>
+                                                <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
                                                 @endif
                                             </div>
                                         </div>
@@ -192,13 +191,13 @@
         rangeSlider = $(".js-range-slider").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 1000,
+            max: 20000000,
             from: {{ $priceMin }},
-            step: 10,
+            step: 100000,
             to: {{ $priceMax }},
             skin: "round",
             max_postfix: "+",
-            prefix: "Rp. ",
+            prefix: "Rp",
             onFinish: function() {
                 apply_filters()
             }

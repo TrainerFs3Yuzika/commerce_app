@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Pengguna</h1>
+                    <h1>Edit Pelanggan</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('users.index') }}" class="btn btn-primary">Kembali</a>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Ubah</button>
                     <a href="{{ route('users.index') }}" class="btn btn-outline-dark ml-3">Batal</a>
                 </div>
             </form>

@@ -36,7 +36,7 @@
             <div class="col-md-6">
                 <form class="shake" role="form" method="post" id="contactForm" name="contactForm">
                     <div class="mb-3">
-                        <label class="mb-2" for="name">Name</label>
+                        <label class="mb-2" for="name">Nama</label>
                         <input class="form-control" id="name" type="text" name="name"  data-error="Please enter your name">
                         <p class="help-block with-errors"></p>
                     </div>
@@ -54,7 +54,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <label for="message" class="mb-2">Message</label>
+                        <label for="message" class="mb-2">Pesan</label>
                         <textarea class="form-control" rows="3" id="message" name="message"  data-error="Write your message"></textarea>
                         <p class="help-block with-errors"></p>
                     </div>

@@ -7,7 +7,7 @@
                 <ol class="breadcrumb primary-color mb-0">
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">Home</a></li>
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.shop') }}">Shop</a></li>
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.cart') }}">Cart</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.cart') }}">Keranjang</a></li>
                     <li class="breadcrumb-item">Checkout</li>
                 </ol>
             </div>
@@ -16,11 +16,11 @@
 
     <section class="section-9 pt-4">
         <div class="container">
-            <form id="orderForm" name="orderForm" action="" method="post">
+            <form id="orderForm" name="orderForm">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="sub-title">
-                            <h2>Shipping Address</h2>
+                            <h2>Alamat Pengiriman</h2>
                         </div>
                         <div class="card shadow-lg border-0">
                             <div class="card-body checkout-form">
@@ -29,7 +29,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="first_name" id="first_name" class="form-control"
-                                                placeholder="First Name"
+                                                placeholder="Masukkan Nama Depan Anda"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->first_name : '' }}">
                                             <p></p>
                                         </div>
@@ -37,7 +37,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="last_name" id="last_name" class="form-control"
-                                                placeholder="Last Name"
+                                                placeholder="Masukkan Nama Belakang Anda"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->last_name : '' }}">
                                             <p></p>
                                         </div>
@@ -45,7 +45,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="email" id="email" class="form-control"
-                                                placeholder="Email"
+                                                placeholder="Masukkan Email Anda"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->email : '' }}">
                                             <p></p>
                                         </div>
@@ -53,7 +53,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <select name="country" id="country" class="form-control">
-                                                <option value="">Select a Country</option>
+                                                <option value="">Pilih Negara</option>
                                                 @if ($countries->isNotEmpty())
                                                     @foreach ($countries as $country)
                                                         <option
@@ -67,21 +67,21 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <textarea name="address" id="address" cols="30" rows="3" placeholder="Address" class="form-control">{{ !empty($customerAddress) ? $customerAddress->address : '' }}</textarea>
+                                            <textarea name="address" id="address" cols="30" rows="3" placeholder="Alamat Cth:Nama Jalan,Gedung, No.Rumah" class="form-control">{{ !empty($customerAddress) ? $customerAddress->address : '' }}</textarea>
                                             <p></p>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="apartment" id="apartment" class="form-control"
-                                                placeholder="Apartment, suite, unit, etc. (optional)"
+                                                placeholder="Kecamatan"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->apartment : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <input type="text" name="city" id="city" class="form-control"
-                                                placeholder="City"
+                                                placeholder="Kota"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->city : '' }}">
                                             <p></p>
                                         </div>
@@ -89,7 +89,7 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <input type="text" name="state" id="state" class="form-control"
-                                                placeholder="State"
+                                                placeholder="Provinsi"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->state : '' }}">
                                             <p></p>
                                         </div>
@@ -97,7 +97,7 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <input type="text" name="zip" id="zip" class="form-control"
-                                                placeholder="Zip"
+                                                placeholder="Kode Pos"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->zip : '' }}">
                                             <p></p>
                                         </div>
@@ -105,7 +105,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="mobile" id="mobile" class="form-control"
-                                                placeholder="Mobile No."
+                                                placeholder="Nomor Telepon"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->mobile : '' }}">
                                             <p></p>
                                         </div>
@@ -113,7 +113,7 @@
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <textarea name="order_notes" id="order_notes" cols="30" rows="2" placeholder="Order Notes (optional)"
+                                            <textarea name="order_notes" id="order_notes" cols="30" rows="2" placeholder="Catatan Pemesanan(optional)"
                                                 class="form-control"></textarea>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="sub-title">
-                            <h2>Order Summery</h3>
+                            <h2>Ringkasan Pemesanan</h3>
                         </div>
                         <div class="card cart-summery">
                             <div class="card-body">
@@ -138,31 +138,32 @@
 
                                 <div class="d-flex justify-content-between summery-end">
                                     <div class="h6"><strong>Subtotal</strong></div>
-                                    <div class="h6"><strong>Rp{{ Cart::subtotal() }}</strong></div>
+                                    {{-- <div class="h6"><strong>Rp{{ Cart::subtotal() }}</strong></div> --}}
+                                    <div class="h6"><strong>Rp{{ number_format($subTotal, 0, '', '.') }}</strong></div>
                                 </div>
                                 <div class="d-flex justify-content-between summery-end">
-                                    <div class="h6"><strong>Discount</strong></div>
+                                    <div class="h6"><strong>Diskon</strong></div>
                                     <div class="h6" id="discount_value"><strong>Rp{{ $discount }}</strong></div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
-                                    <div class="h6"><strong>Shipping</strong></div>
+                                    <div class="h6"><strong>Biaya Pengiriman</strong></div>
                                     <div class="h6" id="shippingAmount">
-                                        <strong>Rp{{ number_format($totalShippingCharge, 2) }}</strong>
+                                        <strong>Rp{{ number_format($totalShippingCharge , 0, ',', '.') }}</strong>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2 summery-end">
                                     <div class="h5"><strong>Total</strong></div>
                                     <div class="h5" id="grandTotal">
-                                        <strong>Rp{{ number_format($grandTotal, 2) }}</strong>
+                                        <strong>Rp{{ number_format($grandTotal, 0, ',', '.') }}</strong>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="input-group apply-coupan mt-4">
-                            <input type="text" placeholder="Coupon Code" class="form-control" name="discount_code"
+                            <input type="text" placeholder="Kode kupon" class="form-control" name="discount_code"
                                 id="discount_code">
-                            <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
+                            <button class="btn btn-dark" type="button" id="apply-discount">Klaim Kupon</button>
                         </div>
 
                         <div id="discount-response-wrapper">
@@ -180,7 +181,7 @@
 
                         <div class="card payment-form ">
 
-                            <h3 class="card-title h5 mb-3">Payment Method</h3>
+                            <h3 class="card-title h5 mb-3">Metode Pembayaran</h3>
 
                             <div>
                                 <input type="radio" name="payment_method" value="cod" id="payment_method_one">
@@ -220,8 +221,8 @@
                             </div>
                             <div class="pt-4">
                                 <!-- <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>-->
-                                <button type="submit" id="payNowButton" class="btn-dark btn btn-block w-100">Pay
-                                    Now</button>
+                                <button type="submit" id="payNowButton" class="btn-dark btn btn-block w-100">Bayar Sekarang
+                                </button>
                             </div>
                         </div>
 
@@ -256,7 +257,7 @@
             $('button[type="submit"]').prop('disabled', true);
             $.ajax({
                 url: '{{ route('front.processCheckout') }}',
-                type: 'post',
+                type: 'POST',
                 data: $(this).serializeArray(),
                 dataType: 'json',
                 success: function(response) {

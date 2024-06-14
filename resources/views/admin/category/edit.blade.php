@@ -25,9 +25,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Nama</label>
+                                    <label for="name">Nama Kategori</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Nama" value="{{ $category->name }}" autofocus>
+                                        placeholder="Nama Kategori" value="{{ $category->name }}" autofocus>
                                     <p></p>
                                 </div>
                             </div>
@@ -70,11 +70,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="status">Tampilkan di beranda</label>
+                                    <label for="status">Tampilkan di Beranda</label>
                                     <select name="showHome" id="showHome" class="form-control">
-                                        ' <option {{ $category->showHome == 'Yes' ? 'selected' : '' }} value="Yes">Ya
+                                        ' <option {{ $category->showHome == 'Ya' ? 'selected' : '' }} value="Yes">Ya
                                         </option>
-                                        <option {{ $category->showHome == 'No' ? 'selected' : '' }} value="No">Tidak
+                                        <option {{ $category->showHome == 'Tidak' ? 'selected' : '' }} value="No">Tidak
                                         </option>
                                     </select>
                                 </div>

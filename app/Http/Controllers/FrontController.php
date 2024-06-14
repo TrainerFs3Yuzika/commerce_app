@@ -88,7 +88,7 @@ class FrontController extends Controller
     public function sendContactEmail(Request $request)
     {
         // dd($request);
-
+    
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
@@ -100,9 +100,9 @@ class FrontController extends Controller
             'subject.required' => 'Harap isi subjek terlebih dahulu',
             'subject.min' => 'Subjek harus memiliki setidaknya 10 karakter',
         ]);
-
+    
         if ($validator->passes()) {
-
+    
             //send email here
             $mailData = [
                 'name' => $request->name,
@@ -111,13 +111,14 @@ class FrontController extends Controller
                 'message' => $request->message,
                 'mail_subject' => 'Kamu telah menerima kontak email.',
             ];
-
-            $admin = User::where('id', 15)->first();
-
-            Mail::to($admin->email)->send(new ContactEmail($mailData));
-
+    
+            // Mengirim email ke alamat statis
+            $adminEmail = 'kuyyybelanjaaa@gmail.com';
+    
+            Mail::to($adminEmail)->send(new ContactEmail($mailData));
+    
             session()->flash('sukses', 'Terimakasih sudah kontak kami, kami akan segera memberikan feedback');
-
+    
             return response()->json([
                 'status' => true,
             ]);
@@ -128,4 +129,5 @@ class FrontController extends Controller
             ]);
         }
     }
+    
 }

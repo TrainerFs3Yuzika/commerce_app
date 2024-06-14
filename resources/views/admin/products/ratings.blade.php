@@ -58,7 +58,15 @@
                                     <tr>
                                         <td>{{ $rating->id }}</td>
                                         <td>{{ $rating->productTitle }}</a></td>
-                                        <td>{{ $rating->rating }}</td>
+                                        <td>
+                                            @for ($i = 1; $i <= $rating->rating; $i++)
+                                                &#9733; <!-- Bintang terisi (★) -->
+                                            @endfor
+                                            @for ($i = $rating->rating + 1; $i <= 5; $i++)
+                                                &#9734; <!-- Bintang kosong (☆) -->
+                                            @endfor
+                                        </td>
+
                                         <td>{{ $rating->comment }}</td>
                                         <td>{{ $rating->username }}</td>
                                         <td>

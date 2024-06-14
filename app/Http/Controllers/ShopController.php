@@ -12,20 +12,21 @@ use Illuminate\Support\Facades\Validator;
 
 class ShopController extends Controller
 {
-    public function index(Request $request, $categorySlug = null, $subCategorySlug = null) { // Ubah $subCategory menjadi $subCategorySlug
+    public function index(Request $request, $categorySlug = null, $subCategorySlug = null)
+    { // Ubah $subCategory menjadi $subCategorySlug
         $categorySelected = '';
         $subCategorySelected = '';
         $brandsArray = [];
 
         $categories = Category::orderBy('name', 'ASC')->with('sub_category')->where('status', 1)->get();
         $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
-        
+
         $products = Product::where('status', 1);
 
         // Apply filters here
         if (!empty($categorySlug)) {
             $category = Category::where('slug', $categorySlug)->first();
-            if ($category) { 
+            if ($category) {
                 $products = $products->where('category_id', $category->id);
                 $categorySelected = $category->id;
             }
@@ -33,16 +34,16 @@ class ShopController extends Controller
 
         if (!empty($subCategorySlug)) {
             $subCategory = SubCategory::where('slug', $subCategorySlug)->first();
-            if ($subCategory) { 
+            if ($subCategory) {
                 $products = $products->where('sub_category_id', $subCategory->id);
                 $subCategorySelected = $subCategory->id;
             }
         }
 
-        if(!empty($request->get('brand'))){
-            $brandsArray = explode(',',$request->get('brand'));
-            $products = $products->whereIn('brand_id',$brandsArray);
-        } 
+        if (!empty($request->get('brand'))) {
+            $brandsArray = explode(',', $request->get('brand'));
+            $products = $products->whereIn('brand_id', $brandsArray);
+        }
 
         if ($request->get('price_max') != '' && $request->get('price_min') != '') {
             if ($request->get('price_max') == 1000) {
@@ -56,97 +57,101 @@ class ShopController extends Controller
         }
 
         if (!empty($request->get('search'))) {
-            $products = $products->where('title','like','%'.$request->get('search').'%');
+            $products = $products->where('title', 'like', '%' . $request->get('search') . '%');
         }
 
-        if ($request->get('sort') !=''){
-            if($request->get('sort') == 'latest'){
-                $products = $products->orderBy('id','DESC');
-            } else if($request->get('sort') == 'price_asc'){
-                $products = $products->orderBy('price','ASC');
+        if ($request->get('sort') != '') {
+            if ($request->get('sort') == 'latest') {
+                $products = $products->orderBy('id', 'DESC');
+            } else if ($request->get('sort') == 'price_asc') {
+                $products = $products->orderBy('price', 'ASC');
             } else {
-                $products = $products->orderBy('price','DESC');
+                $products = $products->orderBy('price', 'DESC');
             }
         } else {
-            $products = $products->orderBy('price','DESC');
+            $products = $products->orderBy('price', 'DESC');
         }
         $products = $products->paginate(6);
- 
-        
+
+
         $data['categories'] = $categories;
         $data['brands'] = $brands;
         $data['products'] = $products;
         $data['categorySelected'] = $categorySelected;
         $data['subCategorySelected'] = $subCategorySelected;
         $data['brandsArray'] = $brandsArray;
-        $data['priceMax'] = (intval($request->get('price_max')) == 0) ? 1000 : $request->get('price_max');
+        $data['priceMax'] = (intval($request->get('price_max')) == 0) ? 20000000 : $request->get('price_max');
+
         $data['priceMin'] = intval($request->get('price_min'));
         $data['sort'] = $request->get('sort');
 
         return view('front.shop', $data);
     }
 
-    public function product($slug){
-        $product = Product::where('slug',$slug)
-                        ->withCount('product_ratings')
-                        ->withSum('product_ratings', 'rating')
-                        ->with(['product_images', 'product_ratings'])->first();    
+    public function product($slug)
+    {
+        $product = Product::where('slug', $slug)
+            ->withCount('product_ratings')
+            ->withSum('product_ratings', 'rating')
+            ->with(['product_images', 'product_ratings'])->first();
 
-       if($product == null){
-        abort(404);
+        if ($product == null) {
+            abort(404);
+        }
 
-       }
+        //dd($product);
 
-       //dd($product);
-
-       $relatedProducts = [];
+        $relatedProducts = [];
         //fetch related product
-        if($product->related_products != ''){
+        if ($product->related_products != '') {
             $productArray = explode(',', $product->related_products);
-            $relatedProducts = Product::whereIn('id', $productArray)->where('status',1)->get();
+            $relatedProducts = Product::whereIn('id', $productArray)->where('status', 1)->get();
         }
 
-       $data['product'] = $product;
-       $data['relatedProducts'] = $relatedProducts;
+        $data['product'] = $product;
+        $data['relatedProducts'] = $relatedProducts;
 
-       //Rating Calculation
-       //"product_ratings_count" => 2
-       //"product_ratings_sum_rating" => 9.0
+        //Rating Calculation
+        //"product_ratings_count" => 2
+        //"product_ratings_sum_rating" => 9.0
 
-       $avgRating = '0.00';
-       $avgRatingPer = 0;
-        if ($product->product_ratings_count > 0){
-            $avgRating = number_format(($product->product_ratings_sum_rating/$product->product_ratings_count),2);
-            $avgRatingPer = ($avgRating*100)/5;
+        $avgRating = '0.00';
+        $avgRatingPer = 0;
+        if ($product->product_ratings_count > 0) {
+            $avgRating = number_format(($product->product_ratings_sum_rating / $product->product_ratings_count), 2);
+            $avgRatingPer = ($avgRating * 100) / 5;
         }
-       
+
         $data['avgRating'] = $avgRating;
         $data['avgRatingPer'] = $avgRatingPer;
 
-       return view('front.product',$data);
-
+        return view('front.product', $data);
     }
 
-    public function saveRating($id, Request $request){
-        $validator = Validator::make($request->all(),[
-            'name'=> 'required|min:5',
-            'email'=> 'required|email',
-            'comment'=> 'required|min:10',
-            'rating'=> 'required',
+    public function saveRating($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'email' => 'required|email',
+            'comment' => 'required|min:10',
+            'rating' => 'required',
         ]);
 
-        if ( $validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
         }
 
-        $count = ProductRating::where('email', $request->email)->count();
-        if($count > 0){
-            session()->flash('error','Kamu telah memberi rating produk ini.');
+        $count = ProductRating::where('email', $request->email)
+            ->where('product_id', $id)
+            ->count();
+        if ($count > 0) {
+            session()->flash('error', 'Kamu telah memberi penilaian produk ini.');
             return response()->json([
                 'status' => true,
+                'message' => 'Kamu telah memberi penilaian produk ini.'
             ]);
         }
 
@@ -159,13 +164,11 @@ class ShopController extends Controller
         $productRating->status = 0;
         $productRating->save();
 
-        session()->flash('sukses','Terimakasih telah memberi rating.');
+        session()->flash('success', 'Terimakasih telah memberi penilaian.');
 
         return response()->json([
             'status' => true,
-            'message' => 'Terimakasih telah memberi rating.'
+            'message' => 'Terimakasih telah memberi penilaian.'
         ]);
     }
-
-    
 }

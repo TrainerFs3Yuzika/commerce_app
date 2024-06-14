@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Commerce-App</title>
+    <title>KuyBelanja</title>
     <meta name="description" content="" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
@@ -37,6 +37,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('front-assets/css/slick-theme.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('front-assets/css/ion.rangeSlider.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('front-assets/css/style.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,120 +62,82 @@
             <div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
                 <div class="col-lg-4 logo">
                     <a href="{{ route('front.home') }}" class="text-decoration-none">
-                        <span class="h1 text-uppercase text-primary bg-dark px-2">Online</span>
-                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">SHOP</span>
+                        <span class="h1 text-uppercase text-primary bg-dark px-2">Kuy</span>
+                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Belanja</span>
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
-                    @if (Auth::check())
-                        <a href="{{ route('account.profile') }}" class="nav-link text-dark">My Account</a>
-                    @else
-                        <a href="{{ route('account.login') }}" class="nav-link text-dark">Login/Register</a>
-                    @endif
-
                     <form action="{{ route('front.shop') }}" method="get">
                         <div class="input-group">
-                            <input value="{{ Request::get('search') }}" type="text" placeholder="Search For Products"
+                            <input value="{{ Request::get('search') }}" type="text" placeholder="Cari Produk"
                                 class="form-control" name="search" id="search">
                             <button type="submit" class="input-group-text">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
                     </form>
+                    @if (Auth::check())
+                        <a href="{{ route('account.profile') }}" class="nav-link text-dark">
+                            <img src="{{ asset('uploads/profile_images/' . (Auth::user()->profile_image ? Auth::user()->profile_image : 'user-default.png')) }}"
+                                class="rounded-circle img-fluid" style="width: 40px; border: 2px solid gray;"
+                                id="profileImage" />
+                            {{ Auth::user()->name }}
+                        </a>
+                    @else
+                        <a href="{{ route('account.login') }}" class="nav-link text-dark">Masuk</a>
+                        <a href="{{ route('account.register') }}" class="text-dark">Daftar</a>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
     <header class="bg-dark">
-        <div class="container">
-            <nav class="navbar navbar-expand-xl" id="navbar">
-                <a href="index.php" class="text-decoration-none mobile-logo">
-                    <span class="h2 text-uppercase text-primary bg-dark">Online</span>
-                    <span class="h2 text-uppercase text-white px-2">SHOP</span>
+    <div class="container">
+        <nav class="navbar navbar-expand-xl" id="navbar">
+            <a href="index.php" class="text-decoration-none mobile-logo">
+                <span class="h2 text-uppercase text-primary bg-dark">Kuy</span>
+                <span class="h2 text-uppercase text-white px-2">Belanja</span>
+            </a>
+            <button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <i class="navbar-toggler-icon fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @if (getCategories()->isNotEmpty())
+                        @foreach (getCategories() as $category)
+                            <li class="nav-item dropdown">
+                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    {{ $category->name }}
+                                </button>
+                                @if ($category->sub_category->isNotEmpty())
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        @foreach ($category->sub_category as $subCategory)
+                                            <li><a class="dropdown-item nav-link"
+                                                    href="{{ route('front.shop', [$category->slug, $subCategory->slug]) }}">{{ $subCategory->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
+            </div>
+            <div class="d-flex align-items-center pt-2">
+                <a href="{{ route('front.home') }}" class="mx-3" id="home-link">
+                    <i class="fas fa-home text-primary"></i>
                 </a>
-                <button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <!-- <span class="navbar-toggler-icon icon-menu"></span> -->
-                    <i class="navbar-toggler-icon fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <!-- <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php" title="Products">Home</a>
-        </li> -->
-
-                        @if (getCategories()->isNotEmpty())
-                            @foreach (getCategories() as $category)
-                                <li class="nav-item dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        {{ $category->name }} <!-- berfungsi untuk memanggil dari database kategori -->
-                                    </button>
-                                    @if ($category->sub_category->isNotEmpty())
-                                        <ul class="dropdown-menu dropdown-menu-dark">
-                                            @foreach ($category->sub_category as $subCategory)
-                                                <li><a class="dropdown-item nav-link"
-                                                        href="{{ route('front.shop', [$category->slug, $subCategory->slug]) }}">{{ $subCategory->name }}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </li>
-                            @endforeach
-                        @endif
-                        <!-- <li class="nav-item dropdown">
-      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-       Men's Fashion
-      </button>
-      <ul class="dropdown-menu dropdown-menu-dark">
-       <li><a class="dropdown-item" href="#">Shirts</a></li>
-       <li><a class="dropdown-item" href="#">Jeans</a></li>
-       <li><a class="dropdown-item" href="#">Shoes</a></li>
-       <li><a class="dropdown-item" href="#">Watches</a></li>
-       <li><a class="dropdown-item" href="#">Perfumes</a></li>
-      </ul>
-     </li>
-     <li class="nav-item dropdown">
-      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-       Women's Fashion
-      </button>
-      <ul class="dropdown-menu dropdown-menu-dark">
-       <li><a class="dropdown-item" href="#">T-Shirts</a></li>
-       <li><a class="dropdown-item" href="#">Tops</a></li>
-       <li><a class="dropdown-item" href="#">Jeans</a></li>
-       <li><a class="dropdown-item" href="#">Shoes</a></li>
-       <li><a class="dropdown-item" href="#">Watches</a></li>
-       <li><a class="dropdown-item" href="#">Perfumes</a></li>
-      </ul>
-     </li>
-
-     <li class="nav-item dropdown">
-      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-       Appliances
-      </button>
-      <ul class="dropdown-menu dropdown-menu-dark">
-       <li><a class="dropdown-item" href="#">TV</a></li>
-       <li><a class="dropdown-item" href="#">Washing Machines</a></li>
-       <li><a class="dropdown-item" href="#">Air Conditioners</a></li>
-       <li><a class="dropdown-item" href="#">Vacuum Cleaner</a></li>
-       <li><a class="dropdown-item" href="#">Fans</a></li>
-       <li><a class="dropdown-item" href="#">Air Coolers</a></li>
-      </ul>
-     </li> -->
-
-
-                    </ul>
-                </div>
-                <div class="right-nav py-0">
-                    <a href="{{ route('front.cart') }}" class="ml-3 d-flex pt-2">
-                        <i class="fas fa-shopping-cart text-primary"></i>
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </header>
+                <a href="{{ Auth::check() ? route('front.cart') : '#' }}" class="mx-3" id="cart-link">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                </a>
+            </div>
+        </nav>
+    </div>
+</header>
 
     <main>
         @yield('content')
@@ -185,17 +148,19 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="footer-card">
-                        <h3>Get In Touch</h3>
-                        <p>No dolore ipsum accusam no lorem. <br>
-                            123 Street, New York, USA <br>
-                            exampl@example.com <br>
-                            000 000 0000</p>
+                        <h3>Kategori</h3>
+                        @foreach (getCategories() as $category)
+                            <a href="{{ route('front.shop', [$category->slug]) }}">
+                                {{ $category->name }}
+                            </a>
+                        @endforeach
+
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="footer-card">
-                        <h3>Important Links</h3>
+                        <h3>Tautan Penting</h3>
                         <ul>
                             @if (staticPages()->isNotEmpty())
                                 @foreach (staticPages() as $page)
@@ -203,22 +168,18 @@
                                             title="{{ $page->name }}">{{ $page->name }}</a></li>
                                 @endforeach
                             @endif
-                            {{-- <li><a href="about-us.php" title="About">About</a></li>
-                            <li><a href="contact-us.php" title="Contact Us">Contact Us</a></li>
-                            <li><a href="#" title="Privacy">Privacy</a></li>
-                            <li><a href="#" title="Privacy">Terms & Conditions</a></li>
-                            <li><a href="#" title="Privacy">Refund Policy</a></li> --}}
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="footer-card">
-                        <h3>My Account</h3>
+                        <h3>Akun saya</h3>
                         <ul>
-                            <li><a href="{{ route('account.login') }}" title="Sell">Login</a></li>
-                            <li><a href="{{ route('account.register') }}" title="Advertise">Register</a></li>
-                            <li><a href="{{ route('front.cart') }}" title="Contact Us">My Orders</a></li>
+                            <li><a href="{{ route('account.login') }}" title="Sell">Masuk</a></li>
+                            <li><a href="{{ route('account.register') }}" title="Advertise">Daftar</a></li>
+                            <li><a href="{{ Auth::check() ? route('front.cart') : '#' }}" id="orders"
+                                    title="Contact Us">Pesananku</a></li>
                         </ul>
                     </div>
                 </div>
@@ -229,7 +190,7 @@
                 <div class="row">
                     <div class="col-12 mt-3">
                         <div class="copy-right text-center">
-                            <p>© Copyright 2022 Amazing Shop. All Rights Reserved</p>
+                            <strong>&copy; {{ date('Y') }} KuyBelanja</strong>
                         </div>
                     </div>
                 </div>
@@ -243,14 +204,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Success</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Berhasil</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -323,6 +284,38 @@
                 }
             });
         }
+        document.getElementById('cart-link').addEventListener('click', function(event) {
+            // Check apakah pengguna sudah login
+            var isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+
+            // Jika pengguna belum login, tampilkan SweetAlert2 dan hentikan aksi default
+            if (!isLoggedIn) {
+                event.preventDefault(); // Menghentikan tindakan bawaan dari anchor tag
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Harap login terlebih dahulu!',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+        document.getElementById('orders').addEventListener('click', function(event) {
+            // Check apakah pengguna sudah login
+            var isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+
+            // Jika pengguna belum login, tampilkan SweetAlert2 dan hentikan aksi default
+            if (!isLoggedIn) {
+                event.preventDefault(); // Menghentikan tindakan bawaan dari anchor tag
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Harap login terlebih dahulu!',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
     </script>
 
     @yield('customJs')

@@ -5,7 +5,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">KuyBelanja</a></li>
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.shop') }}">Shop</a></li>
                     <li class="breadcrumb-item">{{ $product->title }}</li>
                 </ol>
@@ -45,13 +45,6 @@
                     <div class="bg-light right">
                         <h1>{{ $product->title }}</h1>
                         <div class="d-flex mb-3">
-                            {{-- <div class="text-primary mr-2">
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star-half-alt"></small>
-                                <small class="far fa-star"></small>
-                            </div> --}}
                             <div class="star-rating product mt-2" title="">
                                 <div class="back-stars">
                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -72,16 +65,17 @@
                             <small
                                 class="pt-2 ps-1">({{ $product->product_ratings_count > 1
                                     ? $product->product_ratings_count . ' Reviews'
-                                    : $product->product_ratings_count . ' Review' }})</small>
+                                    : $product->product_ratings_count . ' Penilaian' }})</small>
                         </div>
 
                         @if ($product->compare_price > 0)
-                            <h2 class="price text-secondary"><del>Rp. {{ $product->compare_price }}</del></h2>
+                            <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
                         @endif
 
-                        <h2 class="price ">Rp. {{ $product->price }}</h2>
+                        <h2 class="price ">Rp{{number_format($product->price, 0, ',', '.')}}</h2>
 
                         {!! $product->short_description !!}
+                        <br>
 
                         <!-- <a href="javascript:void(0);" onclick="addToCart ({{ $product->id }});" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;ADD TO CART</a> -->
 
@@ -89,16 +83,16 @@
                             @if ($product->qty > 0)
                                 <a class="btn btn-dark" href="javascript:void(0);"
                                     onclick="addToCart ({{ $product->id }});">
-                                    <i class="fa fa-shopping-cart"></i> &nbsp;Add To Cart
+                                    <i class="fa fa-shopping-cart"></i> &nbsp;Masuk Keranjang
                                 </a>
                             @else
                                 <a class="btn btn-dark" href="javascript:void(0);">
-                                    Out Of Stock
+                                    Stok Habis
                                 </a>
                             @endif
                         @else
                             <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart ({{ $product->id }});">
-                                <i class="fa fa-shopping-cart"></i> &nbsp;Add To Cart
+                                <i class="fa fa-shopping-cart"></i> &nbsp;Masuk Keranjang
                             </a>
                         @endif
                     </div>
@@ -110,17 +104,18 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
                                     data-bs-target="#description" type="button" role="tab" aria-controls="description"
-                                    aria-selected="true">Description</button>
+                                    aria-selected="true">Deskripsi</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping"
-                                    type="button" role="tab" aria-controls="shipping" aria-selected="false">Shipping &
-                                    Returns</button>
+                                    type="button" role="tab" aria-controls="shipping" aria-selected="false">Pengiriman
+                                    &
+                                    Kembali</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
                                     type="button" role="tab" aria-controls="reviews"
-                                    aria-selected="false">Reviews</button>
+                                    aria-selected="false">Ulasan</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -136,21 +131,21 @@
                                     <div class="row">
                                         <form action="" name="productRatingForm" id="productRatingForm"
                                             method="post">
-                                            <h3 class="h4 pb-3">Write a Review</h3>
+                                            <h3 class="h4 pb-3">Menulis ulasan</h3>
                                             <div class="form-group col-md-6 mb-3">
-                                                <label for="name">Name</label>
+                                                <label for="name">Nama</label>
                                                 <input type="text" class="form-control" name="name" id="name"
-                                                    placeholder="Name">
+                                                    placeholder="Nama anda">
                                                 <p></p>
                                             </div>
                                             <div class="form-group col-md-6 mb-3">
                                                 <label for="email">Email</label>
                                                 <input type="text" class="form-control" name="email" id="email"
-                                                    placeholder="Email">
+                                                    placeholder="Email anda">
                                                 <p></p>
                                             </div>
                                             <div class="form-group mb-3">
-                                                <label for="rating">Rating</label>
+                                                <label for="rating">Penilaian</label>
                                                 <br>
                                                 <div class="rating" style="width: 10rem">
                                                     <input id="rating-5" type="radio" name="rating"
@@ -172,13 +167,13 @@
                                                 <p class="product-rating-error text-danger"></p>
                                             </div>
                                             <div class="form-group mb-3">
-                                                <label for="">How was your overall experience?</label>
+                                                <label for="">Bagaimana penilaian Anda secara keseluruhan?</label>
                                                 <textarea name="comment" id="review" class="form-control" cols="30" rows="10"
-                                                    placeholder="How was your overall experience?"></textarea>
+                                                    placeholder="Bagaimana Penilaian Anda secara keseluruhan?"></textarea>
                                                 <p></p>
                                             </div>
                                             <div>
-                                                <button class="btn btn-dark">Submit</button>
+                                                <button class="btn btn-dark">Kirim</button>
                                             </div>
                                         </form>
                                     </div>
@@ -214,7 +209,7 @@
                                             <div class="pt-2 ps-2">
                                                 ({{ $product->product_ratings_count > 1
                                                     ? $product->product_ratings_count . ' Reviews'
-                                                    : $product->product_ratings_count . ' Review' }})
+                                                    : $product->product_ratings_count . ' penilaian' }})
                                             </div>
                                         </div>
 
@@ -265,7 +260,7 @@
         <section class="pt-5 section-8">
             <div class="container">
                 <div class="section-title">
-                    <h2>Related Products</h2>
+                    <h2>Produk Terkait</h2>
                 </div>
                 <div class="col-md-12">
                     <div id="related-products" class="carousel">
@@ -293,24 +288,24 @@
                                     <div class="product-action">
                                         <!-- <a class="btn btn-dark" href="#">   -->
                                         <!-- <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart ({{ $product->id }});">
-                                        <i class="fa fa-shopping-cart"></i> Add To Cart
-                                    </a>       -->
+                                                                                                                            <i class="fa fa-shopping-cart"></i> Add To Cart
+                                                                                                                        </a>       -->
 
                                         @if ($relProduct->track_qty == 'Yes')
                                             @if ($relProduct->qty > 0)
                                                 <a class="btn btn-dark" href="javascript:void(0);"
                                                     onclick="addToCart ({{ $relProduct->id }});">
-                                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                                    <i class="fa fa-shopping-cart"></i> Masuk Keranjang
                                                 </a>
                                             @else
                                                 <a class="btn btn-dark" href="javascript:void(0);">
-                                                    Out Of Stock
+                                                    Stok Habis
                                                 </a>
                                             @endif
                                         @else
                                             <a class="btn btn-dark" href="javascript:void(0);"
                                                 onclick="addToCart ({{ $relProduct->id }});">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
+                                                <i class="fa fa-shopping-cart"></i> Masuk Keranjang
                                             </a>
                                         @endif
                                     </div>
@@ -318,10 +313,9 @@
                                 <div class="card-body text-center mt-3">
                                     <a class="h6 link" href="">{{ $relProduct->title }}</a>
                                     <div class="price mt-2">
-                                        <span class="h5"><strong>Rp. {{ $relProduct->price }}</strong></span>
+                                    <span class="h5"><strong>Rp{{number_format($product->price, 0, ',', '.')}}</strong></span>
                                         @if ($relProduct->compare_price > 0)
-                                            <span class="h6 text-underline"><del>Rp.
-                                                    {{ $relProduct->compare_price }}</del></span>
+                                        <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
                                         @endif
 
                                     </div>

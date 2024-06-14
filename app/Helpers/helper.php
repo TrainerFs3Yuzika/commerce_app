@@ -1,4 +1,5 @@
 <?php
+
 use App\Mail\OrderEmail;
 use App\Models\Category;
 use App\Models\Country;
@@ -7,27 +8,29 @@ use App\Models\Page;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Mail;
 
-function getCategories(){
-    return Category::orderBy('name','ASC')
-    ->with('sub_category')
-    ->orderBy('id','DESC')
-    ->where('status',1)  //ini untuk mengedit dibagian edit category yang (active$inactive)
-    ->where('showHome','Yes')
-    ->get();
-    
+function getCategories()
+{
+    return Category::orderBy('name', 'ASC')
+        ->with('sub_category')
+        ->orderBy('id', 'DESC')
+        ->where('status', 1)  //ini untuk mengedit dibagian edit category yang (active$inactive)
+        ->where('showHome', 'Yes')
+        ->get();
 }
 
-function getProductImage($productId){
-    return ProductImage::where('product_id',$productId)->first();
+function getProductImage($productId)
+{
+    return ProductImage::where('product_id', $productId)->first();
 }
 
-function orderEmail($orderId, $userType="customer") {
-    $order = Order::where('id',$orderId)->with('items')->first();
+function orderEmail($orderId, $userType = "customer")
+{
+    $order = Order::where('id', $orderId)->with('items')->first();
 
-    if ($userType == 'customer'){
+    if ($userType == 'customer') {
         $subject = 'Thanks for your order!';
         $email = $order->email;
-    } else{
+    } else {
         $subject = 'You have received an order!';
         $email = env('ADMIN_EMAIL');
     }
@@ -42,12 +45,13 @@ function orderEmail($orderId, $userType="customer") {
     // dd($order);
 }
 
-function getCountryInfo($id){
+function getCountryInfo($id)
+{
     return Country::where('id', $id)->first();
 }
 
-function staticPages() {
-    $pages = Page::orderBy('name', 'ASC')->get();
+function staticPages()
+{
+    $pages = Page::orderBy('id', 'ASC')->get();
     return $pages;
 }
-?>

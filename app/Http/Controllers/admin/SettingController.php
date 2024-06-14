@@ -42,63 +42,30 @@ class SettingController extends Controller
         if ($validator->passes()) {
             // Periksa password lama
             if (!Hash::check($request->old_password, $admin->password)) {
+                session()->flash('error','Password lama tidak sesuai, silahkan coba lagi.');
                 return response()->json([
-                    'status' => false,
-                    'errors' => ['old_password' => 'Password lama tidak sesuai, silahkan coba lagi.']
+                    'status' => true,
+                    // 'errors' => ['old_password' => 'Password lama tidak sesuai, silahkan coba lagi.']
+                    // 'message' => ['old_password' => 'Password lama tidak sesuai, silahkan coba lagi.']
                 ]);
             }
     
             // Update password
             $admin->password = Hash::make($request->new_password);
             $admin->save();
+
+            session()->flash('success','Kamu berhasil mengubah password.');
     
             return response()->json([
                 'status' => true,
+                'message' => 'Kamu berhasil mengubah password.',
             ]);
     
-        } else {
+        } else {            
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors(),
             ]);
         }
     }
-    
-
-    // public function processChangePassword(Request $request){
-    //     $validator = Validator::make($request->all(),[
-    //         'old_password' => 'required',
-    //         'new_password' => 'required|min:5',
-    //         'confirm_password' => 'required|same:new_password', 
-    //     ]);
-
-    //     $id = Auth::guard('admin')->user()->id;
-
-    //     $admin = User::where('id', $id)->first();
-
-    //     if ($validator->passes()) {
-
-    //         if(!Hash::check($request->old_password,$admin->password )){
-    //             session()->flash('error', 'Password lama tidak sesuai, silahkan coba lagi.');
-    //             return response()->json([
-    //                 'status' => true
-    //             ]);
-    //         }
-
-    //         User::where('id', Auth::guard('admin')->id)->update([
-    //             'password' => Hash::make($request->new_password)
-    //         ]);
-
-    //         session()->flash('sukses', 'Berhasil Mengubah password.');
-    //         return response()->json([
-    //             'status' => true,
-    //         ]);
-
-    //     } else {
-    //         return response()->json([
-    //             'status' => false,
-    //             'errors' => $validator->errors(),
-    //         ]);
-    //     }
-    // }
 }
