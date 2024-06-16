@@ -274,7 +274,15 @@
             event.preventDefault();
             var formArray = $(this).serializeArray();
             $("button[type='submit']").prop('disabled', true);
-
+            // Check if photo is selected
+            if ($("#product-gallery").children().length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Harap pilih foto terlebih dahulu.'
+                });
+                return false;
+            }
             $.ajax({
                 url: '{{ route('products.store') }}',
                 type: 'post',

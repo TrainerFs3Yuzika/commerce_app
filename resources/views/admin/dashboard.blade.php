@@ -21,13 +21,13 @@
                 <!-- Kotak Statistik -->
                 @php
                     $stats = [
-                        ['title' => 'Total Pesanan', 'value' => $totalOrders, 'icon' => 'fas fa-shopping-cart', 'link' => route('orders.index')],
-                        ['title' => 'Total Produk', 'value' => $totalProducts, 'icon' => 'fas fa-box', 'link' => route('products.index')],
-                        ['title' => 'Total Pelanggan', 'value' => $totalCustomers, 'icon' => 'fas fa-users', 'link' => route('users.index')],
-                        ['title' => 'Total Penjualan', 'value' => $totalRevenue, 'icon' => 'fas fa-dollar-sign', 'link' => 'javascript:void(0);', 'no_link' => true],
-                        ['title' => 'Pendapatan Bulan Ini', 'value' => $revenueThisMonth, 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true],
-                        ['title' => 'Pendapatan Bulan Lalu ('.$lastMonthName.')', 'value' => $revenueLastMonth, 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true],
-                        ['title' => 'Pendapatan 30 Hari Terakhir', 'value' => $revenueLastThirtyDays, 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true]
+                        ['title' => 'Total Pesanan', 'value' => number_format($totalOrders, 0, ',', '.'), 'icon' => 'fas fa-shopping-cart', 'link' => route('orders.index')],
+                        ['title' => 'Total Produk', 'value' => number_format($totalProducts, 0, ',', '.'), 'icon' => 'fas fa-box', 'link' => route('products.index')],
+                        ['title' => 'Total Pelanggan', 'value' => number_format($totalCustomers, 0, ',', '.'), 'icon' => 'fas fa-users', 'link' => route('users.index')],
+                        ['title' => 'Total Penjualan', 'value' => 'Rp ' . number_format($totalRevenue, 0, ',', '.'), 'icon' => 'fas fa-dollar-sign', 'link' => 'javascript:void(0);', 'no_link' => true],
+                        ['title' => 'Pendapatan Bulan Ini', 'value' => 'Rp ' . number_format($revenueThisMonth, 0, ',', '.'), 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true],
+                        ['title' => 'Pendapatan Bulan Lalu ('.$lastMonthName.')', 'value' => 'Rp ' . number_format($revenueLastMonth, 0, ',', '.'), 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true],
+                        ['title' => 'Pendapatan 30 Hari Terakhir', 'value' => 'Rp ' . number_format($revenueLastThirtyDays, 0, ',', '.'), 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true]
                     ];
                 @endphp
                 
@@ -56,7 +56,7 @@
                 <div class="col-lg-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Pendapatan (30 Hari Terakhir)</h3>
+                            <h3 class="card-title">Pendapatan (12 Bulan Terakhir)</h3>
                         </div>
                         <div class="card-body">
                             <canvas id="revenueChart" width="400" height="200"></canvas>
@@ -66,7 +66,7 @@
                 <div class="col-lg-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Pesanan (30 Hari Terakhir)</h3>
+                            <h3 class="card-title">Pesanan (12 Bulan Terakhir)</h3>
                         </div>
                         <div class="card-body">
                             <canvas id="ordersChart" width="400" height="200"></canvas>
@@ -92,10 +92,10 @@
         const revenueChart = new Chart(revenueCtx, {
             type: 'line',
             data: {
-                labels: @json($revenueLabels),
+                labels: @json($revenueMonthlyLabels), // Labels per bulan
                 datasets: [{
                     label: 'Pendapatan',
-                    data: @json($revenueData),
+                    data: @json($revenueMonthlyData), // Data per bulan
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 2,
                     backgroundColor: revenueGradient,
@@ -110,9 +110,12 @@
                 scales: {
                     y: {
                         beginAtZero: true,
+                        min: 0,
+                        max: 100000000, // 100 juta
                         ticks: {
+                            stepSize: 5000000, // Kelipatan 5 juta
                             callback: function(value) {
-                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                return 'Rp ' + (value / 1000000) + ' juta';
                             }
                         }
                     }
@@ -128,7 +131,7 @@
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
-                                return tooltipItem.formattedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                return 'Rp ' + (tooltipItem.raw / 1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' juta';
                             }
                         }
                     }
@@ -144,10 +147,10 @@
         const ordersChart = new Chart(ordersCtx, {
             type: 'bar',
             data: {
-                labels: @json($orderLabels),
+                labels: @json($orderMonthlyLabels), // Labels per bulan
                 datasets: [{
                     label: 'Pesanan',
-                    data: @json($orderData),
+                    data: @json($orderMonthlyData), // Data per bulan
                     backgroundColor: ordersGradient,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 1,
@@ -159,8 +162,13 @@
                 scales: {
                     y: {
                         beginAtZero: true,
+                        min: 0,
+                        max: 100, // 100 pesanan
                         ticks: {
-                            stepSize: 1
+                            stepSize: 5, // Kelipatan 5
+                            callback: function(value) {
+                                return value + ' pesanan';
+                            }
                         }
                     }
                 },
@@ -175,7 +183,7 @@
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
-                                return tooltipItem.formattedValue + ' pesanan';
+                                return tooltipItem.raw + ' pesanan';
                             }
                         }
                     }

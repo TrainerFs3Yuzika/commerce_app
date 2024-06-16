@@ -69,7 +69,7 @@
                                                     <h2>{{ $item->name }}</h2>
                                                 </div>
                                             </td>
-                                            <td>Rp{{ number_format($item->price, 0, ',', '.') }}</td>
+                                            <td>Rp{{ number_format($item->price,  0, ',', '.') }}</td>
                                             <td>
                                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                                     <div class="input-group-btn">
@@ -89,7 +89,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>Rp{{number_format($item->price * $item->qty, 0, ',', '.') }}</td>
+                                            <td>Rp{{ number_format($item->price * $item->qty, 0, ',', '.') }}</td>
                                             <td>
                                                 <button class="btn btn-sm btn-danger"
                                                     onclick="deleteItem('{{ $item->product_id }}');"><i
@@ -129,7 +129,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body d-flex justify-content-center align-items-center">
-                                <h4>Keranjangmu Kosong Nih :( Isi Dong</h4>
+                                <img src="{{ asset('front-assets/images/Keranjang empty.png') }}" style="width:500px;" >
                             </div>
                         </div>
                     </div>

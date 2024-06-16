@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Pelanggan</h1>
+                    <h1>Edit Pengguna</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('users.index') }}" class="btn btn-primary">Kembali</a>
@@ -61,7 +61,7 @@
                                     <label for="slug">Status</label>
                                     <select name="status" id="status" class="form-control">
                                         <option {{ $user->status == 1 ? 'selected' : '' }} value="1">Aktif</option>
-                                        <option {{ $user->status == 0 ? 'selected' : '' }} value="0">Non Aktif
+                                        <option {{ $user->status == 0 ? 'selected' : '' }} value="0">Tidak Aktif
                                         </option>
                                     </select>
                                     <p></p>

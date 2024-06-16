@@ -1,3 +1,7 @@
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 @extends('front.layouts.app')
 
 @section('content')
@@ -14,43 +18,67 @@
 
     <section class=" section-10">
         <div class="container">
-            <div class="login-form">
-                <form action="" method="post" name="registrationForm" id="registrationForm">
-                    <h4 class="modal-title">Daftar sekarang</h4>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Masukkan nama anda" id="name"
-                            name="name">
-                        <p></p>
+                <div class="row">
+                    <div class="col-md-6">
+                            <div id="carouselExampleIndicators1" class="carousel slide mb-4" data-ride="carousel" data-interval="2000" >
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li> <!-- Ubah data-target ke carouselExampleIndicators1 -->
+                            </ol>
+                            <div class="carousel-inner" >
+                                <div class="carousel-item active">
+                                    <img  class="d-block w-100" src="{{ asset('front-assets/images/Carousel 1-form.png') }}" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="{{ asset('front-assets/images/Carousel 2-form.png') }}" alt="Second slide">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev"> <!-- Ubah href ke carouselExampleIndicators1 -->
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next"> <!-- Ubah href ke carouselExampleIndicators1 -->
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Masukkan email anda" id="email"
-                            name="email">
-                        <p></p>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Masukkan nomor anda" id="phone"
-                            name="phone">
-                        <p></p>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Masukkan password anda" id="password"
-                            name="password">
-                        <p></p>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Konfirmasi password"
-                            id="password_confirmation" name="password_confirmation">
-                        <p></p>
-                    </div>
-                    <div class="form-group small">
-                        <a href="{{ route('front.forgotPassword') }}" class="forgot-link">Tidak ingat kata sandi?</a>
-                        <p></p>
-                    </div>
-                    <button type="submit" class="btn btn-dark btn-block btn-lg" value="Register">Mendaftar</button>
-                </form>
-                <div class="text-center small">Sudah memiliki akun? <a href="{{ route('account.login') }}">Masuk
-                        sekarang</a>
-                </div>
+                    <div class="col-md-6">
+                        <div class="login-form">
+                            <form action="" method="post" name="registrationForm" id="registrationForm">
+                                <h4 class="modal-title">Daftar sekarang</h4>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Masukkan nama anda" id="name"
+                                        name="name">
+                                    <p></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Masukkan email anda" id="email"
+                                        name="email">
+                                    <p></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Masukkan nomor anda" id="phone"
+                                        name="phone">
+                                    <p></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Masukkan password anda" id="password"
+                                        name="password">
+                                    <p></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Konfirmasi password anda"
+                                        id="password_confirmation" name="password_confirmation">
+                                    <p></p>
+                                </div>
+                                <button type="submit" class="btn btn-dark btn-block btn-lg" value="Register">Daftar</button>
+                            </form>
+                            <div class="text-center small">Sudah punya akun? <a href="{{ route('account.login') }}">Masuk
+                                    sekarang</a>
+                            </div>
+                    </div>        
+                </div>    
             </div>
         </div>
     </section>

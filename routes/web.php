@@ -82,7 +82,6 @@ Route::group(['prefix' => 'account'], function () {
         Route::get('/register', [AuthController::class, 'register'])->name('account.register');
         Route::post('/process-register', [AuthController::class, 'processRegister'])->name('account.processRegister');
         Route::get('/verify/{verify_key}', [AuthController::class, 'verify'])->name('verify');
-    
     });
 
     Route::group(['middleware' => 'auth'], function () {

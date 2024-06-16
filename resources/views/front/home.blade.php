@@ -67,14 +67,13 @@
         </div>
     </section>
 
-
     <section class="section-2">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="box shadow-lg">
                         <div class="fa icon fa-check text-primary m-0 mr-3"></div>
-                        <h2 class="font-weight-semi-bold m-0">Produk Berkualitas</h5>
+                        <h2 class="font-weight-semi-bold m-0">Produk berkualitas</h5>
                     </div>
                 </div>
                 <div class="col-lg-3 ">
@@ -86,7 +85,7 @@
                 <div class="col-lg-3">
                     <div class="box shadow-lg">
                         <div class="fa icon fa-exchange-alt text-primary m-0 mr-3"></div>
-                        <h2 class="font-weight-semi-bold m-0">7 Hari Pengembalian</h2>
+                        <h2 class="font-weight-semi-bold m-0">7 Hr Pengembalian</h2>
                     </div>
                 </div>
                 <div class="col-lg-3 ">
@@ -130,10 +129,12 @@
         </div>
     </section>
 
+    <img src="{{ asset('front-assets/images/home-promo1.png') }}" style="height:450px;">
+
     <section class="section-4 pt-5">
         <div class="container">
             <div class="section-title">
-                <h2>Produk Unggulan</h2>
+                <h2>Produk Unggulan</h2>              
             </div>
             <div class="row pb-3">
                 @if ($featuredProducts->isNotEmpty())
@@ -163,7 +164,7 @@
                                             @if ($product->qty > 0)
                                                 <a class="btn btn-dark" href="javascript:void(0);"
                                                     onclick="addToCart ({{ $product->id }});">
-                                                    <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                    <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                                 </a>
                                             @else
                                                 <a class="btn btn-dark" href="javascript:void(0);">
@@ -173,7 +174,7 @@
                                         @else
                                             <a class="btn btn-dark" href="javascript:void(0);"
                                                 onclick="addToCart ({{ $product->id }});">
-                                                <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                             </a>
                                         @endif
                                     </div>
@@ -183,9 +184,9 @@
                                         href="{{ route('front.product', $product->slug) }}">{{ $product->title }}</a>
                                     <div class="price mt-2">
 
-                                    <span class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
+                                        <span class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
                                         @if ($product->compare_price > 0)
-                                            <br><span class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                                          <br>  <span class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.')}}</del></span>
                                         @endif
                                     </div>
                                 </div>
@@ -198,6 +199,8 @@
             </div>
         </div>
     </section>
+
+    <img src="{{ asset('front-assets/images/home-promo3.png') }}" style="height:450px;">
 
     <section class="section-4 pt-5">
         <div class="container">
@@ -232,7 +235,7 @@
                                             @if ($product->qty > 0)
                                                 <a class="btn btn-dark" href="javascript:void(0);"
                                                     onclick="addToCart ({{ $product->id }});">
-                                                    <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                    <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                                 </a>
                                             @else
                                                 <a class="btn btn-dark" href="javascript:void(0);">
@@ -242,7 +245,7 @@
                                         @else
                                             <a class="btn btn-dark" href="javascript:void(0);"
                                                 onclick="addToCart ({{ $product->id }});">
-                                                <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                             </a>
                                         @endif
                                     </div>
@@ -251,9 +254,9 @@
                                     <a class="h6 link" href="product.php">{{ $product->title }}</a>
                                     <div class="price mt-2">
 
-                                        <span class="h5"><strong>Rp{{number_format($product->price, 0, ',', '.')}}</strong></span>
+                                        <span class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
                                         @if ($product->compare_price > 0)
-                                            <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                                            <br><span class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.')}}</del></span>
                                         @endif
                                     </div>
                                 </div>
@@ -265,6 +268,9 @@
             </div>
         </div>
     </section>
+    
+    <img src="{{ asset('front-assets/images/home-promo2.png') }}" style="height:450px;">
+
 @endsection
 
 @section('customJs')

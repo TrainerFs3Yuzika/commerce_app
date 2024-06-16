@@ -5,7 +5,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">Akun Saya</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">Akun saya</a></li>
                     <li class="breadcrumb-item">Pesananku</li>
                 </ol>
             </div>
@@ -24,14 +24,14 @@
                             <h2 class="h5 mb-0 pt-2 pb-2">Pesananku</h2>
                         </div>
                         <div class="card-body p-4">
-                            <table class="table">
+                            <table class="table text-center">
                                 <thead>
                                     <tr>
-                                        <td>Orders #</td>
+                                        <td>Pesanan #</td>
                                         <td>Tanggal Pembelian</td>
                                         <td>Status</td>
                                         <td>Total</td>
-                                        <td>Detail Order</td>
+                                        <td>Detail</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,31 +39,34 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>
-                                                    <a href="">{{ $order->id }}</a>
+                                                    
+                                                {{ $order->id }}
                                                 </td>
-                                                <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($order->created_at)->setTimeZone('Asia/Jakarta')->format('d M, Y H:i:s') }}
+                                                </td>
+
                                                 <td>
                                                     @if ($order->status == 'pending')
-                                                        <span class="badge bg-danger">Dikemas</span>
+                                                        <span class="badge bg-danger">Tertunda</span>
                                                     @elseif ($order->status == 'shipped')
                                                         <span class="badge bg-info">Dikirim</span>
                                                     @elseif ($order->status == 'delivered')
-                                                        <span class="badge bg-success">Selesai</span>
+                                                        <span class="badge bg-success">Terkirim</span>
                                                     @else
-                                                        <span class="badge bg-danger">Di Batalkan</span>
+                                                        <span class="badge bg-danger">Dibatalkan</span>
                                                     @endif
                                                 </td>
-                                                <td>Rp{{ number_format($order->grand_total,  0, ',', '.') }}</td>
-                                                <td class="text-center">
+                                                <td>@rupiah($order->grand_total)</td>
+                                                <td>
                                                     <a href="{{ route('account.orderDetail', $order->id) }}">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                               </td>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="3" style="text-align: center;">Belum Ada Pesanan</td>
+                                            <td colspan="3" style="text-align: center;">Pesanan tidak ditemukan</td>
                                         </tr>
                                     @endif
 

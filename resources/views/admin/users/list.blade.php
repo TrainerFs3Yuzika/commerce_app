@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Pelanggan</h1>
+                    <h1>Pengguna</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">Pelanggan Baru</a>
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">Pengguna Baru</a>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
                                 <input value="{{ Request::get('keyword') }}" type="text" name="keyword"
-                                    class="form-control float-right" placeholder="Cari Pelanggan">
+                                    class="form-control float-right" placeholder="Cari Pengguna">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">

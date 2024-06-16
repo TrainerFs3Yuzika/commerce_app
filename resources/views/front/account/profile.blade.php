@@ -123,7 +123,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="phone">Kecamatan</label>
                                         <input value="{{ !empty($address) ? $address->apartment : '' }}" type="text"
-                                            name="apartment" id="apartment" placeholder="Apartment"
+                                            name="apartment" id="apartment" placeholder="Kecamatan"
                                             class="form-control">
                                         <p></p>
                                     </div>
@@ -136,7 +136,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="phone">Provinsi</label>
                                         <input value="{{ !empty($address) ? $address->state : '' }}" type="text"
-                                            name="state" id="state" placeholder="Negara" class="form-control">
+                                            name="state" id="state" placeholder="Provinsi" class="form-control">
                                         <p></p>
                                     </div>
                                     <div class="col-md-6 mb-3">

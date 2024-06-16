@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>KuyBelanja</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="description" content="" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
@@ -37,7 +37,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('front-assets/css/slick-theme.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('front-assets/css/ion.rangeSlider.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('front-assets/css/style.css') }}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,7 +53,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="#" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-
+<style>
+    .icon-cart, .icon-home{
+        color:#fff;
+    }
+</style>
 <body data-instant-intensity="mousedown">
 
     <div class="bg-light top-header">
@@ -62,8 +65,9 @@
             <div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
                 <div class="col-lg-4 logo">
                     <a href="{{ route('front.home') }}" class="text-decoration-none">
-                        <span class="h1 text-uppercase text-primary bg-dark px-2">Kuy</span>
-                        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Belanja</span>
+                    <span>
+                        <img src="{{ asset('front-assets/images/logo-kuyBelanja.png') }}" style="width:200px;">
+                    </span>
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
@@ -92,58 +96,67 @@
         </div>
     </div>
 
-    <header class="bg-dark">
-    <div class="container">
-        <nav class="navbar navbar-expand-xl" id="navbar">
-            <a href="index.php" class="text-decoration-none mobile-logo">
-                <span class="h2 text-uppercase text-primary bg-dark">Kuy</span>
-                <span class="h2 text-uppercase text-white px-2">Belanja</span>
-            </a>
-            <button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <i class="navbar-toggler-icon fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    @if (getCategories()->isNotEmpty())
-                        @foreach (getCategories() as $category)
-                            <li class="nav-item dropdown">
-                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    {{ $category->name }}
-                                </button>
-                                @if ($category->sub_category->isNotEmpty())
-                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                        @foreach ($category->sub_category as $subCategory)
-                                            <li><a class="dropdown-item nav-link"
-                                                    href="{{ route('front.shop', [$category->slug, $subCategory->slug]) }}">{{ $subCategory->name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </li>
-                        @endforeach
-                    @endif
-                </ul>
-            </div>
-            <div class="d-flex align-items-center pt-2">
+    <header class="" style="background-color:#1679AB;">
+        <div class="container">
+            <nav class="navbar navbar-expand-xl" id="navbar">
+                <a href="index.php" class="text-decoration-none mobile-logo">
+                <a href="{{ url('index.php') }}" class="text-decoration-none mobile-logo">
+                    <span class="image-container">
+                        <img src="{{ asset('public/front-assets/images/logo-KuyBelanja (2).png') }}" alt="KuyBelanja Logo">
+                    </span>
+                </a>
+                </a>
+                <button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <!-- <span class="navbar-toggler-icon icon-menu"></span> -->
+                    <i class="navbar-toggler-icon fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.php" title="Products">Home</a>
+        </li> -->
+
+                        @if (getCategories()->isNotEmpty())
+                            @foreach (getCategories() as $category)
+                                <li class="nav-item dropdown" >
+                                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        {{ $category->name }} <!-- berfungsi untuk memanggil dari database kategori -->
+                                    </button>
+                                    @if ($category->sub_category->isNotEmpty())
+                                        <ul class="dropdown-menu dropdown-menu-dark" style="background-color:#102C57;">
+                                            @foreach ($category->sub_category as $subCategory)
+                                                <li><a class="dropdown-item nav-link"
+                                                        href="{{ route('front.shop', [$category->slug, $subCategory->slug]) }}">{{ $subCategory->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                        @endif
+
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center pt-2">
                 <a href="{{ route('front.home') }}" class="mx-3" id="home-link">
-                    <i class="fas fa-home text-primary"></i>
+                <i class="fas fa-home icon-home"></i>
                 </a>
                 <a href="{{ Auth::check() ? route('front.cart') : '#' }}" class="mx-3" id="cart-link">
-                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <i class="fas fa-shopping-cart icon-cart"></i>
                 </a>
             </div>
-        </nav>
-    </div>
-</header>
+            </nav>
+        </div>
+    </header>
 
     <main>
         @yield('content')
     </main>
 
-    <footer class="bg-dark mt-5">
+    <footer class="mt-5" style="background:#1679AB;">
         <div class="container pb-5 pt-3">
             <div class="row">
                 <div class="col-md-4">
@@ -185,7 +198,7 @@
                 </div>
             </div>
         </div>
-        <div class="copyright-area">
+        <div class="copyright-area" style="background:#102C57;">
             <div class="container">
                 <div class="row">
                     <div class="col-12 mt-3">

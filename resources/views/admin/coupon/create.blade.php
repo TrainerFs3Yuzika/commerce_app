@@ -129,22 +129,21 @@
 
 @section('customJs')
     <script>
-        var today = new Date();
-        var minDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate())
-            .slice(-2);
+         var today = new Date();
+        var maxDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
 
         $(document).ready(function() {
             $('#starts_at').datetimepicker({
                 // options here
                 format: 'Y-m-d H:i:s',
-                minDate: minDate,
             });
         });
         $(document).ready(function() {
             $('#expires_at').datetimepicker({
                 // options here
                 format: 'Y-m-d H:i:s',
-                minDate: minDate,
+                minDate: maxDate,
             });
         });
 

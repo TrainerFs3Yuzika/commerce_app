@@ -5,7 +5,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">KuyBelanja</a></li>
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.shop') }}">Shop</a></li>
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.cart') }}">Keranjang</a></li>
                     <li class="breadcrumb-item">Checkout</li>
@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="sub-title">
-                            <h2>Alamat Pengiriman</h2>
+                            <h2>ALAMAT PENGIRIMAN</h2>
                         </div>
                         <div class="card shadow-lg border-0">
                             <div class="card-body checkout-form">
@@ -29,7 +29,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="first_name" id="first_name" class="form-control"
-                                                placeholder="Masukkan Nama Depan Anda"
+                                                placeholder="Nama depan"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->first_name : '' }}">
                                             <p></p>
                                         </div>
@@ -37,7 +37,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="last_name" id="last_name" class="form-control"
-                                                placeholder="Masukkan Nama Belakang Anda"
+                                                placeholder="Nama Belakang"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->last_name : '' }}">
                                             <p></p>
                                         </div>
@@ -45,7 +45,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="email" id="email" class="form-control"
-                                                placeholder="Masukkan Email Anda"
+                                                placeholder="Email"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->email : '' }}">
                                             <p></p>
                                         </div>
@@ -67,14 +67,14 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <textarea name="address" id="address" cols="30" rows="3" placeholder="Alamat Cth:Nama Jalan,Gedung, No.Rumah" class="form-control">{{ !empty($customerAddress) ? $customerAddress->address : '' }}</textarea>
+                                            <textarea name="address" id="address" cols="30" rows="3" placeholder="Alamat Cth:Nama Jalan,Gedung, No.Rumah" class="form-control" class="form-control">{{ !empty($customerAddress) ? $customerAddress->address : '' }}</textarea>
                                             <p></p>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <input type="text" name="apartment" id="apartment" class="form-control"
-                                                placeholder="Kecamatan"
+                                                placeholder="Kecamatan (opsional)"
                                                 value="{{ !empty($customerAddress) ? $customerAddress->apartment : '' }}">
                                         </div>
                                     </div>
@@ -113,8 +113,8 @@
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <textarea name="order_notes" id="order_notes" cols="30" rows="2" placeholder="Catatan Pemesanan(optional)"
-                                                class="form-control"></textarea>
+                                            <textarea name="order_notes" id="order_notes" cols="30" rows="2"
+                                                placeholder="Catatan Pemesanan (opsional)" class="form-control"></textarea>
                                         </div>
                                     </div>
 
@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="sub-title">
-                            <h2>Ringkasan Pemesanan</h3>
+                            <h2>RINGKASAN PESANAN</h3>
                         </div>
                         <div class="card cart-summery">
                             <div class="card-body">
@@ -132,7 +132,7 @@
                                 @foreach (Cart::content() as $item)
                                     <div class="d-flex justify-content-between pb-2">
                                         <div class="h6">{{ $item->name }}</div>
-                                        <div class="h6">Rp{{ $item->price }}</div>
+                                        <div class="h6">Rp{{$item->price}}</div>
                                     </div>
                                 @endforeach
 
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between summery-end">
                                     <div class="h6"><strong>Diskon</strong></div>
-                                    <div class="h6" id="discount_value"><strong>Rp{{ $discount }}</strong></div>
+                                    <div class="h6" id="discount_value"><strong>Rp{{ $discount}}</strong></div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
                                     <div class="h6"><strong>Biaya Pengiriman</strong></div>
@@ -161,15 +161,15 @@
                         </div>
 
                         <div class="input-group apply-coupan mt-4">
-                            <input type="text" placeholder="Kode kupon" class="form-control" name="discount_code"
+                            <input type="text" placeholder="Kode Kupon" class="form-control" name="discount_code"
                                 id="discount_code">
-                            <button class="btn btn-dark" type="button" id="apply-discount">Klaim Kupon</button>
+                            <button class="btn btn-dark" type="button" id="apply-discount">Terapkan Kupon</button>
                         </div>
 
                         <div id="discount-response-wrapper">
                             @if (Session::has('code'))
                                 <div class="mt-4 d-flex justify-content-center align-items-center" id="discount-response"
-                                    style="background-color: orange; width: 300px; height: 50px; position: relative;">
+                                    style="background-color: #06D001; width: 300px; height: 50px; position: relative;">
                                     <strong>{{ Session::get('code')->code }}</strong>
                                     <a class="btn btn-sm btn-danger position-absolute" style="top: 0; right: 0;"
                                         id="remove-discount"><i class="fa fa-times"></i></a>
@@ -189,40 +189,15 @@
                             </div>
 
                             <div>
-                                <input type="radio" name="payment_method" value="transfer" id="payment_method_two">
-                                <label for="payment_method_two" class="form_check_label">Transfer Bank</label>
-                            </div>
-
-                            <div>
                                 <input type="radio" name="payment_method" value="e-wallet" id="payment_method_three">
-                                <label for="payment_method_three" class="form_check_label">E-Wallet</label>
+                                <label for="payment_method_three" class="form_check_label">Transfer Bank/E-Wallet</label>
                             </div>
-
-
-                            <div class="card-body p-0 d-none mt-3" id="card-payment-form">
-                                <div class="mb-3">
-                                    <label for="card_number" class="mb-2">Card Number</label>
-                                    <input type="text" name="card_number" id="card_number"
-                                        placeholder="Valid Card Number" class="form-control">
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="expiry_date" class="mb-2">Expiry Date</label>
-                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY"
-                                            class="form-control">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="expiry_date" class="mb-2">CVV Code</label>
-                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="123"
-                                            class="form-control">
-                                    </div>
-                                </div>
 
                             </div>
                             <div class="pt-4">
                                 <!-- <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>-->
-                                <button type="submit" id="payNowButton" class="btn-dark btn btn-block w-100">Bayar Sekarang
-                                </button>
+                                <button type="submit" id="payNowButton" class="btn-dark btn btn-block w-100">Bayar
+                                    Sekarang</button>
                             </div>
                         </div>
 
@@ -254,130 +229,147 @@
         $('#orderForm').submit(function(event) {
             event.preventDefault();
 
-            $('button[type="submit"]').prop('disabled', true);
-            $.ajax({
-                url: '{{ route('front.processCheckout') }}',
-                type: 'POST',
-                data: $(this).serializeArray(),
-                dataType: 'json',
-                success: function(response) {
-                    var errors = response.errors;
-                    $('button[type="submit"]').prop('disabled', false);
+            Swal.fire({
+                title: 'Apa kamu yakin?',
+                text: "Apakah Anda benar-benar ingin melanjutkan pembayaran?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, bayar sekarang!',
+                cancelButtonText: 'Tidak, batalkan'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form if confirmed
+                    $('button[type="submit"]').prop('disabled', true);
+                    $.ajax({
+                        url: '{{ route('front.processCheckout') }}',
+                        type: 'POST',
+                        data: $(this).serializeArray(),
+                        dataType: 'json',
+                        success: function(response) {
+                            var errors = response.errors;
+                            $('button[type="submit"]').prop('disabled', false);
 
-                    if (response.status == false) {
-                        if (errors.first_name) {
-                            $("#first_name").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.first_name);
-                        } else {
-                            $("#first_name").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
+                            if (response.status == false) {
+                                if (errors.first_name) {
+                                    $("#first_name").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.first_name);
+                                } else {
+                                    $("#first_name").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.last_name) {
+                                    $("#last_name").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.last_name);
+                                } else {
+                                    $("#last_name").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.email) {
+                                    $("#email").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.email);
+                                } else {
+                                    $("#email").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.country) {
+                                    $("#country").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.country);
+                                } else {
+                                    $("#country").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.address) {
+                                    $("#address").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.address);
+                                } else {
+                                    $("#address").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.city) {
+                                    $("#city").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.city);
+                                } else {
+                                    $("#city").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+
+                                if (errors.state) {
+                                    $("#state").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.state);
+                                } else {
+                                    $("#state").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.zip) {
+                                    $("#zip").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.zip);
+                                } else {
+                                    $("#zip").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+
+                                if (errors.mobile) {
+                                    $("#mobile").addClass('is-invalid')
+                                        .siblings("p")
+                                        .addClass('invalid-feedback')
+                                        .html(errors.mobile);
+                                } else {
+                                    $("#mobile").removeClass('is-invalid')
+                                        .siblings("p")
+                                        .removeClass('invalid-feedback')
+                                        .html('');
+                                }
+                            } else {
+                                if (response.payment_method != 'cod') {
+                                    window.open(response.link_snap.redirect_url, '_blank');
+                                }
+                                window.location.href = "{{ url('/thanks/') }}/" + response
+                                    .orderId;
+                            }
+
                         }
-
-                        if (errors.last_name) {
-                            $("#last_name").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.last_name);
-                        } else {
-                            $("#last_name").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-                        if (errors.email) {
-                            $("#email").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.email);
-                        } else {
-                            $("#email").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-                        if (errors.country) {
-                            $("#country").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.country);
-                        } else {
-                            $("#country").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-                        if (errors.address) {
-                            $("#address").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.address);
-                        } else {
-                            $("#address").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-                        if (errors.city) {
-                            $("#city").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.city);
-                        } else {
-                            $("#city").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-
-                        if (errors.state) {
-                            $("#state").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.state);
-                        } else {
-                            $("#state").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-                        if (errors.zip) {
-                            $("#zip").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.zip);
-                        } else {
-                            $("#zip").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-
-                        if (errors.mobile) {
-                            $("#mobile").addClass('is-invalid')
-                                .siblings("p")
-                                .addClass('invalid-feedback')
-                                .html(errors.mobile);
-                        } else {
-                            $("#mobile").removeClass('is-invalid')
-                                .siblings("p")
-                                .removeClass('invalid-feedback')
-                                .html('');
-                        }
-                    } else {
-                        window.location.href = "{{ url('/thanks/') }}/" + response.orderId;
-                    }
-
-
+                    });
                 }
             });
         });
@@ -418,7 +410,7 @@
                         $("#discount-response-wrapper").html(response.discountString);
 
                         $("#discount-response").css({
-                            'background-color': 'orange',
+                            'background-color': '#06D001',
                             'display': 'flex',
                             'justify-content': 'center',
                             'align-items': 'center',
@@ -459,49 +451,27 @@
                 }
             });
         });
-        document.getElementById('orderForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
 
-            // Get all input elements
-            const firstName = document.getElementById('first_name').value.trim();
-            const lastName = document.getElementById('last_name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const country = document.getElementById('country').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const city = document.getElementById('city').value.trim();
-            const state = document.getElementById('state').value.trim();
-            const zip = document.getElementById('zip').value.trim();
-            const mobile = document.getElementById('mobile').value.trim();
 
-            // Check if any required field is empty
-            if (!firstName || !lastName || !email || !country || !address || !city || !state || !zip || !mobile) {
+        document.getElementById('payNowButton').addEventListener('click', function(event) {
+            const paymentMethods = document.getElementsByName('payment_method');
+            let selectedPaymentMethod = null;
+            for (const method of paymentMethods) {
+                if (method.checked) {
+                    selectedPaymentMethod = method.value;
+                    break;
+                }
+            }
+            if (!selectedPaymentMethod) {
+                event.preventDefault();
                 Swal.fire({
-                    title: 'Kesalahan!',
-                    text: 'Silakan isi semua bidang yang wajib diisi.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            } else {
-                // Show confirmation alert before proceeding to payment
-                Swal.fire({
-                    title: 'Apa kamu yakin?',
-                    text: "Apakah Anda benar-benar ingin melanjutkan pembayaran?",
                     icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, bayar sekarang!',
-                    cancelButtonText: 'Tidak, batalkan'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Submit the form if confirmed
-                        event.target.submit();
-                    }
+                    title: 'Perhatian',
+                    text: 'Harap pilih metode pembayaran terlebih dahulu',
+                    showConfirmButton: true
                 });
             }
         });
-
-
 
         // $("#remove-discount").click(function(){
 

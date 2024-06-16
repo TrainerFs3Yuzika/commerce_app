@@ -170,7 +170,7 @@
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h2 class="h4 mb-3">Produk-produk terkait</h2>
+                                <h2 class="h4 mb-3">Produk Terkait</h2>
                                 <div class="mb-3">
                                     <select multiple class="related-product w-100" name="related_products[]"
                                         id="related_products">
@@ -237,7 +237,7 @@
                                 <h2 class="h4 mb-3">Merek produk</h2>
                                 <div class="mb-3">
                                     <select name="brand" id="brand" class="form-control">
-                                        <option value="">Pilih Brand</option>
+                                        <option value="">Pilih Merek</option>
                                         @if ($brands->isNotEmpty())
                                             @foreach ($brands as $brand)
                                                 <option {{ $product->brand_id == $brand->id ? 'selected' : '' }}

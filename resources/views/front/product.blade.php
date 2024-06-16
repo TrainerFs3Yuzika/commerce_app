@@ -69,7 +69,7 @@
                         </div>
 
                         @if ($product->compare_price > 0)
-                            <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                            <h2 class="price text-secondary"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></h2>
                         @endif
 
                         <h2 class="price ">Rp{{number_format($product->price, 0, ',', '.')}}</h2>
@@ -83,7 +83,7 @@
                             @if ($product->qty > 0)
                                 <a class="btn btn-dark" href="javascript:void(0);"
                                     onclick="addToCart ({{ $product->id }});">
-                                    <i class="fa fa-shopping-cart"></i> &nbsp;Masuk Keranjang
+                                    <i class="fa fa-shopping-cart"></i> &nbsp;Masuk keranjang
                                 </a>
                             @else
                                 <a class="btn btn-dark" href="javascript:void(0);">
@@ -92,7 +92,7 @@
                             @endif
                         @else
                             <a class="btn btn-dark" href="javascript:void(0);" onclick="addToCart ({{ $product->id }});">
-                                <i class="fa fa-shopping-cart"></i> &nbsp;Masuk Keranjang
+                                <i class="fa fa-shopping-cart"></i> &nbsp;Masuk keranjang
                             </a>
                         @endif
                     </div>
@@ -131,7 +131,7 @@
                                     <div class="row">
                                         <form action="" name="productRatingForm" id="productRatingForm"
                                             method="post">
-                                            <h3 class="h4 pb-3">Menulis ulasan</h3>
+                                            <h3 class="h4 pb-3">Nilai Produk</h3>
                                             <div class="form-group col-md-6 mb-3">
                                                 <label for="name">Nama</label>
                                                 <input type="text" class="form-control" name="name" id="name"
@@ -167,9 +167,9 @@
                                                 <p class="product-rating-error text-danger"></p>
                                             </div>
                                             <div class="form-group mb-3">
-                                                <label for="">Bagaimana penilaian Anda secara keseluruhan?</label>
+                                                <label for="">Nilai kepuasan terhadap pesananmu</label>
                                                 <textarea name="comment" id="review" class="form-control" cols="30" rows="10"
-                                                    placeholder="Bagaimana Penilaian Anda secara keseluruhan?"></textarea>
+                                                    placeholder="Bagaimana kepuasan Anda secara keseluruhan?"></textarea>
                                                 <p></p>
                                             </div>
                                             <div>
@@ -209,7 +209,7 @@
                                             <div class="pt-2 ps-2">
                                                 ({{ $product->product_ratings_count > 1
                                                     ? $product->product_ratings_count . ' Reviews'
-                                                    : $product->product_ratings_count . ' penilaian' }})
+                                                    : $product->product_ratings_count . ' Penilaian' }})
                                             </div>
                                         </div>
 
@@ -295,7 +295,7 @@
                                             @if ($relProduct->qty > 0)
                                                 <a class="btn btn-dark" href="javascript:void(0);"
                                                     onclick="addToCart ({{ $relProduct->id }});">
-                                                    <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                    <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                                 </a>
                                             @else
                                                 <a class="btn btn-dark" href="javascript:void(0);">
@@ -305,7 +305,7 @@
                                         @else
                                             <a class="btn btn-dark" href="javascript:void(0);"
                                                 onclick="addToCart ({{ $relProduct->id }});">
-                                                <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                             </a>
                                         @endif
                                     </div>
@@ -313,9 +313,9 @@
                                 <div class="card-body text-center mt-3">
                                     <a class="h6 link" href="">{{ $relProduct->title }}</a>
                                     <div class="price mt-2">
-                                    <span class="h5"><strong>Rp{{number_format($product->price, 0, ',', '.')}}</strong></span>
+                                        <span class="h5"><strong>Rp{{number_format( $relProduct->price, 0, ',', '.') }}</strong></span>
                                         @if ($relProduct->compare_price > 0)
-                                        <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                                            <br><span class="h6 text-underline"><del>Rp{{number_format( $relProduct->compare_price, 0, ',', '.') }}</del></span>
                                         @endif
 
                                     </div>

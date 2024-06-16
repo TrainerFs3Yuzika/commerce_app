@@ -77,7 +77,7 @@
                                         </td>
                                         <td>@rupiah($order->grand_total)</td>
                                         <td>
-                                            {{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}
+                                            {{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y H:i:s') }}
                                         </td>
                                         <td class="text-center">
                                             <a href="{{ route('orders.detail', [$order->id]) }}">

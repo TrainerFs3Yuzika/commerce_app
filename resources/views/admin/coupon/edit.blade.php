@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Ubah</button>
                     <a href="{{ route('coupons.index') }}" class="btn btn-outline-dark ml-3">Batal</a>
                 </div>
             </form>

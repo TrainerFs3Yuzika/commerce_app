@@ -144,7 +144,7 @@
                                                     @if ($product->qty > 0)
                                                         <a class="btn btn-dark" href="javascript:void(0);" id="wishlist"
                                                             onclick="addToCart ({{ $product->id }});">
-                                                            <i class="fa fa-shopping-cart"></i> Masuk Keranjang
+                                                            <i class="fa fa-shopping-cart"></i> Masuk keranjang
                                                         </a>
                                                     @else
                                                         <a class="btn btn-dark" href="javascript:void(0);">
@@ -162,10 +162,10 @@
                                         <div class="card-body text-center mt-3">
                                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                                             <div class="price mt-2">
-                                            <span class="h5"><strong>Rp{{number_format($product->price, 0, ',', '.')}}</strong></span>
+                                                <span class="h5"><strong>Rp{{number_format($product->price, 0, ',', '.')}}</strong></span>
 
                                                 @if ($product->compare_price > 0)
-                                                <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                                                    <br><span class="h6 text-underline"><del>Rp{{number_format($product->compare_price, 0, ',', '.')}}</del></span>
                                                 @endif
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@
         rangeSlider = $(".js-range-slider").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 20000000,
+            max: 30000000,
             from: {{ $priceMin }},
             step: 100000,
             to: {{ $priceMax }},

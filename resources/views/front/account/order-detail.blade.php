@@ -63,7 +63,7 @@
                                                 @elseif ($order->status == 'delivered')
                                                 <span class="badge bg-success">Selesai</span>
                                                 @else
-                                                <span class="badge bg-danger">Di Batalkan</span>
+                                                <span class="badge bg-danger">Dibatalkan</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -72,7 +72,7 @@
                                             <h6 class="heading-xxxs text-muted">Jumlah Pesanan:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
-                                             Rp{{ number_format($order->grand_total, 0, ',', '.') }}
+                                            Rp{{ number_format($order->grand_total, 0, ',', '.') }}
                                             </p>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                         <span class="ms-auto">Rp{{number_format($order->subtotal, 0, ',', '.')}}</span>
                                     </li>
                                     <li class="list-group-item d-flex">
-                                        <span>Diskon {{ (!empty($order->coupon_code)) ? '('.$order->coupon_code.')' : '' }}</span>
+                                        <span>Discount {{ (!empty($order->coupon_code)) ? '('.$order->coupon_code.')' : '' }}</span>
                                         <span class="ms-auto">Rp{{number_format($order->discount, 0, ',', '.')}}</span>
                                     </li>
                                     <li class="list-group-item d-flex">

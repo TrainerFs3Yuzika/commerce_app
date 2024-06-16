@@ -313,7 +313,7 @@ class AuthController extends Controller
 
         $data = [];
         $user = Auth::user();
-        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
+        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
         $data['orders'] = $orders;
         return view('front.account.order', $data);
     }

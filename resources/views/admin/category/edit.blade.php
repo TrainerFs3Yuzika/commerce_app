@@ -72,9 +72,9 @@
                                 <div class="mb-3">
                                     <label for="status">Tampilkan di Beranda</label>
                                     <select name="showHome" id="showHome" class="form-control">
-                                        ' <option {{ $category->showHome == 'Ya' ? 'selected' : '' }} value="Yes">Ya
+                                        ' <option {{ $category->showHome == 'Yes' ? 'selected' : '' }} value="Yes">Ya
                                         </option>
-                                        <option {{ $category->showHome == 'Tidak' ? 'selected' : '' }} value="No">Tidak
+                                        <option {{ $category->showHome == 'No' ? 'selected' : '' }} value="No">Tidak
                                         </option>
                                     </select>
                                 </div>

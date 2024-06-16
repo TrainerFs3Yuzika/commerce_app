@@ -46,18 +46,6 @@ class DiscountCodeController extends Controller
 
         if ($validator->passes()) {
 
-            // tanggal mulai harus tergenerate dengan tanggal sekarang
-            if (!empty($request->starts_at)) {
-                $now = Carbon::now();
-                $startsAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->starts_at);
-
-                if ($startsAt->lte($now) == true) {
-                    return response()->json([
-                        'status' => false,
-                        'errors' => ['starts_at' => 'Tanggal Mulai Tidak boleh sebelum hari ini!']
-                    ]);
-                }
-            }
 
             // tanggal mulai harus melebihi tanggal mulai
             if (!empty($request->starts_at) && !empty($request->expires_at)) {

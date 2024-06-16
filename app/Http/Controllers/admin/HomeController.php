@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -45,25 +45,31 @@ class HomeController extends Controller
             ->whereDate('created_at', '<=', $currentDate)
             ->sum('grand_total');
 
-        // generate data untuk grafik
-        $revenueData = [];
-        $orderData = [];
-        $revenueLabels = [];
-        $orderLabels = [];
-        for ($i = 0; $i < 30; $i++) {
-            $date = Carbon::now()->subDays(29 - $i)->format('Y-m-d');
-            $revenueLabels[] = $date;
-            $orderLabels[] = $date;
+        // generate data untuk grafik bulanan
+        $revenueMonthlyData = [];
+        $orderMonthlyData = [];
+        $revenueMonthlyLabels = [];
+        $orderMonthlyLabels = [];
 
-            $dailyRevenue = Order::where('status', '!=', 'cancelled')
-                ->whereDate('created_at', $date)
+        for ($i = 11; $i >= 0; $i--) {
+            $startOfMonth = Carbon::now()->subMonths($i)->startOfMonth()->format('Y-m-d');
+            $endOfMonth = Carbon::now()->subMonths($i)->endOfMonth()->format('Y-m-d');
+            $monthLabel = Carbon::now()->subMonths($i)->format('M Y');
+
+            $revenueMonthlyLabels[] = $monthLabel;
+            $orderMonthlyLabels[] = $monthLabel;
+
+            $monthlyRevenue = Order::where('status', '!=', 'cancelled')
+                ->whereDate('created_at', '>=', $startOfMonth)
+                ->whereDate('created_at', '<=', $endOfMonth)
                 ->sum('grand_total');
-            $dailyOrders = Order::where('status', '!=', 'cancelled')
-                ->whereDate('created_at', $date)
+            $monthlyOrders = Order::where('status', '!=', 'cancelled')
+                ->whereDate('created_at', '>=', $startOfMonth)
+                ->whereDate('created_at', '<=', $endOfMonth)
                 ->count();
 
-            $revenueData[] = $dailyRevenue;
-            $orderData[] = $dailyOrders;
+            $revenueMonthlyData[] = $monthlyRevenue;
+            $orderMonthlyData[] = $monthlyOrders;
         }
 
         // hapus gambar sementara
@@ -88,18 +94,18 @@ class HomeController extends Controller
         }
 
         return view('admin.dashboard', [
-            'totalOrders' => number_format($totalOrders, 0, ',', '.'),
-            'totalProducts' => number_format($totalProducts, 0, ',', '.'),
-            'totalCustomers' => number_format($totalCustomers, 0, ',', '.'),
-            'totalRevenue' => number_format($totalRevenue, 0, ',', '.'),
-            'revenueThisMonth' => number_format($revenueThisMonth, 0, ',', '.'),
-            'revenueLastMonth' => number_format($revenueLastMonth, 0, ',', '.'),
-            'revenueLastThirtyDays' => number_format($revenueLastThirtyDays, 0, ',', '.'),
+            'totalOrders' => $totalOrders,
+            'totalProducts' => $totalProducts,
+            'totalCustomers' => $totalCustomers,
+            'totalRevenue' => $totalRevenue,
+            'revenueThisMonth' => $revenueThisMonth,
+            'revenueLastMonth' => $revenueLastMonth,
+            'revenueLastThirtyDays' => $revenueLastThirtyDays,
             'lastMonthName' => $lastMonthName,
-            'revenueData' => array_map(function($value) { return number_format($value, 0, ',', '.'); }, $revenueData),
-            'revenueLabels' => $revenueLabels,
-            'orderData' => $orderData,
-            'orderLabels' => $orderLabels,
+            'revenueMonthlyData' => $revenueMonthlyData,
+            'revenueMonthlyLabels' => $revenueMonthlyLabels,
+            'orderMonthlyData' => $orderMonthlyData,
+            'orderMonthlyLabels' => $orderMonthlyLabels,
         ]);
     }
 

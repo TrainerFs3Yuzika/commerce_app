@@ -5,8 +5,8 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="#">Akun Saya</a></li>
-                    <li class="breadcrumb-item">Ganti Kata Sandi</li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">Akun saya</a></li>
+                    <li class="breadcrumb-item">Pengaturan</li>
                 </ol>
             </div>
         </div>
@@ -27,7 +27,7 @@
                             <div class="card-body p-4">
                                 <div class="row">
                                     <div class="mb-3">
-                                        <label for="name">Password Lama</label>
+                                        <label for="name">Kata Sandi Lama</label>
                                         <input type="password" name="old_password" id="old_password"
                                             placeholder="Password Lama" class="form-control">
                                         <p></p>
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="d-flex">
                                         <button id="submit" name="submit" type="submit"
-                                            class="btn btn-dark">Save</button>
+                                            class="btn btn-dark">Simpan</button>
                                     </div>
                                 </div>
                             </div>

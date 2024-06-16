@@ -9,7 +9,7 @@
                     {{ Session::get('success') }}
                 </div>
             @endif
-            <h1>Terima Kasih :D</h1>
+            <img src="{{ asset('front-assets/images/Thanks-foto.png') }}" style="width:500px;" >
             <p>Pesanan Kamu dengan Id: {{$id}} </p>
         </div>
     </section>

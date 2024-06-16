@@ -17,10 +17,18 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Midtrans\{Config, Snap};
 
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        // Inital Midtrans
+        Config::$serverKey = env("MIDTRANS_SERVER_KEY");
+        Config::$clientKey = env("MIDTRANS_CLIENT_KEY");
+        Config::$isSanitized = Config::$is3ds = true;
+    }
     public function addToCart(Request $request)
     {
         if (empty(Auth::user())) {
@@ -540,8 +548,183 @@ class CartController extends Controller
             return response()->json([
                 'message' => 'Pesanan berhasil disimpan',
                 'orderId' => $order->id,
+                'payment_method' => 'cod',
                 'status' => true
             ]);
+        } else if ($request->payment_method == 'e-wallet') {
+
+            $discountCodeId = NULL;
+            $promoCode = '';
+            $shipping = 0;
+            $discount = 0;
+            $subTotal  = 0;
+            foreach ($checkCart as $cart) {
+                $subTotal += (int) $cart->price * $cart->qty;
+            }
+
+            // Apply Discount Here
+            if (session()->has('code')) {
+                $code = session()->get('code');
+                if ($code->type == 'percent') {
+                    $discount = ($code->discount_amount / 100) * $subTotal;
+                } else {
+                    $discount = $code->discount_amount;
+                }
+                $discountCodeId = $code->id;
+                $promoCode = $code->code;
+            }
+
+            // Menghitung biaya shipping
+            $shippingInfo = ShippingCharge::where('country_id', $request->country)->first();
+            $totalQty = 0;
+            foreach ($checkCart as $cart) {
+                $totalQty += $cart->qty;
+            }
+
+            if ($shippingInfo != null) {
+                $shipping = $totalQty * $shippingInfo->amount;
+                $grandTotal = ($subTotal - $discount) + $shipping;
+            } else {
+                $shippingInfo = ShippingCharge::where('country_id', 'semua_negara')->first();
+                $shipping = $totalQty * $shippingInfo->amount;
+                $grandTotal = ($subTotal - $discount) + $shipping;
+            }
+
+            $order = new Order;
+            $order->subtotal = $subTotal;
+            $order->shipping = $shipping;
+            $order->grand_total = $grandTotal;
+            $order->discount = $discount;
+            $order->coupon_code_id = !empty($discountCodeId) ? $discountCodeId : null;
+            $order->coupon_code = $promoCode ?? null;
+            $order->payment_status = 'paid';
+            $order->status = 'pending';
+            $order->user_id = $user->id;
+            $order->first_name = $request->first_name;
+            $order->last_name = $request->last_name;
+            $order->email = $request->email;
+            $order->mobile = $request->mobile;
+            $order->address = $request->address;
+            $order->apartment = $request->apartment;
+            $order->state = $request->state;
+            $order->city = $request->city;
+            $order->zip = $request->zip;
+            $order->notes = $request->order_notes;
+            $order->country_id = $request->country;
+            $order->save();
+
+            // step - 4 store order items in order items table
+            foreach ($checkCart as $cart) {
+                $orderItem = new OrderItem;
+                $orderItem->order_id = $order->id;
+                $orderItem->product_id = $cart->product_id;
+                $orderItem->name = $cart->name;
+                $orderItem->qty = $cart->qty;
+                $orderItem->price = $cart->price;
+                $orderItem->total = $cart->price * $cart->qty;
+                $orderItem->save();
+
+                $productData = Product::find($cart->product_id);
+                if ($productData->track_qty == 'Yes') {
+                    $currentQty = $productData->qty;
+                    $updatedQty = $currentQty - $cart->qty;
+                    $productData->qty = $updatedQty;
+                    $productData->save();
+                }
+            }
+
+            // Proses pembayaran lain (misalnya pembayaran online) bisa ditambahkan di sini
+            $itemProductCart = array();
+            foreach ($checkCart as $cart) {
+                $itemProductCart[] = [
+                    'id'         => $cart->product_id,
+                    'quantity'   => $cart->qty,
+                    'name'       => $cart->name,
+                    'price'      => $cart->price
+                ];
+            }
+
+            $orderId = "ORD-" . $order->id;
+            $gross_amount = intval($grandTotal);
+            $transaction_details = array(
+                'order_id' => $orderId, // isi order id anda
+                'gross_amount' => $gross_amount, // no decimal allowed for creditcard
+            );
+
+            $item_details = $itemProductCart; // Optional
+            // custom expired
+            $custom_expiry = [
+                'start_time' => date("Y-m-d H:i:s O", time()),
+                'unit' => 'day',
+                'duration' => 7
+            ];
+            // Populate customer's billing address
+            $billing_address = array(
+                'first_name'   => $request->first_name,
+                'last_name'    => $request->last_name,
+                'address'      => $request->address,
+                'city'         => $request->city,
+                'postal_code'  => $request->zip,
+                'phone'        => $request->mobile,
+                'country_code' => 'IDN'
+            );
+
+            // Biaya Pengiriman
+            $shipping_item = array(
+                'id' => 'shipping',
+                'price' => $shipping,
+                'quantity' => 1,
+                'name' => 'Shipping Cost'
+            );
+
+            $item_details[] = $shipping_item;
+
+            // Populate customer's shipping address
+            $shipping_address = array(
+                'first_name'   => $request->first_name,
+                'last_name'    => $request->last_name,
+                'address'      => $request->address,
+                'city'         => $request->city,
+                'postal_code'  => $request->zip,
+                'phone'        => $request->mobile,
+                'country_code' => 'IDN'
+            );
+
+            $customer_details = array(
+                'first_name'    => $request->first_name,
+                'last_name'     => $request->last_name,
+                'email'         => $request->email,
+                'phone'         => $request->mobile,
+                'billing_address'  => $billing_address,
+                'shipping_address' => $shipping_address
+            );
+            // Fill transaction details
+            $transaction = array(
+                'transaction_details' => $transaction_details,
+                'customer_details' => $customer_details,
+                'expiry' => $custom_expiry,
+                'item_details' => $item_details,
+            );
+
+            // dd($transaction);
+
+            // Send Order Email
+            orderEmail($order->id);
+
+            // Menghapus data keranjang setelah checkout berhasil
+            Carts::where('user_id', $user->id)->delete();
+
+            session()->flash('success', 'Kamu Berhasil Memesan');
+
+            // dd($response_data);
+            return response()->json([
+                'message'   => 'Pesanan berhasil disimpan',
+                'orderId'   => $order->id,
+                'link_snap' => Snap::getSnapToken($transaction),
+                'payment_method' => 'midtrans',
+                'status'    => true
+            ]);
+            // dd($response_data);
         } else {
             // Proses pembayaran lain (misalnya pembayaran online) bisa ditambahkan di sini
         }
