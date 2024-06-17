@@ -66,7 +66,7 @@
                                         <td>@formatPhone($order->mobile)</td>
                                         <td>
                                             @if ($order->status == 'pending')
-                                                <span class="badge bg-danger">Dikemas</span>
+                                                <span class="badge bg-warning">Dikemas</span>
                                             @elseif ($order->status == 'shipped')
                                                 <span class="badge bg-info">Dikirim</span>
                                             @elseif ($order->status == 'delivered')
