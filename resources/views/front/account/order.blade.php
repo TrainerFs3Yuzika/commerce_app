@@ -47,7 +47,7 @@
 
                                                 <td>
                                                     @if ($order->status == 'pending')
-                                                        <span class="badge bg-warning">Dikirim</span>
+                                                        <span class="badge bg-warning">Dikemas</span>
                                                     @elseif ($order->status == 'shipped')
                                                         <span class="badge bg-info">Dikirim</span>
                                                     @elseif ($order->status == 'delivered')
