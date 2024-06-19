@@ -54,6 +54,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <style>
+    .sub-title:after{
+        background-color: #3ABEF9;
+    }
      .section-10 .login-form a:hover {
         color: #3ABEF9;
     }
