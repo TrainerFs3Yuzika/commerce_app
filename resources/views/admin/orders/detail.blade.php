@@ -50,7 +50,7 @@
                                     <b>Total:</b> @rupiah($order->grand_total)<br>
                                     <b>Status:</b>
                                     @if ($order->status == 'pending')
-                                        <span class="text-warning">Dikemas</span>
+                                        <span class="text-warning">Dibayar</span>
                                     @elseif ($order->status == 'shipped')
                                         <span class="text-info">Dikirim</span>
                                     @elseif ($order->status == 'delivered')
@@ -115,7 +115,7 @@
                                 <div class="mb-3">
                                     <select name="status" id="status" class="form-control">
                                         <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
-                                            Dikemas</option>
+                                            Dibayar</option>
                                         <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>
                                             Dikirim</option>
                                         <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>
