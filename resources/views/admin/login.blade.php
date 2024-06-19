@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('admin-assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
@@ -26,19 +25,19 @@
 
         .login-box {
             display: flex;
+            flex-direction: row;
             width: 100%;
             max-width: 1300px;
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
         .login-image {
             flex: 1;
-            background: url('{{ asset('https://i.pinimg.com/564x/ef/a6/77/efa677de2afbd457f8d9424bbd027938.jpg') }}') no-repeat center center;
+            background: url('https://i.pinimg.com/564x/ef/a6/77/efa677de2afbd457f8d9424bbd027938.jpg') no-repeat center center;
             background-size: cover;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
         }
 
         .login-form {
@@ -128,6 +127,49 @@
             content: '*';
             color: red;
             margin-left: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .login-box {
+                flex-direction: column;
+                max-width: 100%;
+            }
+
+            .login-image {
+                height: 200px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 0;
+            }
+
+            .login-form {
+                padding: 30px 20px;
+            }
+
+            .login-header {
+                font-size: 32px;
+            }
+
+            .login-box-msg {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .btn-primary {
+                padding: 8px;
+                margin-top: 15px;
+            }
+
+            .input-group .form-control {
+                padding: 8px 15px;
+            }
+
+            .form-control {
+                padding: 8px 15px;
+            }
+
+            .input-group-icon {
+                padding: 0 10px;
+            }
         }
     </style>
 </head>
