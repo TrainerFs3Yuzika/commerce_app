@@ -54,7 +54,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <style>
+    .section-3 .cat-card .right:hover {
+        background-color: #3ABEF9;
+        color: #FFF
+    }
     .sub-title:after{
+        background-color: #3ABEF9;
+    }
+    .section-10 .login-form a {
+        color: #000;
+    }
+    .section-title:after{   
         background-color: #3ABEF9;
     }
      .section-10 .login-form a:hover {
