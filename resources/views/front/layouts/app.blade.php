@@ -54,9 +54,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <style>
+    .section-9 .table thead {
+        background-color: #3ABEF9;
+        color: #FFF;
+    }
     .section-3 .cat-card .right:hover {
         background-color: #3ABEF9;
-        color: #FFF
+        color: #FFF;
     }
     .sub-title:after{
         background-color: #3ABEF9;
@@ -83,7 +87,7 @@
         color:#fff;
     }
     .text-primary {
-        color: #3572EF !important;
+        color: #3ABEF9 !important;
     }
     .breadcrumb a{
         color:#3ABEF9;
