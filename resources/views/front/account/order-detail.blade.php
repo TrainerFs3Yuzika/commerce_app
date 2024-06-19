@@ -56,15 +56,17 @@
                                             <h6 class="heading-xxxs text-muted">Status:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
-                                                @if ($order->status == 'pending')
-                                                <span class="badge bg-warning">Dikemas</span>
-                                                @elseif ($order->status == 'shipped')
-                                                <span class="badge bg-info">Dikirim</span>
-                                                @elseif ($order->status == 'delivered')
-                                                <span class="badge bg-success">Selesai</span>
-                                                @else
-                                                <span class="badge bg-danger">Dibatalkan</span>
-                                                @endif
+                                                 @if ($order->status == 'paid')
+                                                        <span class="badge bg-success">Dibayar</span>
+                                                    @elseif ($order->status == 'pending')
+                                                        <span class="badge bg-warning">Belum Dibayar</span>
+                                                    @elseif ($order->status == 'shipped')
+                                                        <span class="badge bg-info">Dikirim</span>
+                                                    @elseif ($order->status == 'delivered')
+                                                        <span class="badge bg-success">Selesai</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Dibatalkan</span>
+                                                    @endif
                                             </p>
                                         </div>
                                         <div class="col-6 col-lg-3">
