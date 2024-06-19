@@ -49,15 +49,17 @@
                                     <b>Order ID:</b> {{ $order->id }}<br>
                                     <b>Total:</b> @rupiah($order->grand_total)<br>
                                     <b>Status:</b>
-                                    @if ($order->status == 'pending')
-                                        <span class="text-warning">Dibayar</span>
-                                    @elseif ($order->status == 'shipped')
-                                        <span class="text-info">Dikirim</span>
-                                    @elseif ($order->status == 'delivered')
-                                        <span class="text-success">Selesai</span>
-                                    @else
-                                        <span class="text-danger">Dibatalkan</span>
-                                    @endif
+                                   @if ($order->status == 'paid')
+                                                        <span class="badge bg-success">Dibayar</span>
+                                                    @elseif ($order->status == 'pending')
+                                                        <span class="badge bg-warning">Belum Dibayar</span>
+                                                    @elseif ($order->status == 'shipped')
+                                                        <span class="badge bg-info">Dikirim</span>
+                                                    @elseif ($order->status == 'delivered')
+                                                        <span class="badge bg-success">Selesai</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Dibatalkan</span>
+                                                    @endif
                                     <br>
                                 </div>
                             </div>
@@ -114,8 +116,10 @@
                                 <h2 class="h4 mb-3">Status pemesanan</h2>
                                 <div class="mb-3">
                                     <select name="status" id="status" class="form-control">
-                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                        <option value="paid" {{ $order->status == 'paid' ? 'selected' : '' }}>
                                             Dibayar</option>
+                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                            Belum dibayar</option>
                                         <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>
                                             Dikirim</option>
                                         <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>
