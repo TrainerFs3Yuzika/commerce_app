@@ -65,15 +65,17 @@
                                         <td>{{ $order->email }}</td>
                                         <td>@formatPhone($order->mobile)</td>
                                         <td>
-                                            @if ($order->status == 'pending')
-                                                <span class="badge bg-warning">Dibayar</span>
-                                            @elseif ($order->status == 'shipped')
-                                                <span class="badge bg-info">Dikirim</span>
-                                            @elseif ($order->status == 'delivered')
-                                                <span class="badge bg-success">Selesai</span>
-                                            @else
-                                                <span class="badge bg-danger">Dibatalkan</span>
-                                            @endif
+                                            @if ($order->status == 'paid')
+                                                        <span class="badge bg-success">Dibayar</span>
+                                                    @elseif ($order->status == 'pending')
+                                                        <span class="badge bg-warning">Belum Dibayar</span>
+                                                    @elseif ($order->status == 'shipped')
+                                                        <span class="badge bg-info">Dikirim</span>
+                                                    @elseif ($order->status == 'delivered')
+                                                        <span class="badge bg-success">Selesai</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Dibatalkan</span>
+                                                    @endif
                                         </td>
                                         <td>@rupiah($order->grand_total)</td>
                                         <td>
