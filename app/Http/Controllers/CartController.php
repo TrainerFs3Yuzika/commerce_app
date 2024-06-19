@@ -501,8 +501,8 @@ class CartController extends Controller
             $order->discount = $discount;
             $order->coupon_code_id = !empty($discountCodeId) ? $discountCodeId : null;
             $order->coupon_code = $promoCode ?? null;
-            $order->payment_status = 'not paid';
-            $order->status = 'pending';
+            $order->payment_status = 'paid';
+            $order->status = 'paid';
             $order->user_id = $user->id;
             $order->first_name = $request->first_name;
             $order->last_name = $request->last_name;
