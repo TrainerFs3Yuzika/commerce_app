@@ -88,8 +88,8 @@
                             {{ Auth::user()->name }}
                         </a>
                     @else
-                        <a href="{{ route('account.login') }}" class="nav-link text-dark">Masuk</a>
-                        <a href="{{ route('account.register') }}" class="text-dark">Daftar</a>
+                        <a href="{{ route('account.login') }}" class="nav-link text-dark mb-1">Masuk</a>
+                        <a href="{{ route('account.register') }}" class="text-dark mb-1">Daftar</a>
                     @endif
                 </div>
             </div>
