@@ -54,10 +54,113 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <style>
+     .section-10 .login-form a:hover {
+        color: #3ABEF9;
+    }
+    .btn-dark {
+        padding: 10px 20px;
+        background-color: #3572EF;
+        border-radius: 0px;
+    }
+    .btn-dark:hover {
+        background-color: #3ABEF9;
+        border-color: #3ABEF9;
+    }
     .icon-cart, .icon-home{
         color:#fff;
     }
+    .text-primary {
+        color: #3572EF !important;
+    }
+    .breadcrumb a{
+        color:#3ABEF9;
+    }
+    .fa-heart{
+        color:#FF0000;
+    }
+    .fa-heart:hover{
+        color:#A7E6FF;
+    }
+    .footer-card h3:after{
+        background-color: #3ABEF9;
+    }
+    .footer-card a:hover{
+        color: #050C9C;
+    }
+
+    .section-6 .sidebar .accordion-item .nav-link {
+        color: #001d3d;
+    }
+
+    .section-6 .sidebar .accordion-item .nav-link:hover {
+        color: #3ABEF9;
+    }
+
+    .section-6 .sidebar .nav-link {
+        color: #001d3d;
+    }
+
+    .section-6 .sidebar .nav-link:hover {
+        color: #3ABEF9;
+    }
+    .section-6 .sidebar .accordion-button:focus {
+        box-shadow: none;
+        background-color: transparent;
+    }
+    .section-6 .sidebar .accordion-button:hover {
+        color: #3ABEF9;
+    }
+    header .btn-dark {
+        background-color: transparent;
+        color: #FFF;
+        border: none;
+    }
+    
+    header .btn-dark:hover {
+        background-color: transparent;
+        color: #3ABEF9;
+        outline: none;
+        box-shadow: none;
+    }
+    
+    header .btn-dark:active {
+        background-color: transparent;
+        color: #3ABEF9;
+        outline: none;
+        box-shadow: none;
+    }
+    
+    header .btn-dark:focus {
+        background-color: transparent;
+        color: #3ABEF9;
+        outline: none;
+        box-shadow: none;
+    }
+    
+    header .navbar .nav-link {
+        color: #FFF;
+        padding: 10px 15px 10px 15px !important;
+        font-family: 'Roboto';
+    }
+    
+    header .navbar .nav-link:hover {
+        color: #3ABEF9;
+    }
+    
+    header .navbar .dropdown-item:focus {
+        color: #3ABEF9;
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+    .section-11 #account-panel .nav-link:hover {
+        background-color: #3ABEF9;
+    }
+    .section-11 .nav-item .nav-link {
+        background-color: #3572EF;
+        color: #FFF;
+        margin-bottom: 5px
+    }
 </style>
+    
 <body data-instant-intensity="mousedown">
 
     <div class="bg-light top-header">
