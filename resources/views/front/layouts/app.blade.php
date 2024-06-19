@@ -93,10 +93,10 @@
         color:#3ABEF9;
     }
     .fa-heart{
-        color:#FF0000;
+        color:#A7E6FF;
     }
     .fa-heart:hover{
-        color:#A7E6FF;
+        color:#FF0000;
     }
     .footer-card h3:after{
         background-color: #3ABEF9;
