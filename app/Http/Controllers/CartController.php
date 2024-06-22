@@ -455,6 +455,8 @@ class CartController extends Controller
         );
 
         // step - 3 store data in orders table
+        $orderId = "ORD-" . date('Y-m-d-H-i') . "-" . rand(1, 20);
+
         $checkCart = Carts::where('user_id', $user->id)->get();
         if ($request->payment_method == 'cod') {
             $discountCodeId = NULL;
@@ -495,6 +497,7 @@ class CartController extends Controller
             }
 
             $order = new Order;
+            $order->order_id = $orderId;
             $order->subtotal = $subTotal;
             $order->shipping = $shipping;
             $order->grand_total = $grandTotal;
@@ -591,14 +594,15 @@ class CartController extends Controller
             }
 
             $order = new Order;
+            $order->order_id = $orderId;
             $order->subtotal = $subTotal;
             $order->shipping = $shipping;
             $order->grand_total = $grandTotal;
             $order->discount = $discount;
             $order->coupon_code_id = !empty($discountCodeId) ? $discountCodeId : null;
             $order->coupon_code = $promoCode ?? null;
-            $order->payment_status = 'paid';
-            $order->status = 'paid';
+            $order->payment_status = 'not paid';
+            $order->status = 'pending';
             $order->user_id = $user->id;
             $order->first_name = $request->first_name;
             $order->last_name = $request->last_name;
@@ -644,7 +648,6 @@ class CartController extends Controller
                 ];
             }
 
-            $orderId = "ORD-" . $order->id;
             $gross_amount = intval($grandTotal);
             $transaction_details = array(
                 'order_id' => $orderId, // isi order id anda
