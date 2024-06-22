@@ -7,13 +7,16 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Dashboard</h1>
+
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 text-right">
+                    <a href="{{ route('laporan.penjualanBulanan') }}" class="btn btn-sm btn-success">Laporan Penjualan Bulan
+                        Ini</a>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Konten Utama -->
     <section class="content">
         <div class="container-fluid">
@@ -21,16 +24,55 @@
                 <!-- Kotak Statistik -->
                 @php
                     $stats = [
-                        ['title' => 'Total Pesanan', 'value' => number_format($totalOrders, 0, ',', '.'), 'icon' => 'fas fa-shopping-cart', 'link' => route('orders.index')],
-                        ['title' => 'Total Produk', 'value' => number_format($totalProducts, 0, ',', '.'), 'icon' => 'fas fa-box', 'link' => route('products.index')],
-                        ['title' => 'Total Pelanggan', 'value' => number_format($totalCustomers, 0, ',', '.'), 'icon' => 'fas fa-users', 'link' => route('users.index')],
-                        ['title' => 'Total Penjualan', 'value' => 'Rp ' . number_format($totalRevenue, 0, ',', '.'), 'icon' => 'fas fa-dollar-sign', 'link' => 'javascript:void(0);', 'no_link' => true],
-                        ['title' => 'Pendapatan Bulan Ini', 'value' => 'Rp ' . number_format($revenueThisMonth, 0, ',', '.'), 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true],
-                        ['title' => 'Pendapatan Bulan Lalu ('.$lastMonthName.')', 'value' => 'Rp ' . number_format($revenueLastMonth, 0, ',', '.'), 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true],
-                        ['title' => 'Pendapatan 30 Hari Terakhir', 'value' => 'Rp ' . number_format($revenueLastThirtyDays, 0, ',', '.'), 'icon' => 'fas fa-calendar-alt', 'link' => 'javascript:void(0);', 'no_link' => true]
+                        [
+                            'title' => 'Total Pesanan',
+                            'value' => number_format($totalOrders, 0, ',', '.'),
+                            'icon' => 'fas fa-shopping-cart',
+                            'link' => route('orders.index'),
+                        ],
+                        [
+                            'title' => 'Total Produk',
+                            'value' => number_format($totalProducts, 0, ',', '.'),
+                            'icon' => 'fas fa-box',
+                            'link' => route('products.index'),
+                        ],
+                        [
+                            'title' => 'Total Pelanggan',
+                            'value' => number_format($totalCustomers, 0, ',', '.'),
+                            'icon' => 'fas fa-users',
+                            'link' => route('users.index'),
+                        ],
+                        [
+                            'title' => 'Total Penjualan',
+                            'value' => 'Rp ' . number_format($totalRevenue, 0, ',', '.'),
+                            'icon' => 'fas fa-dollar-sign',
+                            'link' => 'javascript:void(0);',
+                            'no_link' => true,
+                        ],
+                        [
+                            'title' => 'Pendapatan Bulan Ini',
+                            'value' => 'Rp ' . number_format($revenueThisMonth, 0, ',', '.'),
+                            'icon' => 'fas fa-calendar-alt',
+                            'link' => 'javascript:void(0);',
+                            'no_link' => true,
+                        ],
+                        [
+                            'title' => 'Pendapatan Bulan Lalu (' . $lastMonthName . ')',
+                            'value' => 'Rp ' . number_format($revenueLastMonth, 0, ',', '.'),
+                            'icon' => 'fas fa-calendar-alt',
+                            'link' => 'javascript:void(0);',
+                            'no_link' => true,
+                        ],
+                        [
+                            'title' => 'Pendapatan 30 Hari Terakhir',
+                            'value' => 'Rp ' . number_format($revenueLastThirtyDays, 0, ',', '.'),
+                            'icon' => 'fas fa-calendar-alt',
+                            'link' => 'javascript:void(0);',
+                            'no_link' => true,
+                        ],
                     ];
                 @endphp
-                
+
                 @foreach ($stats as $stat)
                     <div class="col-lg-4 col-6">
                         <div class="small-box bg-info">
@@ -131,7 +173,8 @@
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
-                                return 'Rp ' + (tooltipItem.raw / 1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' juta';
+                                return 'Rp ' + (tooltipItem.raw / 1000000).toString().replace(
+                                    /\B(?=(\d{3})+(?!\d))/g, ".") + ' juta';
                             }
                         }
                     }

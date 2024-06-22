@@ -1,16 +1,47 @@
 @extends('front.layouts.app')
 
 @section('content')
+    <style>
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-caption h1 {
+                font-size: 2rem;
+            }
+
+            .carousel-caption p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+
     <section class="section-1">
         <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel"
             data-bs-interval="false">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="video-container">
-                        <video id="videoCarousel3" class="d-block w-100" autoplay loop muted>
-                            <source src="{{ asset('front-assets/videos/carousel-3.mp4') }}" type="video/mp4">
-                            Browser Anda tidak mendukung tag video.
-                        </video>
+                        <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/aBzvu5_1M1Q?autoplay=1&mute=1&loop=1&playlist=aBzvu5_1M1Q"
+                            frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
@@ -20,12 +51,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item ">
+                <div class="carousel-item">
                     <div class="video-container">
-                        <video id="videoCarousel1" class="d-block w-100" autoplay loop muted>
-                            <source src="{{ asset('front-assets/videos/carousel-1.mp4') }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/N60_oXI3wtQ?autoplay=1&mute=1&loop=1&playlist=N60_oXI3wtQ"
+                            frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
@@ -38,10 +68,9 @@
                 </div>
                 <div class="carousel-item">
                     <div class="video-container">
-                        <video id="videoCarousel2" class="d-block w-100" autoplay loop muted>
-                            <source src="{{ asset('front-assets/videos/carousel-2.mp4') }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/eB2lagODyWE?autoplay=1&mute=1&loop=1&playlist=eB2lagODyWE"
+                            frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
@@ -134,7 +163,7 @@
     <section class="section-4 pt-5">
         <div class="container">
             <div class="section-title">
-                <h2>Produk Unggulan</h2>              
+                <h2>Produk Unggulan</h2>
             </div>
             <div class="row pb-3">
                 @if ($featuredProducts->isNotEmpty())
@@ -184,9 +213,11 @@
                                         href="{{ route('front.product', $product->slug) }}">{{ $product->title }}</a>
                                     <div class="price mt-2">
 
-                                        <span class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
+                                        <span
+                                            class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
                                         @if ($product->compare_price > 0)
-                                          <br>  <span class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                                            <br> <span
+                                                class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.') }}</del></span>
                                         @endif
                                     </div>
                                 </div>
@@ -254,9 +285,11 @@
                                     <a class="h6 link" href="product.php">{{ $product->title }}</a>
                                     <div class="price mt-2">
 
-                                        <span class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
+                                        <span
+                                            class="h5"><strong>Rp{{ number_format($product->price, 0, ',', '.') }}</strong></span>
                                         @if ($product->compare_price > 0)
-                                            <br><span class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.')}}</del></span>
+                                            <br><span
+                                                class="h6 text-underline"><del>Rp{{ number_format($product->compare_price, 0, ',', '.') }}</del></span>
                                         @endif
                                     </div>
                                 </div>
@@ -268,7 +301,7 @@
             </div>
         </div>
     </section>
-    
+
     <img src="{{ asset('front-assets/images/home-promo2.png') }}" style="height:450px;">
 
 @endsection

@@ -8,7 +8,7 @@
                 <div class="col-sm-6">
                     <h1>Change Password</h1>
                 </div>
-                
+
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -25,7 +25,8 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="name">Old Password</label>
-                                    <input type="password" name="old_password" id="old_password" class="form-control" placeholder="Old Password">
+                                    <input type="password" name="old_password" id="old_password" class="form-control"
+                                        placeholder="Old Password">
                                     <p></p>
                                 </div>
                             </div>
@@ -33,7 +34,8 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="name">New Password</label>
-                                    <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password">                                    
+                                    <input type="password" name="new_password" id="new_password" class="form-control"
+                                        placeholder="New Password">
                                     <p></p>
                                 </div>
                             </div>
@@ -41,7 +43,8 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="name">Confirm Password</label>
-                                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm Password">                                       
+                                    <input type="password" name="confirm_password" id="confirm_password"
+                                        class="form-control" placeholder="Confirm Password">
                                     <p></p>
                                 </div>
                             </div>
@@ -50,7 +53,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button type="submit" class="btn btn-primary">Update</button>        
+                    <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
         <!-- /.card -->
@@ -75,7 +78,7 @@
 
                     if (response["status"] == true) {
 
-                        window.location.href = "{{ route('admin.showChangePasswordForm') }}";                
+                        window.location.href = "{{ route('admin.showChangePasswordForm') }}";
                     } else {
                         var errors = response['errors'];
                         if (errors['old_password']) {
@@ -112,8 +115,5 @@
                 }
             })
         });
-
-        
-       
     </script>
 @endsection

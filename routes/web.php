@@ -18,13 +18,17 @@ use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CallbackController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\GeneratePDFController;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +48,8 @@ use Illuminate\Support\Facades\File;
 // Route::get('/test', function () {
 //     orderEmail(28);
 // });
+// Midtrans
+Route::post('/callback', [CallbackController::class, 'callback'])->name('midtrans.callback');
 
 //produk
 Route::get('/', [FrontController::class, 'index'])->name('front.home');
@@ -78,6 +84,10 @@ Route::group(['prefix' => 'account'], function () {
         //login
         Route::get('/login', [AuthController::class, 'login'])->name('account.login');
         Route::post('/login', [AuthController::class, 'authenticate'])->name('account.authenticate');
+
+        Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('login.google');
+        Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('login.handleGoogle');
+
         //Register
         Route::get('/register', [AuthController::class, 'register'])->name('account.register');
         Route::post('/process-register', [AuthController::class, 'processRegister'])->name('account.processRegister');
@@ -96,6 +106,10 @@ Route::group(['prefix' => 'account'], function () {
         Route::post('/remove-product-from-wishlist', [AuthController::class, 'removeProductFromWishList'])->name('account.removeProductFromWishList');
         Route::get('/order-detail/{orderId}', [AuthController::class, 'orderDetail'])->name('account.orderDetail');
         Route::get('/logout', [AuthController::class, 'logout'])->name('account.logout');
+
+        //Generate PDF
+        Route::get('/order/{id}/view-pdf', [GeneratePDFController::class, 'viewOrderPDF'])->name('order.viewpdf');
+        Route::get('/order/{id}/download', [GeneratePDFController::class, 'downloadOrder'])->name('order.download');
     });
 });
 
@@ -195,8 +209,13 @@ Route::group(['prefix' => 'admin'], function () {
 
         //setting routes
         Route::get('/change-password', [SettingController::class, 'showChangePasswordForm'])->name('admin.showChangePasswordForm');
-        Route::post('/process-change-password', [SettingController::class, 'processChangePassword'])->name('admin.processChangePassword');
         //processChangePassword
+        Route::post('/process-change-password', [SettingController::class, 'processChangePassword'])->name('admin.processChangePassword');
+
+        //generate pdf monthly reports
+        Route::get('/admin/reports/sales/{month?}', [App\Http\Controllers\GeneratePDFController::class, 'generateMonthlySalesReport'])->name('laporan.penjualanBulanan');
+
+
 
         Route::get('/getSlug', function (Request $request) {
             $slug = '';

@@ -20,16 +20,16 @@
                 </div>
                 <div class="col-md-9">
                     <div class="card">
-                        <div class="card-header">
-                            <h2 class="h5 mb-0 pt-2 pb-2">Order: {{ $order->id }}</h2>
-                        </div>
-
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h2 class="h5 mb-0 pt-2 pb-2">Order: {{ $order->id }}</h2>
+                            <a href="{{ route('order.download', ['id' => $order->id]) }}" class="btn btn-sm btn-success">Bukti Invoice</a>
+                    </div>
                         <div class="card-body pb-0">
                             <!-- info -->
                             <div class="card card-sm">
                                 <div class="card-body bg-light mb-3">
                                     <div class="row">
-                                        <div class="col-6 col-lg-3">
+                                        <div class="col-6 col-lg-2">
                                             <!-- Heading -->
                                             <h6 class="heading-xxxs text-muted">Order No:</h6>
                                             <!-- Text -->
@@ -37,9 +37,9 @@
                                             {{ $order->id }}
                                             </p>
                                         </div>
-                                        <div class="col-6 col-lg-3">
+                                        <div class="col-6 col-lg-2">
                                             <!-- Heading -->
-                                            <h6 class="heading-xxxs text-muted">Tanggal Pengiriman:</h6>
+                                            <h6 class="heading-xxxs text-muted">Tanggal Kirim:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
                                                 <time datetime="2024-06-01">
@@ -51,27 +51,37 @@
                                                 </time>
                                             </p>
                                         </div>
-                                        <div class="col-6 col-lg-3">
+                                        <div class="col-6 col-lg-2">
                                             <!-- Heading -->
-                                            <h6 class="heading-xxxs text-muted">Status:</h6>
+                                            <h6 class="heading-xxxs text-muted">Pemesanan:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
-                                                 @if ($order->status == 'paid')
-                                                        <span class="badge bg-success">Dibayar</span>
-                                                    @elseif ($order->status == 'pending')
-                                                        <span class="badge bg-warning">Belum Dibayar</span>
-                                                    @elseif ($order->status == 'shipped')
-                                                        <span class="badge bg-info">Dikirim</span>
-                                                    @elseif ($order->status == 'delivered')
-                                                        <span class="badge bg-success">Selesai</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Dibatalkan</span>
-                                                    @endif
+                                                @if ($order->status == 'pending')
+                                                <span class="badge bg-warning">Dikemas</span>
+                                                @elseif ($order->status == 'shipped')
+                                                    <span class="badge bg-info">Dikirim</span>
+                                                @elseif ($order->status == 'delivered')
+                                                    <span class="badge bg-success">Selesai</span>
+                                                @else
+                                                    <span class="badge bg-danger">Dibatalkan</span>
+                                                @endif
                                             </p>
                                         </div>
                                         <div class="col-6 col-lg-3">
                                             <!-- Heading -->
-                                            <h6 class="heading-xxxs text-muted">Jumlah Pesanan:</h6>
+                                            <h6 class="heading-xxxs text-muted"> Status Pembayaran:</h6>
+                                            <!-- Text -->
+                                            <p class="mb-lg-0 fs-sm fw-bold">
+                                                @if ($order->payment_status == 'paid')
+                                                    <span class="badge bg-success">Dibayar</span>
+                                                @else
+                                                    <span class="badge bg-warning">Belum Dibayar</span>
+                                                @endif
+                                            </p>
+                                        </div>  
+                                        <div class="col-6 col-lg-3">
+                                            <!-- Heading -->
+                                            <h6 class="heading-xxxs text-muted">Jumlah Harga:</h6>
                                             <!-- Text -->
                                             <p class="mb-lg-0 fs-sm fw-bold">
                                             Rp{{ number_format($order->grand_total, 0, ',', '.') }}

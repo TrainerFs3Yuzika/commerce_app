@@ -29,7 +29,8 @@
                                     <tr>
                                         <td>Pesanan #</td>
                                         <td>Tanggal Pembelian</td>
-                                        <td>Status</td>
+                                        <td>Status Pemesanan</td>
+                                        <td>Status Pembayaran</td>
                                         <td>Total</td>
                                         <td>Detail</td>
                                     </tr>
@@ -46,16 +47,21 @@
                                                 </td>
 
                                                 <td>
-                                                   @if ($order->status == 'paid')
+                                                @if ($order->status == 'pending')
+                                                    <span class="badge bg-warning">Dikemas</span>
+                                                @elseif ($order->status == 'shipped')
+                                                    <span class="badge bg-info">Dikirim</span>
+                                                @elseif ($order->status == 'delivered')
+                                                    <span class="badge bg-success">Selesai</span>
+                                                @else
+                                                    <span class="badge bg-danger">Dibatalkan</span>
+                                                @endif
+                                                </td>
+                                                <td>
+                                                    @if ($order->payment_status == 'paid')
                                                         <span class="badge bg-success">Dibayar</span>
-                                                    @elseif ($order->status == 'pending')
-                                                        <span class="badge bg-warning">Belum Dibayar</span>
-                                                    @elseif ($order->status == 'shipped')
-                                                        <span class="badge bg-info">Dikirim</span>
-                                                    @elseif ($order->status == 'delivered')
-                                                        <span class="badge bg-success">Selesai</span>
                                                     @else
-                                                        <span class="badge bg-danger">Dibatalkan</span>
+                                                        <span class="badge bg-warning">Belum Dibayar</span>
                                                     @endif
                                                 </td>
                                                 <td>@rupiah($order->grand_total)</td>

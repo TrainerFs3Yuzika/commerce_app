@@ -37,7 +37,7 @@
                                     </address>
                                     <strong>Tanggal pengiriman</strong><br>
                                     @if (!empty($order->shipped_date))
-                                    {{ \Carbon\Carbon::parse($order->shipped_date)->setTimezone('Asia/Jakarta')->format('d M, Y H:i:s') }}
+                                        {{ \Carbon\Carbon::parse($order->shipped_date)->setTimezone('Asia/Jakarta')->format('d M, Y H:i:s') }}
                                     @else
                                         n/a
                                     @endif
@@ -45,21 +45,26 @@
 
                                 <div class="col-sm-4 invoice-col">
                                     <!-- <b>Invoice #007612</b><br>
-                                                                                                                                                                                                                            <br> -->
+                                                                                                                                                                                                                                <br> -->
                                     <b>Order ID:</b> {{ $order->id }}<br>
                                     <b>Total:</b> @rupiah($order->grand_total)<br>
-                                    <b>Status:</b>
-                                   @if ($order->status == 'paid')
-                                                        <span class="badge bg-success">Dibayar</span>
-                                                    @elseif ($order->status == 'pending')
-                                                        <span class="badge bg-warning">Belum Dibayar</span>
-                                                    @elseif ($order->status == 'shipped')
-                                                        <span class="badge bg-info">Dikirim</span>
-                                                    @elseif ($order->status == 'delivered')
-                                                        <span class="badge bg-success">Selesai</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Dibatalkan</span>
-                                                    @endif
+                                    <b>Status Pemesanan:</b>
+                                    @if ($order->status == 'pending')
+                                        <span class="badge bg-warning">Dikemas</span>
+                                    @elseif ($order->status == 'shipped')
+                                        <span class="badge bg-info">Dikirim</span>
+                                    @elseif ($order->status == 'delivered')
+                                        <span class="badge bg-success">Selesai</span>
+                                    @else
+                                        <span class="badge bg-danger">Dibatalkan</span>
+                                    @endif
+                                    <br>
+                                    <b>Status Pembayaran:</b>
+                                    @if ($order->payment_status == 'paid')
+                                        <span class="badge bg-success">Dibayar</span>
+                                    @else
+                                        <span class="badge bg-warninng">Belum Dibayar</span>
+                                    @endif
                                     <br>
                                 </div>
                             </div>
@@ -116,10 +121,8 @@
                                 <h2 class="h4 mb-3">Status pemesanan</h2>
                                 <div class="mb-3">
                                     <select name="status" id="status" class="form-control">
-                                        <option value="paid" {{ $order->status == 'paid' ? 'selected' : '' }}>
-                                            Dibayar</option>
                                         <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
-                                            Belum dibayar</option>
+                                            Dikemas</option>
                                         <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>
                                             Dikirim</option>
                                         <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>

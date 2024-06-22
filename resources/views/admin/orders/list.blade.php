@@ -50,7 +50,8 @@
                                 <th>Pelanggan</th>
                                 <th>Email</th>
                                 <th>Telpon</th>
-                                <th>Status</th>
+                                <th>Status Pemesanan</th>
+                                <th>Status Pembayaran</th>
                                 <th>Total</th>
                                 <th>Tanggal Pembelian</th>
                                 <th>Detail Order</th>
@@ -65,17 +66,22 @@
                                         <td>{{ $order->email }}</td>
                                         <td>@formatPhone($order->mobile)</td>
                                         <td>
-                                            @if ($order->status == 'paid')
-                                                        <span class="badge bg-success">Dibayar</span>
-                                                    @elseif ($order->status == 'pending')
-                                                        <span class="badge bg-warning">Belum Dibayar</span>
-                                                    @elseif ($order->status == 'shipped')
-                                                        <span class="badge bg-info">Dikirim</span>
-                                                    @elseif ($order->status == 'delivered')
-                                                        <span class="badge bg-success">Selesai</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Dibatalkan</span>
-                                                    @endif
+                                            @if ($order->status == 'pending')
+                                                <span class="badge bg-warning">Dikemas</span>
+                                            @elseif ($order->status == 'shipped')
+                                                <span class="badge bg-info">Dikirim</span>
+                                            @elseif ($order->status == 'delivered')
+                                                <span class="badge bg-success">Selesai</span>
+                                            @else
+                                                <span class="badge bg-danger">Dibatalkan</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($order->payment_status == 'paid')
+                                                <span class="badge bg-success">Dibayar</span>
+                                            @else
+                                                <span class="badge bg-warning">Belum Dibayar</span>
+                                            @endif
                                         </td>
                                         <td>@rupiah($order->grand_total)</td>
                                         <td>
