@@ -102,9 +102,6 @@
         </tfoot>
     </table>
 
-    <!-- Sertakan gambar grafik -->
-    {!! $chartsHtml !!}
-
     <div class="footer margin-top">
         <table class="w-full">
             <tr>
@@ -119,37 +116,5 @@
             </tr>
         </table>
     </div>
-
-    <!-- Script untuk menggambar grafik menggunakan Lavacharts -->
-    <script src="https://cdn.jsdelivr.net/npm/lavacharts"></script>
-    <script>
-        // Inisialisasi grafik pendapatan bulanan
-        const revenueData = @json($revenueMonthlyData);
-        const revenueLabels = @json($revenueMonthlyLabels);
-
-        let revenueChart = new Lava.LineChart('revenueChart');
-        revenueChart.DataTable.addDateColumn('Bulan');
-        revenueChart.DataTable.addNumberColumn('Pendapatan');
-
-        revenueLabels.forEach((label, index) => {
-            revenueChart.DataTable.addRow([new Date(label), revenueData[index]]);
-        });
-
-        revenueChart.draw();
-
-        // Inisialisasi grafik jumlah pesanan bulanan
-        const ordersData = @json($orderMonthlyData);
-        const ordersLabels = @json($orderMonthlyLabels);
-
-        let ordersChart = new Lava.BarChart('ordersChart');
-        ordersChart.DataTable.addDateColumn('Bulan');
-        ordersChart.DataTable.addNumberColumn('Pesanan');
-
-        ordersLabels.forEach((label, index) => {
-            ordersChart.DataTable.addRow([new Date(label), ordersData[index]]);
-        });
-
-        ordersChart.draw();
-    </script>
 </body>
 </html>

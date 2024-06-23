@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Carbon;
-
-use Khill\Lavacharts\Lavacharts;
 use Mpdf\Mpdf;
 
 class GeneratePDFController extends Controller
@@ -99,35 +97,6 @@ class GeneratePDFController extends Controller
             $orderMonthlyData[] = $order->total;
         }
 
-        // Buat instance Lavacharts baru
-        $lava = new Lavacharts();
-
-        // Grafik untuk pendapatan
-        $revenueChart = $lava->DataTable();
-        $revenueChart->addDateColumn('Bulan')
-            ->addNumberColumn('Pendapatan');
-
-        foreach ($monthlyRevenue as $revenue) {
-            $revenueChart->addRow([$revenue->month, $revenue->total]);
-        }
-
-        $lava->LineChart('revenueChart', $revenueChart);
-
-        // Grafik untuk jumlah pesanan
-        $ordersChart = $lava->DataTable();
-        $ordersChart->addDateColumn('Bulan')
-            ->addNumberColumn('Pesanan');
-
-        foreach ($monthlyOrders as $order) {
-            $ordersChart->addRow([$order->month, $order->total]);
-        }
-
-        $lava->BarChart('ordersChart', $ordersChart);
-
-        // Render view into HTML
-        $chartsHtml = $lava->render('LineChart', 'revenueChart', 'revenueChart');
-        $chartsHtml .= $lava->render('BarChart', 'ordersChart', 'ordersChart');
-
         $html = view('admin.orders.laporan-penjualan-bulanan', compact(
             'orders',
             'month',
@@ -135,7 +104,6 @@ class GeneratePDFController extends Controller
             'revenueMonthlyData',
             'orderMonthlyLabels',
             'orderMonthlyData',
-            'chartsHtml',
             'totalPendapatan' // Mengirimkan total pendapatan ke view
         ))->render();
 
