@@ -257,10 +257,10 @@
                         beforeSend: function() {
                             $('button[type="submit"]').prop('disabled', true);
                             // Show the spinner
-                            // document.getElementById('spinner').classList.add('show');
+
                         },
                         success: function(response) {
-                            // document.getElementById('spinner').classList.remove('show');
+
                             var errors = response.errors;
                             $('button[type="submit"]').prop('disabled', false);
 
