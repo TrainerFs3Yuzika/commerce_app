@@ -25,6 +25,8 @@
 
     <link rel="stylesheet" href="{{ asset('admin-assets/css/custom.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+      <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' http: https: ws: wss: data: blob: 'unsafe-inline' 'unsafe-eval'">
 </head>
 
 <body class="hold-transition sidebar-mini">
