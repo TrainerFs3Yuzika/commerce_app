@@ -79,8 +79,9 @@
             <tr>
                 <td class="w-half">
                     <div><p><strong>ID Pembelian:</strong> {{ $order->id }}</p></div>
-                   <div><p><strong>Nama Pembeli:</strong> {{ $order->first_name }} {{ $order->last_name }}</p></div>
-                   <div><p><strong>Tanggal Pembelian:</strong> {{ $order->created_at }}</p></div>
+                    <div><p><strong>Nama Pembeli:</strong> {{ $order->first_name }} {{ $order->last_name }}</p></div>
+                    <div><p><strong>Tanggal Pembelian:</strong> {{ $order->created_at }}</p></div>
+                    <div><p><strong>Alamat Pengirim:</strong> {{ $order->address}}</p></div>
                 </td>
                 <td class="w-half">
                     <div></div>
