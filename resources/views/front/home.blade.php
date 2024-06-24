@@ -54,7 +54,7 @@
                 <div class="carousel-item">
                     <div class="video-container">
                         <iframe width="100%" height="100%"
-                            src="https://www.youtube.com/embed/N60_oXI3wtQ?autoplay=1&mute=1&loop=1&playlist=N60_oXI3wtQ"
+                            src="https://www.youtube.com/embed/eB2lagODyWE?autoplay=1&mute=1&loop=1&playlist=eB2lagODyWE"
                             frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
@@ -69,7 +69,7 @@
                 <div class="carousel-item">
                     <div class="video-container">
                         <iframe width="100%" height="100%"
-                            src="https://www.youtube.com/embed/eB2lagODyWE?autoplay=1&mute=1&loop=1&playlist=eB2lagODyWE"
+                            src="https://www.youtube.com/embed/N60_oXI3wtQ?autoplay=1&mute=1&loop=1&playlist=N60_oXI3wtQ"
                             frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
