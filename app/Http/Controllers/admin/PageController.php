@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
-use Illuminate\support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
