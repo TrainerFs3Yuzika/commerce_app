@@ -455,7 +455,7 @@ class CartController extends Controller
         );
 
         // step - 3 store data in orders table
-        $orderId = "ORD-" . date('Y-m-d-H-i') . "-" . rand(1, 20);
+        $orderId = "ORD-" . date('Y-m-d-H-i') . "-" . rand(1, 1000);
 
         $checkCart = Carts::where('user_id', $user->id)->get();
         if ($request->payment_method == 'cod') {
