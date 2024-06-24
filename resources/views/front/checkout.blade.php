@@ -403,7 +403,9 @@
                                                         }
                                                     });
                                                 } else {
-                                                    window.location.href = response.redirect_url;
+                                                    // Jika metode pembayaran adalah 'cod', langsung mengarahkan ke halaman "thanks"
+                                                    window.location.href = "{{ url('/thanks/') }}/" + response
+                                                        .orderId;
                                                 }
 
                                             }

@@ -552,8 +552,7 @@ class CartController extends Controller
                 'message' => 'Pesanan berhasil disimpan',
                 'orderId' => $order->id,
                 'payment_method' => 'cod',
-                'status' => true,
-                'redirect_url' => url('/thanks/' . $order->id)
+                'status' => true
             ]);
         } else if ($request->payment_method == 'e-wallet') {
 
