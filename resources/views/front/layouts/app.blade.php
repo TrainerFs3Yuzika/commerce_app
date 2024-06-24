@@ -222,7 +222,7 @@
                 <a href="index.php" class="text-decoration-none mobile-logo">
                 <a href="{{ url('index.php') }}" class="text-decoration-none mobile-logo">
                     <span class="image-container">
-                        <img src="{{ asset('public/front-assets/images/logo-KuyBelanja (2).png') }}" alt="KuyBelanja Logo">
+                        <img src="{{ asset('front-assets/images/logo-kuyBelanja.png') }}" style="width:100px;">
                     </span>
                 </a>
                 </a>
