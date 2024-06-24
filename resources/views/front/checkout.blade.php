@@ -233,290 +233,288 @@
         });
 
         $('#orderForm').submit(function(event) {
-            event.preventDefault();
+                    event.preventDefault();
 
-            Swal.fire({
-                title: 'Apa kamu yakin?',
-                text: "Apakah Anda benar-benar ingin melanjutkan pembayaran?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, bayar sekarang!',
-                cancelButtonText: 'Tidak, batalkan'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Submit the form if confirmed
-                    $('button[type="submit"]').prop('disabled', true);
+                    Swal.fire({
+                        title: 'Apa kamu yakin?',
+                        text: "Apakah Anda benar-benar ingin melanjutkan pembayaran?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, bayar sekarang!',
+                        cancelButtonText: 'Tidak, batalkan'
+                    }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Submit the form if confirmed
+                                $('button[type="submit"]').prop('disabled', true);
+                                $.ajax({
+                                        url: '{{ route('front.processCheckout') }}',
+                                        // url: "{{ env('APP_URL') }}/process-checkout",
+                                        type: 'POST',
+                                        data: $(this).serializeArray(),
+                                        dataType: 'json',
+                                        beforeSend: function() {
+                                            $('button[type="submit"]').prop('disabled', true);
+                                            // Show the spinner
+
+                                        },
+                                        success: function(response) {
+
+                                            var errors = response.errors;
+                                            $('button[type="submit"]').prop('disabled', false);
+
+                                            if (response.status == false) {
+                                                if (errors.first_name) {
+                                                    $("#first_name").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.first_name);
+                                                } else {
+                                                    $("#first_name").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.last_name) {
+                                                    $("#last_name").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.last_name);
+                                                } else {
+                                                    $("#last_name").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.email) {
+                                                    $("#email").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.email);
+                                                } else {
+                                                    $("#email").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.country) {
+                                                    $("#country").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.country);
+                                                } else {
+                                                    $("#country").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.address) {
+                                                    $("#address").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.address);
+                                                } else {
+                                                    $("#address").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.city) {
+                                                    $("#city").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.city);
+                                                } else {
+                                                    $("#city").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+
+                                                if (errors.state) {
+                                                    $("#state").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.state);
+                                                } else {
+                                                    $("#state").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.zip) {
+                                                    $("#zip").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.zip);
+                                                } else {
+                                                    $("#zip").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+
+                                                if (errors.mobile) {
+                                                    $("#mobile").addClass('is-invalid')
+                                                        .siblings("p")
+                                                        .addClass('invalid-feedback')
+                                                        .html(errors.mobile);
+                                                } else {
+                                                    $("#mobile").removeClass('is-invalid')
+                                                        .siblings("p")
+                                                        .removeClass('invalid-feedback')
+                                                        .html('');
+                                                }
+                                            } else {
+                                                if (response.payment_method != 'cod') {
+                                                    // window.open(response.link_snap.redirect_url, '_blank');
+                                                    snap.pay(response.link_snap.token, {
+                                                        onSuccess: function(result) {
+                                                            // Handle success payment here
+                                                            console.log(result);
+                                                            window.location.href =
+                                                                "{{ url('/thanks/') }}/" + response
+                                                                .orderId;
+                                                        },
+                                                        onPending: function(result) {
+                                                            // Handle pending payment here
+                                                            console.log(result);
+                                                            alert('Payment Pending');
+                                                        },
+                                                        onError: function(result) {
+                                                            // Handle error payment here
+                                                            console.log(result);
+                                                            alert('Payment Failed');
+                                                        },
+                                                        onClose: function() {
+                                                            // Handle payment cancel here
+                                                            alert('Payment Closed');
+                                                            console.log(
+                                                                'customer closed the popup without finishing the payment'
+                                                            );
+                                                        }
+                                                    });
+                                                } else {
+                                                    // Jika metode pembayaran adalah 'cod', langsung mengarahkan ke halaman "thanks"
+                                                    window.location.href = "{{ url('/thanks/') }}/" + response
+                                                        .orderId;
+                                                }
+
+                                            }
+                                        });
+                                }
+                            });
+                    });
+
+                $("#country").change(function() {
                     $.ajax({
-                        url: '{{ route('front.processCheckout') }}',
-                        // url: "{{ env('APP_URL') }}/process-checkout",
-                        type: 'POST',
-                        data: $(this).serializeArray(),
-                        dataType: 'json',
-                        beforeSend: function() {
-                            $('button[type="submit"]').prop('disabled', true);
-                            // Show the spinner
-
+                        url: '{{ route('front.getOrderSummery') }}',
+                        type: 'post',
+                        data: {
+                            country_id: $(this).val()
                         },
+                        dataType: 'json',
                         success: function(response) {
-
-                            var errors = response.errors;
-                            $('button[type="submit"]').prop('disabled', false);
-
-                            if (response.status == false) {
-                                if (errors.first_name) {
-                                    $("#first_name").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.first_name);
-                                } else {
-                                    $("#first_name").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.last_name) {
-                                    $("#last_name").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.last_name);
-                                } else {
-                                    $("#last_name").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.email) {
-                                    $("#email").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.email);
-                                } else {
-                                    $("#email").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.country) {
-                                    $("#country").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.country);
-                                } else {
-                                    $("#country").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.address) {
-                                    $("#address").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.address);
-                                } else {
-                                    $("#address").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.city) {
-                                    $("#city").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.city);
-                                } else {
-                                    $("#city").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-
-                                if (errors.state) {
-                                    $("#state").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.state);
-                                } else {
-                                    $("#state").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.zip) {
-                                    $("#zip").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.zip);
-                                } else {
-                                    $("#zip").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-
-                                if (errors.mobile) {
-                                    $("#mobile").addClass('is-invalid')
-                                        .siblings("p")
-                                        .addClass('invalid-feedback')
-                                        .html(errors.mobile);
-                                } else {
-                                    $("#mobile").removeClass('is-invalid')
-                                        .siblings("p")
-                                        .removeClass('invalid-feedback')
-                                        .html('');
-                                }
-                            } else {
-                                if (response.payment_method != 'cod') {
-                                    // window.open(response.link_snap.redirect_url, '_blank');
-                                    snap.pay(response.link_snap.token, {
-                                        onSuccess: function(result) {
-                                            // Handle success payment here
-                                            console.log(result);
-                                            window.location.href =
-                                                "{{ url('/thanks/') }}/" + response
-                                                .orderId;
-                                        },
-                                        onPending: function(result) {
-                                            // Handle pending payment here
-                                            console.log(result);
-                                            alert('Payment Pending');
-                                        },
-                                        onError: function(result) {
-                                            // Handle error payment here
-                                            console.log(result);
-                                            alert('Payment Failed');
-                                        },
-                                        onClose: function() {
-                                            // Handle payment cancel here
-                                            alert('Payment Closed');
-                                            console.log(
-                                                'customer closed the popup without finishing the payment'
-                                            );
-                                        }
-                                    });
-                                } else {
-                                    window.location.href = "{{ url('/thanks/') }}/" + response
-                                        .orderId;
-                                }
-
-                                // window.location.href = "{{ url('/thanks/') }}/" + response.orderId;
+                            if (response.status == true) {
+                                $("#shippingAmount").html('Rp' + response.shippingCharge);
+                                $("#grandTotal").html('Rp' + response.grandTotal);
                             }
 
                         }
                     });
-                }
-            });
-        });
 
-        $("#country").change(function() {
-            $.ajax({
-                url: '{{ route('front.getOrderSummery') }}',
-                type: 'post',
-                data: {
-                    country_id: $(this).val()
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == true) {
-                        $("#shippingAmount").html('Rp' + response.shippingCharge);
-                        $("#grandTotal").html('Rp' + response.grandTotal);
-                    }
-
-                }
-            });
-
-        });
-
-        $("#apply-discount").click(function() {
-            $.ajax({
-                url: '{{ route('front.applyDiscount') }}',
-                type: 'post',
-                data: {
-                    code: $("#discount_code").val(),
-                    country_id: $("#country").val()
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == true) {
-                        $("#shippingAmount").html('Rp' + response.shippingCharge);
-                        $("#grandTotal").html('Rp' + response.grandTotal);
-                        $("#discount_value").html('Rp' + response.discount);
-                        $("#discount-response-wrapper").html(response.discountString);
-
-                        $("#discount-response").css({
-                            'background-color': '#06D001',
-                            'display': 'flex',
-                            'justify-content': 'center',
-                            'align-items': 'center',
-                            'height': '50px',
-                            'width': '300px',
-                            'position': 'relative'
-                        });
-
-                        $("#remove-discount").css({
-                            'position': 'absolute',
-                            'top': '0',
-                            'right': '0'
-                        });
-                    } else {
-                        $("#discount-response-wrapper").html("<span class='text-danger'>" + response
-                            .message + "<span>");
-                    }
-                }
-            });
-        });
-
-        $('body').on('click', "#remove-discount", function() {
-            $.ajax({
-                url: '{{ route('front.removeCoupon') }}',
-                type: 'post',
-                data: {
-                    country_id: $("#country").val()
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == true) {
-                        $("#shippingAmount").html('Rp' + response.shippingCharge);
-                        $("#grandTotal").html('Rp' + response.grandTotal);
-                        $("#discount_value").html('Rp' + response.discount);
-                        $("#discount-response-wrapper").html('');
-                        $("#discount_code").val('');
-                    }
-                }
-            });
-        });
-
-
-        document.getElementById('payNowButton').addEventListener('click', function(event) {
-            const paymentMethods = document.getElementsByName('payment_method');
-            let selectedPaymentMethod = null;
-            for (const method of paymentMethods) {
-                if (method.checked) {
-                    selectedPaymentMethod = method.value;
-                    break;
-                }
-            }
-            if (!selectedPaymentMethod) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Perhatian',
-                    text: 'Harap pilih metode pembayaran terlebih dahulu',
-                    showConfirmButton: true
                 });
-            }
-        });
 
-        // $("#remove-discount").click(function(){
+                $("#apply-discount").click(function() {
+                    $.ajax({
+                        url: '{{ route('front.applyDiscount') }}',
+                        type: 'post',
+                        data: {
+                            code: $("#discount_code").val(),
+                            country_id: $("#country").val()
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status == true) {
+                                $("#shippingAmount").html('Rp' + response.shippingCharge);
+                                $("#grandTotal").html('Rp' + response.grandTotal);
+                                $("#discount_value").html('Rp' + response.discount);
+                                $("#discount-response-wrapper").html(response.discountString);
 
-        // });
+                                $("#discount-response").css({
+                                    'background-color': '#06D001',
+                                    'display': 'flex',
+                                    'justify-content': 'center',
+                                    'align-items': 'center',
+                                    'height': '50px',
+                                    'width': '300px',
+                                    'position': 'relative'
+                                });
+
+                                $("#remove-discount").css({
+                                    'position': 'absolute',
+                                    'top': '0',
+                                    'right': '0'
+                                });
+                            } else {
+                                $("#discount-response-wrapper").html("<span class='text-danger'>" + response
+                                    .message + "<span>");
+                            }
+                        }
+                    });
+                });
+
+                $('body').on('click', "#remove-discount", function() {
+                    $.ajax({
+                        url: '{{ route('front.removeCoupon') }}',
+                        type: 'post',
+                        data: {
+                            country_id: $("#country").val()
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status == true) {
+                                $("#shippingAmount").html('Rp' + response.shippingCharge);
+                                $("#grandTotal").html('Rp' + response.grandTotal);
+                                $("#discount_value").html('Rp' + response.discount);
+                                $("#discount-response-wrapper").html('');
+                                $("#discount_code").val('');
+                            }
+                        }
+                    });
+                });
+
+
+                document.getElementById('payNowButton').addEventListener('click', function(event) {
+                    const paymentMethods = document.getElementsByName('payment_method');
+                    let selectedPaymentMethod = null;
+                    for (const method of paymentMethods) {
+                        if (method.checked) {
+                            selectedPaymentMethod = method.value;
+                            break;
+                        }
+                    }
+                    if (!selectedPaymentMethod) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Perhatian',
+                            text: 'Harap pilih metode pembayaran terlebih dahulu',
+                            showConfirmButton: true
+                        });
+                    }
+                });
+
+                // $("#remove-discount").click(function(){
+
+                // });
     </script>
 @endsection
