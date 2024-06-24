@@ -52,6 +52,8 @@
     <!-- Fav Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="#" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+      <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' http: https: ws: wss: data: blob: 'unsafe-inline' 'unsafe-eval'">
 </head>
 <style>
     .section-9 .table thead {
